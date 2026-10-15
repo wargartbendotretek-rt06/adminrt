@@ -3,324 +3,310 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal RT 06 RW 01</title>
+  <title>Portal Sistem Informasi RT 06</title>
+  <!-- Tailwind CSS & Google Font Inter -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root {
-      --primary: #1e3a8a;
-      --primary-hover: #1d4ed8;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #1e293b;
-      --border: #e2e8f0;
-      --success: #16a34a;
-      --danger: #dc2626;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
-
-    header {
-      background-color: var(--primary);
-      color: white;
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    header h1 { font-size: 1.25rem; font-weight: 600; }
-
-    .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      border: 1px solid var(--border);
-    }
-
-    .card h2 { margin-bottom: 1rem; font-size: 1.1rem; color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
-
-    /* Forms */
-    .form-group { margin-bottom: 1rem; }
-    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.375rem; }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.9rem;
-    }
-    button {
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s;
-    }
-    button:hover { background-color: var(--primary-hover); }
-    button.btn-danger { background-color: var(--danger); }
-
-    /* Tables */
-    .table-container { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.875rem; }
-    th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid var(--border); }
-    th { background-color: #f1f5f9; font-weight: 600; }
-
-    /* Tabs / Nav */
-    .nav-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-    .tab-btn { background: none; color: var(--text); border: none; padding: 0.5rem 1rem; font-size: 0.9rem; }
-    .tab-btn.active { background-color: var(--primary); color: white; border-radius: 6px; }
-
-    .hidden { display: none !important; }
-    .badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
-    .badge-admin { background: #dbeafe; color: #1e40af; }
-    .badge-warga { background: #fef3c7; color: #92400e; }
-
-    /* Summary Grid */
-    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-    .summary-box { background: var(--card-bg); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
-    .summary-box h3 { font-size: 0.85rem; color: #64748b; margin-bottom: 0.25rem; }
-    .summary-box p { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+    body { font-family: 'Inter', sans-serif; }
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
   </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
 
-  <header>
-    <h1>Portal RT 06</h1>
-    <div id="user-info" class="hidden">
-      <span id="user-name-display"></span>
-      <button onclick="logout()" class="btn-danger" style="margin-left: 10px; padding: 0.3rem 0.6rem; font-size: 0.8rem;">Keluar</button>
+  <!-- TOP HEADER NAVBAR -->
+  <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="bg-indigo-600 p-2 rounded-lg text-white">
+          <i class="fa-solid fa-building-user text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight">Portal Digital RT 06</h1>
+          <p class="text-xs text-indigo-200">Desa Bendotretek, Sidoarjo</p>
+        </div>
+      </div>
+      
+      <div id="user-info-bar" class="hidden flex items-center space-x-4">
+        <div class="text-right hidden sm:block">
+          <p id="user-name-display" class="font-medium text-sm text-white"></p>
+          <span id="user-role-badge" class="text-[10px] bg-indigo-700 px-2 py-0.5 rounded-full text-indigo-200 uppercase tracking-wider"></span>
+        </div>
+        <button onclick="logout()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-2 rounded-lg font-medium transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-right-from-bracket"></i> Keluar
+        </button>
+      </div>
     </div>
   </header>
 
-  <div class="container">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
 
-    <!-- LOGIN FORM -->
-    <div id="sec-login" class="card">
-      <h2>Masuk ke Portal</h2>
-      <form id="form-login" onsubmit="handleLogin(event)">
-        <div class="form-group">
-          <label>Username</label>
-          <input type="text" id="login-username" required placeholder="Masukkan username">
+    <!-- LOGIN PANEL -->
+    <div id="sec-login" class="max-w-md mx-auto my-12">
+      <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+        <div class="bg-gradient-to-r from-indigo-800 to-indigo-900 p-6 text-white text-center">
+          <i class="fa-solid fa-user-shield text-4xl mb-2 text-indigo-300"></i>
+          <h2 class="text-xl font-bold">Masuk ke Portal</h2>
+          <p class="text-xs text-indigo-200 mt-1">Silakan masuk menggunakan akun Anda</p>
         </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="login-password" required placeholder="Masukkan password">
-        </div>
-        <div class="form-group">
-          <label>Peran / Jenis Akun</label>
-          <select id="login-role">
-            <option value="viewer">Warga</option>
-            <option value="admin">Pengurus / Admin</option>
-          </select>
-        </div>
-        <button type="submit">Masuk</button>
-      </form>
+        
+        <form onsubmit="handleLogin(event)" class="p-6 space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Username</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-user"></i></span>
+              <input type="text" id="login-username" required class="w-full pl-9 pr-3 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="Masukkan username">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Password</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-lock"></i></span>
+              <input type="password" id="login-password" required class="w-full pl-9 pr-3 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="••••••••">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Peran Akses</label>
+            <select id="login-role" class="w-full px-3 py-2.5 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none bg-white">
+              <option value="viewer">Warga RT 06</option>
+              <option value="admin">Pengurus / Admin</option>
+            </select>
+          </div>
+
+          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg text-sm transition shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Masuk Sekarang
+          </button>
+        </form>
+      </div>
     </div>
 
-    <!-- MAIN APP DASHBOARD -->
-    <div id="sec-dashboard" class="hidden">
+    <!-- MAIN DASHBOARD CONTENT -->
+    <div id="sec-dashboard" class="hidden space-y-6">
 
-      <!-- NAVIGATION TABS -->
-      <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('tab-ringkasan')">Ringkasan & Kas</button>
-        <button class="tab-btn" onclick="switchTab('tab-pengumuman')">Pengumuman</button>
-        <button class="tab-btn" onclick="switchTab('tab-surat')">Permohonan Surat</button>
-        <button id="btn-tab-admin" class="tab-btn hidden" onclick="switchTab('tab-admin')">Kelola RT</button>
+      <!-- NAVIGATION TABS BAR -->
+      <div class="flex space-x-2 border-b border-slate-200 overflow-x-auto pb-1 scrollbar-none">
+        <button onclick="switchTab('tab-ringkasan', this)" class="tab-btn active px-4 py-2.5 text-sm font-semibold rounded-lg bg-indigo-600 text-white shadow-sm flex items-center gap-2">
+          <i class="fa-solid fa-chart-line"></i> Keuangan Kas
+        </button>
+        <button onclick="switchTab('tab-warga', this)" class="tab-btn px-4 py-2.5 text-sm font-semibold rounded-lg text-slate-600 hover:bg-slate-100 transition flex items-center gap-2">
+          <i class="fa-solid fa-users"></i> Daftar Warga
+        </button>
+        <button onclick="switchTab('tab-pengumuman', this)" class="tab-btn px-4 py-2.5 text-sm font-semibold rounded-lg text-slate-600 hover:bg-slate-100 transition flex items-center gap-2">
+          <i class="fa-solid fa-bullhorn"></i> Pengumuman
+        </button>
+        <button onclick="switchTab('tab-surat', this)" class="tab-btn px-4 py-2.5 text-sm font-semibold rounded-lg text-slate-600 hover:bg-slate-100 transition flex items-center gap-2">
+          <i class="fa-solid fa-file-signature"></i> Surat Pengantar
+        </button>
+        <button id="btn-tab-admin" onclick="switchTab('tab-admin', this)" class="tab-btn hidden px-4 py-2.5 text-sm font-semibold rounded-lg text-slate-600 hover:bg-slate-100 transition flex items-center gap-2">
+          <i class="fa-solid fa-sliders"></i> Kelola RT
+        </button>
       </div>
 
-      <!-- TAB 1: RINGKASAN & KAS -->
-      <div id="tab-ringkasan" class="tab-content">
-        <div class="summary-grid">
-          <div class="summary-box">
-            <h3>Total Pemasukan</h3>
-            <p id="total-masuk">Rp 0</p>
+      <!-- TAB 1: RINGKASAN KEUANGAN KAS -->
+      <div id="tab-ringkasan" class="tab-content space-y-6">
+        <!-- STATS CARDS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm flex items-center space-x-4">
+            <div class="p-3 bg-emerald-50 rounded-lg text-emerald-600"><i class="fa-solid fa-wallet text-2xl"></i></div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium uppercase">Pemasukan Kas</p>
+              <h3 id="total-masuk" class="text-lg font-bold text-slate-800">Rp 0</h3>
+            </div>
           </div>
-          <div class="summary-box">
-            <h3>Total Pengeluaran</h3>
-            <p id="total-keluar">Rp 0</p>
+          <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm flex items-center space-x-4">
+            <div class="p-3 bg-rose-50 rounded-lg text-rose-600"><i class="fa-solid fa-arrow-up-right-from-square text-2xl"></i></div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium uppercase">Pengeluaran Kas</p>
+              <h3 id="total-keluar" class="text-lg font-bold text-slate-800">Rp 0</h3>
+            </div>
           </div>
-          <div class="summary-box">
-            <h3>Saldo Kas</h3>
-            <p id="total-saldo">Rp 0</p>
+          <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm flex items-center space-x-4">
+            <div class="p-3 bg-indigo-50 rounded-lg text-indigo-600"><i class="fa-solid fa-piggy-bank text-2xl"></i></div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium uppercase">Saldo Kas Saat Ini</p>
+              <h3 id="total-saldo" class="text-lg font-bold text-indigo-700">Rp 0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm flex items-center space-x-4">
+            <div class="p-3 bg-amber-50 rounded-lg text-amber-600"><i class="fa-solid fa-users text-2xl"></i></div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium uppercase">Total Warga Terdaftar</p>
+              <h3 id="total-warga-count" class="text-lg font-bold text-slate-800">0 Warga</h3>
+            </div>
           </div>
         </div>
 
-        <div class="card">
-          <h2>Riwayat Kas Masuk</h2>
-          <div class="table-container">
-            <table>
-              <thead>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- RIWAYAT KAS MASUK -->
+          <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+              <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2"><i class="fa-solid fa-arrow-down-left text-emerald-600"></i> Riwayat Kas Masuk</h2>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-500 border-b border-slate-100 uppercase">
+                  <tr><th class="p-3">Tanggal</th><th class="p-3">Warga</th><th class="p-3">Kategori</th><th class="p-3 text-right">Jumlah</th></tr>
+                </thead>
+                <tbody id="tbl-masuk" class="divide-y divide-slate-100"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- RIWAYAT KAS KELUAR -->
+          <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+              <h2 class="font-bold text-slate-800 text-sm flex items-center gap-2"><i class="fa-solid fa-arrow-up-right text-rose-600"></i> Riwayat Kas Keluar</h2>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-500 border-b border-slate-100 uppercase">
+                  <tr><th class="p-3">Tanggal</th><th class="p-3">Keterangan</th><th class="p-3">Kategori</th><th class="p-3 text-right">Jumlah</th></tr>
+                </thead>
+                <tbody id="tbl-keluar" class="divide-y divide-slate-100"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: DAFTAR WARGA -->
+      <div id="tab-warga" class="tab-content hidden space-y-4">
+        <div class="bg-white rounded-xl border border-slate-200/80 p-5 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+            <div>
+              <h2 class="font-bold text-slate-800 text-base">Daftar Warga RT 06</h2>
+              <p class="text-xs text-slate-500">Daftar anggota keluarga terdaftar lingkungan RT 06</p>
+            </div>
+            <div class="relative w-full sm:w-64">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-search"></i></span>
+              <input type="text" id="search-warga" oninput="filterWarga()" placeholder="Cari nama warga..." class="w-full pl-9 pr-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 text-slate-500 border-b border-slate-100 uppercase">
                 <tr>
-                  <th>Tanggal</th>
-                  <th>Nama Warga</th>
-                  <th>Kategori</th>
-                  <th>Jumlah</th>
+                  <th class="p-3">No</th>
+                  <th class="p-3">Nama Lengkap Warga</th>
+                  <th class="p-3">Status Lingkungan</th>
+                  <th class="p-3">Tanggal Terdaftar</th>
                 </tr>
               </thead>
-              <tbody id="tbl-masuk"></tbody>
+              <tbody id="tbl-warga-list" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
+      </div>
 
-        <div class="card">
-          <h2>Riwayat Kas Keluar</h2>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Tanggal</th>
-                  <th>Keterangan</th>
-                  <th>Kategori</th>
-                  <th>Jumlah</th>
-                </tr>
+      <!-- TAB 3: PENGUMUMAN -->
+      <div id="tab-pengumuman" class="tab-content hidden space-y-6">
+        <div id="admin-form-pengumuman" class="hidden bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm">
+          <h2 class="font-bold text-slate-800 text-sm mb-3"><i class="fa-solid fa-bullhorn text-indigo-600"></i> Buat Pengumuman Baru</h2>
+          <form onsubmit="handleAddPengumuman(event)" class="space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input type="text" id="p-judul" placeholder="Judul Pengumuman" required class="p-2.5 text-xs border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500">
+              <input type="text" id="p-kategori" placeholder="Kategori (misal: Kegiatan, Kerja Bakti)" required class="p-2.5 text-xs border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <textarea id="p-isi" rows="3" placeholder="Isi pengumuman lengkap..." required class="w-full p-2.5 text-xs border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            <button type="submit" class="bg-indigo-600 text-white text-xs px-4 py-2 rounded-lg font-medium hover:bg-indigo-700 transition">Publikasikan</button>
+          </form>
+        </div>
+
+        <div id="list-pengumuman" class="space-y-4"></div>
+      </div>
+
+      <!-- TAB 4: PERMOHONAN SURAT -->
+      <div id="tab-surat" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-1 bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm h-fit">
+          <h2 class="font-bold text-slate-800 text-sm mb-3"><i class="fa-solid fa-paper-plane text-indigo-600"></i> Pengajuan Surat Pengantar</h2>
+          <form onsubmit="handleAddSurat(event)" class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-medium text-slate-600 mb-1">Nama Lengkap Pemohon</label>
+              <input type="text" id="s-nama" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-slate-600 mb-1">NIK (16 Digit)</label>
+              <input type="text" id="s-nik" maxlength="16" pattern="\d{16}" placeholder="3515..." required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-slate-600 mb-1">Jenis Surat</label>
+              <input type="text" id="s-jenis" placeholder="Surat Domisili / SKTM / Pengantar" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label class="block text-[11px] font-medium text-slate-600 mb-1">Keperluan Surat</label>
+              <textarea id="s-keperluan" rows="3" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 text-white text-xs py-2 rounded-lg font-medium hover:bg-indigo-700 transition">Kirim Pengajuan</button>
+          </form>
+        </div>
+
+        <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm">
+          <h2 class="font-bold text-slate-800 text-sm mb-3"><i class="fa-solid fa-clock-rotate-left text-indigo-600"></i> Status Pengajuan Surat</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 text-slate-500 border-b border-slate-100 uppercase">
+                <tr><th class="p-3">Tanggal</th><th class="p-3">Nama Pemohon</th><th class="p-3">Jenis Surat</th><th class="p-3">Status</th></tr>
               </thead>
-              <tbody id="tbl-keluar"></tbody>
+              <tbody id="tbl-surat-status" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- TAB 2: PENGUMUMAN -->
-      <div id="tab-pengumuman" class="tab-content hidden">
-        <div id="admin-form-pengumuman" class="card hidden">
-          <h2>Tambah Pengumuman Baru</h2>
-          <form onsubmit="handleAddPengumuman(event)">
-            <div class="form-group">
-              <label>Judul</label>
-              <input type="text" id="p-judul" required>
-            </div>
-            <div class="form-group">
-              <label>Kategori</label>
-              <input type="text" id="p-kategori" placeholder="misal: Kegiatan, Kerja Bakti, Info" required>
-            </div>
-            <div class="form-group">
-              <label>Isi Pengumuman</label>
-              <textarea id="p-isi" rows="4" required></textarea>
-            </div>
-            <button type="submit">Publikasikan</button>
+      <!-- TAB 5: PANEL ADMIN (KELOLA RT) -->
+      <div id="tab-admin" class="tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm">
+          <h2 class="font-bold text-slate-800 text-sm mb-3"><i class="fa-solid fa-plus-circle text-emerald-600"></i> Catat Kas Masuk</h2>
+          <form onsubmit="handleAddMasuk(event)" class="space-y-3">
+            <input type="text" id="km-nama" placeholder="Nama Warga" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none">
+            <input type="text" id="km-kategori" placeholder="Kategori (misal: Iuran Bulanan)" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none">
+            <input type="number" id="km-jumlah" placeholder="Nominal (Rp)" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none">
+            <input type="date" id="km-tanggal" class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none">
+            <button type="submit" class="w-full bg-emerald-600 text-white text-xs py-2 rounded-lg font-medium hover:bg-emerald-700 transition">Simpan Pemasukan</button>
           </form>
         </div>
 
-        <div class="card">
-          <h2>Daftar Pengumuman</h2>
-          <div id="list-pengumuman"></div>
-        </div>
-      </div>
-
-      <!-- TAB 3: PERMOHONAN SURAT -->
-      <div id="tab-surat" class="tab-content hidden">
-        <div class="card">
-          <h2>Formulir Pengajuan Surat Pengantar</h2>
-          <form onsubmit="handleAddSurat(event)">
-            <div class="form-group">
-              <label>Nama Lengkap</label>
-              <input type="text" id="s-nama" required>
-            </div>
-            <div class="form-group">
-              <label>NIK (16 Digit)</label>
-              <input type="text" id="s-nik" maxlength="16" pattern="\d{16}" placeholder="3515..." required>
-            </div>
-            <div class="form-group">
-              <label>Jenis Surat</label>
-              <input type="text" id="s-jenis" placeholder="misal: Surat Keterangan Domisili, SKTM" required>
-            </div>
-            <div class="form-group">
-              <label>Keperluan</label>
-              <textarea id="s-keperluan" rows="3" required></textarea>
-            </div>
-            <button type="submit">Kirim Permohonan</button>
-          </form>
-        </div>
-      </div>
-
-      <!-- TAB 4: PANEL ADMIN / PENGURUS -->
-      <div id="tab-admin" class="tab-content hidden">
-        <div class="card">
-          <h2>Tambah Transaksi Kas Masuk</h2>
-          <form onsubmit="handleAddMasuk(event)">
-            <div class="form-group">
-              <label>Nama Warga</label>
-              <input type="text" id="km-nama" required>
-            </div>
-            <div class="form-group">
-              <label>Kategori</label>
-              <input type="text" id="km-kategori" placeholder="misal: Iuran Bulanan, Sumbangan" required>
-            </div>
-            <div class="form-group">
-              <label>Nominal (Rp)</label>
-              <input type="number" id="km-jumlah" required>
-            </div>
-            <div class="form-group">
-              <label>Tanggal</label>
-              <input type="date" id="km-tanggal">
-            </div>
-            <button type="submit">Simpan Pemasukan</button>
+        <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm">
+          <h2 class="font-bold text-slate-800 text-sm mb-3"><i class="fa-solid fa-minus-circle text-rose-600"></i> Catat Kas Keluar</h2>
+          <form onsubmit="handleAddKeluar(event)" class="space-y-3">
+            <input type="text" id="kk-keterangan" placeholder="Keterangan Pengeluaran" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none">
+            <input type="text" id="kk-kategori" placeholder="Kategori (misal: Perbaikan Lampu)" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none">
+            <input type="number" id="kk-jumlah" placeholder="Nominal (Rp)" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none">
+            <input type="date" id="kk-tanggal" class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none">
+            <button type="submit" class="w-full bg-rose-600 text-white text-xs py-2 rounded-lg font-medium hover:bg-rose-700 transition">Simpan Pengeluaran</button>
           </form>
         </div>
 
-        <div class="card">
-          <h2>Tambah Transaksi Kas Keluar</h2>
-          <form onsubmit="handleAddKeluar(event)">
-            <div class="form-group">
-              <label>Keterangan</label>
-              <input type="text" id="kk-keterangan" required>
-            </div>
-            <div class="form-group">
-              <label>Kategori</label>
-              <input type="text" id="kk-kategori" placeholder="misal: Perbaikan Lampu, Kebersihan" required>
-            </div>
-            <div class="form-group">
-              <label>Nominal (Rp)</label>
-              <input type="number" id="kk-jumlah" required>
-            </div>
-            <div class="form-group">
-              <label>Tanggal</label>
-              <input type="date" id="kk-tanggal">
-            </div>
-            <button type="submit">Simpan Pengeluaran</button>
-          </form>
-        </div>
-
-        <div class="card">
-          <h2>Tambah Data Warga Baru</h2>
-          <form onsubmit="handleAddWarga(event)">
-            <div class="form-group">
-              <label>Nama Kepala Keluarga</label>
-              <input type="text" id="w-nama" required>
-            </div>
-            <button type="submit">Tambah Warga</button>
+        <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm">
+          <h2 class="font-bold text-slate-800 text-sm mb-3"><i class="fa-solid fa-user-plus text-indigo-600"></i> Tambah Data Warga</h2>
+          <form onsubmit="handleAddWarga(event)" class="space-y-3">
+            <input type="text" id="w-nama" placeholder="Nama Lengkap Warga" required class="w-full p-2 text-xs border border-slate-200 rounded-lg outline-none">
+            <button type="submit" class="w-full bg-indigo-600 text-white text-xs py-2 rounded-lg font-medium hover:bg-indigo-700 transition">Tambah Warga Baru</button>
           </form>
         </div>
       </div>
 
     </div>
 
-  </div>
+  </main>
 
   <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbyhA5-Ke7UFKzRKAZZ0eQvAly4oQiTGnZXlKz9EJbkcCAyYy04pUW9kmCWI6HIIvFGd7g/exec';
 
     let currentUser = null;
     let sessionToken = localStorage.getItem('sessionToken') || '';
+    let globalWargaList = [];
 
-    // Initialize
     window.addEventListener('DOMContentLoaded', () => {
-      if (sessionToken) {
-        const storedUser = localStorage.getItem('currentUser');
-        if (storedUser) {
-          currentUser = JSON.parse(storedUser);
-          showDashboard();
-        } else {
-          loadPublicData();
-        }
+      const storedUser = localStorage.getItem('currentUser');
+      if (sessionToken && storedUser) {
+        currentUser = JSON.parse(storedUser);
+        showDashboard();
       } else {
         loadPublicData();
       }
@@ -336,15 +322,14 @@
         });
         return await response.json();
       } catch (err) {
-        alert('Terjadi kesalahan koneksi ke server.');
-        console.error(err);
+        alert('Terjadi kesalahan koneksi.');
         return { success: false };
       }
     }
 
     async function handleLogin(e) {
       e.preventDefault();
-      const username = document.getElementById('login-username').value;
+      const username = document.getElementById('login-username').value.trim();
       const password = document.getElementById('login-password').value;
       const role = document.getElementById('login-role').value;
 
@@ -372,10 +357,11 @@
     function showDashboard() {
       document.getElementById('sec-login').classList.add('hidden');
       document.getElementById('sec-dashboard').classList.remove('hidden');
-      document.getElementById('user-info').classList.remove('hidden');
-      document.getElementById('user-name-display').innerText = `${currentUser.name} (${currentUser.role})`;
+      document.getElementById('user-info-bar').classList.remove('hidden');
+      document.getElementById('user-name-display').innerText = currentUser.name;
+      document.getElementById('user-role-badge').innerText = currentUser.role;
 
-      if (['admin', 'editor', 'pengurus'].includes(currentUser.role.toLowerCase())) {
+      if (['admin', 'editor', 'pengurus'].includes((currentUser.role || '').toLowerCase())) {
         document.getElementById('btn-tab-admin').classList.remove('hidden');
         document.getElementById('admin-form-pengumuman').classList.remove('hidden');
       }
@@ -396,43 +382,82 @@
     }
 
     function renderData(data) {
-      // Render Kas Masuk
+      // Kas Masuk
       let tMasuk = 0;
-      const tbodyMasuk = document.getElementById('tbl-masuk');
-      tbodyMasuk.innerHTML = (data.riwayat || []).map(r => {
+      document.getElementById('tbl-masuk').innerHTML = (data.riwayat || []).map(r => {
         tMasuk += Number(r.jumlah || 0);
-        return `<tr><td>${r.tanggal}</td><td>${r.nama}</td><td>${r.kategori}</td><td>Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td></tr>`;
+        return `<tr class="hover:bg-slate-50"><td class="p-3">${r.tanggal}</td><td class="p-3 font-medium text-slate-700">${r.nama}</td><td class="p-3">${r.kategori}</td><td class="p-3 text-right font-semibold text-emerald-600">Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td></tr>`;
       }).join('');
 
-      // Render Kas Keluar
+      // Kas Keluar
       let tKeluar = 0;
-      const tbodyKeluar = document.getElementById('tbl-keluar');
-      tbodyKeluar.innerHTML = (data.pengeluaran || []).map(r => {
+      document.getElementById('tbl-keluar').innerHTML = (data.pengeluaran || []).map(r => {
         tKeluar += Number(r.jumlah || 0);
-        return `<tr><td>${r.tanggal}</td><td>${r.keterangan}</td><td>${r.kategori}</td><td>Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td></tr>`;
+        return `<tr class="hover:bg-slate-50"><td class="p-3">${r.tanggal}</td><td class="p-3 font-medium text-slate-700">${r.keterangan}</td><td class="p-3">${r.kategori}</td><td class="p-3 text-right font-semibold text-rose-600">Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td></tr>`;
       }).join('');
 
-      // Totals
+      // Dashboard Summary
       document.getElementById('total-masuk').innerText = `Rp ${tMasuk.toLocaleString('id-ID')}`;
       document.getElementById('total-keluar').innerText = `Rp ${tKeluar.toLocaleString('id-ID')}`;
       document.getElementById('total-saldo').innerText = `Rp ${(tMasuk - tKeluar).toLocaleString('id-ID')}`;
 
+      // Daftar Warga
+      globalWargaList = data.warga || [];
+      document.getElementById('total-warga-count').innerText = `${globalWargaList.length} Warga`;
+      renderWargaTable(globalWargaList);
+
       // Pengumuman
-      const divP = document.getElementById('list-pengumuman');
-      divP.innerHTML = (data.pengumuman || []).map(p => `
-        <div style="border-bottom: 1px solid var(--border); padding: 1rem 0;">
-          <h3 style="font-size: 1rem; color: var(--primary);">${p.judul} <span class="badge badge-warga">${p.kategori}</span></h3>
-          <small style="color: #64748b;">${p.tanggal}</small>
-          <p style="margin-top: 0.5rem;">${p.isi}</p>
+      document.getElementById('list-pengumuman').innerHTML = (data.pengumuman || []).map(p => `
+        <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm space-y-2">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-slate-800 text-sm">${p.judul}</h3>
+            <span class="text-[10px] bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-full font-semibold uppercase">${p.kategori}</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">${p.isi}</p>
+          <p class="text-[10px] text-slate-400 pt-1"><i class="fa-regular fa-clock"></i> Dipublikasikan: ${p.tanggal}</p>
         </div>
+      `).join('');
+
+      // Surat Status
+      document.getElementById('tbl-surat-status').innerHTML = (data.surat || []).map(s => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-3">${s.tanggal}</td>
+          <td class="p-3 font-medium text-slate-700">${s.nama}</td>
+          <td class="p-3">${s.jenis}</td>
+          <td class="p-3"><span class="bg-amber-50 text-amber-600 border border-amber-200 text-[10px] px-2 py-0.5 rounded-full font-semibold">${s.status}</span></td>
+        </tr>
       `).join('');
     }
 
-    function switchTab(tabId) {
+    function renderWargaTable(list) {
+      document.getElementById('tbl-warga-list').innerHTML = list.map((w, idx) => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-3 font-semibold text-slate-400">${idx + 1}</td>
+          <td class="p-3 font-semibold text-slate-700 flex items-center gap-2">
+            <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-bold">${w.nama.charAt(0).toUpperCase()}</div>
+            ${w.nama}
+          </td>
+          <td class="p-3"><span class="bg-emerald-50 text-emerald-600 text-[10px] px-2 py-0.5 rounded-full font-semibold">Aktif</span></td>
+          <td class="p-3 text-slate-400">${w.dibuatPada || '-'}</td>
+        </tr>
+      `).join('');
+    }
+
+    function filterWarga() {
+      const q = document.getElementById('search-warga').value.toLowerCase();
+      const filtered = globalWargaList.filter(w => w.nama.toLowerCase().includes(q));
+      renderWargaTable(filtered);
+    }
+
+    function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
+        el.classList.add('text-slate-600');
+      });
       document.getElementById(tabId).classList.remove('hidden');
-      event.target.classList.add('active');
+      btn.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+      btn.classList.remove('text-slate-600');
     }
 
     // Submit Handlers
@@ -446,7 +471,7 @@
       };
       const res = await apiRequest('addsurat', payload);
       alert(res.message);
-      if (res.success) e.target.reset();
+      if (res.success) { e.target.reset(); loadPublicData(); }
     }
 
     async function handleAddPengumuman(e) {
@@ -492,7 +517,7 @@
       const payload = { nama: document.getElementById('w-nama').value };
       const res = await apiRequest('addwarga', payload);
       alert(res.message);
-      if (res.success) e.target.reset();
+      if (res.success) { e.target.reset(); loadPublicData(); }
     }
   </script>
 </body>
