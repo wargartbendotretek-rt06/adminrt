@@ -43,10 +43,10 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
 
-  <!-- NOTIFIKASI TOAST MELAYANG -->
+  <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- HEADER NAVBAR PERFEKTIF -->
+  <!-- HEADER NAVIGATION -->
   <header class="glass-nav text-white sticky top-0 z-50 shadow-2xl">
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
@@ -77,7 +77,7 @@
 
   <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
 
-    <!-- PANEL LOGIN -->
+    <!-- LOGIN PANEL -->
     <div id="sec-login" class="max-w-md mx-auto my-8 sm:my-14">
       <div class="glass-card rounded-3xl overflow-hidden shadow-2xl border border-white/50">
         <div class="bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-950 p-8 text-white text-center">
@@ -110,10 +110,10 @@
       </div>
     </div>
 
-    <!-- DASHBOARD UTAMA -->
+    <!-- MAIN DASHBOARD -->
     <div id="sec-dashboard" class="hidden space-y-6">
 
-      <!-- TAB NAVIGATION BAR DENGAN ANTI-TERPOTONG & DYNAMIC SHRINK (FIXED) -->
+      <!-- TAB NAVIGATION BAR DENGAN SHRINK-PRESERVATION & WRAP AMAN -->
       <div class="w-full overflow-x-auto no-scrollbar border-b border-white/10 pb-2">
         <div class="flex flex-nowrap sm:flex-wrap gap-2 min-w-max sm:min-w-0">
           <button onclick="vibrate(); switchTab('tab-ringkasan', this);" class="tab-btn active btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl bg-emerald-600 text-white shadow-lg flex items-center gap-2 shrink-0">
@@ -199,7 +199,7 @@
                 <h3 class="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
                   <i class="fa-solid fa-list-check text-emerald-600"></i> Rekapitulasi Alokasi Pengeluaran Kas
                 </h3>
-                <p class="text-[11px] text-slate-500">Persentase pengeluaran kas berdasarkan alokasi kebutuhan.</p>
+                <p class="text-[11px] text-slate-500">Persentase pengeluaran kas berdasarkan kebutuhan.</p>
               </div>
               <button onclick="exportCSV()" class="btn-smooth bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2.5 rounded-2xl font-bold shadow-md flex items-center gap-1.5">
                 <i class="fa-solid fa-file-excel"></i> Unduh Laporan (Excel)
@@ -317,7 +317,7 @@
           <form onsubmit="handleAddPinjam(event)" class="space-y-3">
             <input type="text" id="pj-nama" placeholder="Nama Peminjam" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
             <input type="text" id="pj-barang" placeholder="Nama Barang (Tenda/Kursi/Sound)" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
-            <input type="number" id="pj-jumlah" placeholder="Jumlah Dipinjam" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+            <input type="number" id="pj-jumlah" min="1" placeholder="Jumlah Dipinjam" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
             <input type="date" id="pj-kembali" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
             <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-3.5 rounded-2xl font-bold shadow-md glow-emerald">Ajukan Pinjaman Alat</button>
           </form>
@@ -414,7 +414,7 @@
                 <option value="Dana Bantuan Pemerintah">Dana Bantuan Pemerintah</option>
                 <option value="Lain-lain">Lain-lain</option>
               </select>
-              <input type="number" id="km-jumlah" placeholder="Nominal (Rp)" required class="w-full p-3 text-xs bg-slate-50 border rounded-xl outline-none">
+              <input type="number" id="km-jumlah" min="1" placeholder="Nominal (Rp)" required class="w-full p-3 text-xs bg-slate-50 border rounded-xl outline-none">
               <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-3 rounded-xl font-bold shadow-md">Simpan Pemasukan</button>
             </form>
           </div>
@@ -433,7 +433,7 @@
                 <option value="Operasional RT, ATK & Cetak">📄 Operasional RT, ATK & Cetak</option>
                 <option value="Lain-lain">📦 Lain-lain</option>
               </select>
-              <input type="number" id="kk-jumlah" placeholder="Nominal (Rp)" required class="w-full p-3 text-xs bg-slate-50 border rounded-xl outline-none">
+              <input type="number" id="kk-jumlah" min="1" placeholder="Nominal (Rp)" required class="w-full p-3 text-xs bg-slate-50 border rounded-xl outline-none">
               <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-rose-600 hover:bg-rose-700 text-white text-xs py-3 rounded-xl font-bold shadow-md">Simpan Pengeluaran</button>
             </form>
           </div>
@@ -467,7 +467,7 @@
             <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wider text-indigo-700">+ Tambah Inventaris Barang RT</h3>
             <form onsubmit="handleAddInventaris(event)" class="space-y-2.5">
               <input type="text" id="inv-nama" placeholder="Nama Barang" required class="w-full p-3 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="number" id="inv-jumlah" placeholder="Jumlah Unit Total" required class="w-full p-3 text-xs bg-slate-50 border rounded-xl outline-none">
+              <input type="number" id="inv-jumlah" min="1" placeholder="Jumlah Unit Total" required class="w-full p-3 text-xs bg-slate-50 border rounded-xl outline-none">
               <input type="text" id="inv-kondisi" placeholder="Kondisi (Baik / Perlu Servis)" required class="w-full p-3 text-xs bg-slate-50 border rounded-xl outline-none">
               <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs py-3 rounded-xl font-bold">Simpan Aset Barang</button>
             </form>
@@ -519,11 +519,22 @@
     let sessionToken = localStorage.getItem('sessionToken') || '';
     let globalWargaList = [], globalKasMasuk = [], globalKasKeluar = [];
 
+    // XSS SANITIZER UTAMA
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
     function showToast(msg, isError = false) {
       const container = document.getElementById('toast-container');
+      if (!container) return;
       const toast = document.createElement('div');
       toast.className = `p-4 rounded-2xl text-xs font-bold text-white shadow-2xl transition-all duration-300 transform translate-y-2 ${isError ? 'bg-rose-600' : 'bg-emerald-600'}`;
-      toast.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-xmark' : 'fa-circle-check'} mr-2"></i> ${msg}`;
+      toast.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-xmark' : 'fa-circle-check'} mr-2"></i> ${escapeHtml(msg)}`;
       container.appendChild(toast);
       setTimeout(() => toast.remove(), 3500);
     }
@@ -535,7 +546,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swBlob = new Blob([`
-          const CACHE_NAME = 'portal-rt06-v4';
+          const CACHE_NAME = 'portal-rt06-v5';
           self.addEventListener('install', e => self.skipWaiting());
           self.addEventListener('activate', e => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', e => {
@@ -550,8 +561,12 @@
     window.addEventListener('DOMContentLoaded', () => {
       const storedUser = localStorage.getItem('currentUser');
       if (sessionToken && storedUser) {
-        currentUser = JSON.parse(storedUser);
-        showDashboard();
+        try {
+          currentUser = JSON.parse(storedUser);
+          showDashboard();
+        } catch (_) {
+          logout();
+        }
       } else {
         loadPublicData();
       }
@@ -610,13 +625,15 @@
     }
 
     function showDashboard() {
-      document.getElementById('sec-login').classList.add('hidden');
-      document.getElementById('sec-dashboard').classList.remove('hidden');
-      document.getElementById('user-info-bar').classList.remove('hidden');
-      document.getElementById('user-name-display').innerText = currentUser.name;
+      document.getElementById('sec-login')?.classList.add('hidden');
+      document.getElementById('sec-dashboard')?.classList.remove('hidden');
+      document.getElementById('user-info-bar')?.classList.remove('hidden');
+      
+      const nameDisplay = document.getElementById('user-name-display');
+      if (nameDisplay) nameDisplay.innerText = currentUser.name || '';
 
       if (['admin', 'editor', 'pengurus'].includes((currentUser.role || '').toLowerCase())) {
-        document.getElementById('btn-tab-admin').classList.remove('hidden');
+        document.getElementById('btn-tab-admin')?.classList.remove('hidden');
       }
 
       autofillUserInputs();
@@ -646,8 +663,8 @@
       const cvs = document.getElementById('kasChartCanvas');
       if (!cvs) return;
       const ctx = cvs.getContext('2d');
-      cvs.width = cvs.clientWidth;
-      cvs.height = cvs.clientHeight;
+      cvs.width = cvs.clientWidth || 300;
+      cvs.height = cvs.clientHeight || 180;
 
       ctx.clearRect(0, 0, cvs.width, cvs.height);
       const maxVal = Math.max(tMasuk, tKeluar, 1000);
@@ -692,16 +709,16 @@
           <div class="content">
             <p>Yang bertanda tangan di bawah ini Pengurus RT 06 RW 01 Desa Bendotretek, menerangkan bahwa:</p>
             <table style="margin-left: 20px;">
-              <tr><td>Nama Lengkap</td><td>: <b>${nama}</b></td></tr>
-              <tr><td>NIK</td><td>: ${nik}</td></tr>
-              <tr><td>Keperluan</td><td>: ${keperluan}</td></tr>
-              <tr><td>Jenis Surat</td><td>: <b>${jenis}</b></td></tr>
+              <tr><td>Nama Lengkap</td><td>: <b>${escapeHtml(nama)}</b></td></tr>
+              <tr><td>NIK</td><td>: ${escapeHtml(nik)}</td></tr>
+              <tr><td>Keperluan</td><td>: ${escapeHtml(keperluan)}</td></tr>
+              <tr><td>Jenis Surat</td><td>: <b>${escapeHtml(jenis)}</b></td></tr>
             </table>
             <p>Demikian surat pengantar ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p>
           </div>
           <div class="footer">
-            <div><br>Pemohon,<br><br><br><b>(${nama})</b></div>
-            <div>Bendotretek, ${tanggal}<br>Ketua RT 06 RW 01,<br><br><br><b>( _________________ )</b></div>
+            <div><br>Pemohon,<br><br><br><b>(${escapeHtml(nama)})</b></div>
+            <div>Bendotretek, ${escapeHtml(tanggal)}<br>Ketua RT 06 RW 01,<br><br><br><b>( _________________ )</b></div>
           </div>
         </body>
         </html>
@@ -731,12 +748,12 @@
               <div class="title">KUITANSI PEMBAYARAN RESMI</div>
               <small>RT 06 RW 01 Desa Bendotretek, Prambon, Sidoarjo</small>
             </div>
-            <p>Telah terima dari: <b>${nama}</b></p>
-            <p>Untuk Pembayaran: <b>${kategori}</b></p>
-            <p>Tanggal Transaksi: ${tanggal}</p>
+            <p>Telah terima dari: <b>${escapeHtml(nama)}</b></p>
+            <p>Untuk Pembayaran: <b>${escapeHtml(kategori)}</b></p>
+            <p>Tanggal Transaksi: ${escapeHtml(tanggal)}</p>
             <div class="amount">Rp ${Number(nominal).toLocaleString('id-ID')}</div>
             <div class="footer">
-              <p>Bendotretek, ${tanggal}<br>Bendahara / Pengurus RT 06,<br><br><br><b>( _________________ )</b></p>
+              <p>Bendotretek, ${escapeHtml(tanggal)}<br>Bendahara / Pengurus RT 06,<br><br><br><b>( _________________ )</b></p>
             </div>
           </div>
         </body>
@@ -775,7 +792,7 @@
       let tMasuk = 0;
       document.getElementById('tbl-masuk').innerHTML = globalKasMasuk.map(r => {
         tMasuk += Number(r.jumlah || 0);
-        return `<tr class="hover:bg-emerald-50/50"><td class="p-3 text-slate-500">${r.tanggal}</td><td class="p-3 font-semibold">${r.nama}<br><span class="inline-block bg-emerald-100 text-emerald-800 text-[9px] px-2 py-0.5 rounded-full font-bold mt-0.5">${r.kategori}</span></td><td class="p-3 text-right"><span class="text-emerald-600 font-bold">+Rp ${Number(r.jumlah).toLocaleString('id-ID')}</span><br><button onclick="printKuitansi('${r.nama}', '${r.kategori}', ${r.jumlah}, '${r.tanggal}')" class="text-[9px] text-slate-400 hover:text-indigo-600 font-bold underline">Cetak Struk</button></td></tr>`;
+        return `<tr class="hover:bg-emerald-50/50"><td class="p-3 text-slate-500">${escapeHtml(r.tanggal)}</td><td class="p-3 font-semibold">${escapeHtml(r.nama)}<br><span class="inline-block bg-emerald-100 text-emerald-800 text-[9px] px-2 py-0.5 rounded-full font-bold mt-0.5">${escapeHtml(r.kategori)}</span></td><td class="p-3 text-right"><span class="text-emerald-600 font-bold">+Rp ${Number(r.jumlah).toLocaleString('id-ID')}</span><br><button onclick="printKuitansi('${escapeHtml(r.nama)}', '${escapeHtml(r.kategori)}', ${r.jumlah}, '${escapeHtml(r.tanggal)}')" class="text-[9px] text-slate-400 hover:text-indigo-600 font-bold underline">Cetak Struk</button></td></tr>`;
       }).join('') || '<tr><td colspan="3" class="p-4 text-center text-slate-400">Belum ada transaksi kas masuk.</td></tr>';
 
       let tKeluar = 0;
@@ -792,7 +809,7 @@
         else totalLainnya += nominal;
 
         const colorClass = getKategoriBadgeColor(kat);
-        return `<tr class="hover:bg-rose-50/50"><td class="p-3 text-slate-500">${r.tanggal}</td><td class="p-3 font-semibold">${r.keterangan}<br><span class="inline-block ${colorClass} text-[9px] px-2 py-0.5 rounded-full font-bold mt-0.5">${r.kategori}</span></td><td class="p-3 text-right text-rose-600 font-bold">-Rp ${nominal.toLocaleString('id-ID')}</td></tr>`;
+        return `<tr class="hover:bg-rose-50/50"><td class="p-3 text-slate-500">${escapeHtml(r.tanggal)}</td><td class="p-3 font-semibold">${escapeHtml(r.keterangan)}<br><span class="inline-block ${colorClass} text-[9px] px-2 py-0.5 rounded-full font-bold mt-0.5">${escapeHtml(r.kategori)}</span></td><td class="p-3 text-right text-rose-600 font-bold">-Rp ${nominal.toLocaleString('id-ID')}</td></tr>`;
       }).join('') || '<tr><td colspan="3" class="p-4 text-center text-slate-400">Belum ada transaksi kas keluar.</td></tr>';
 
       document.getElementById('total-masuk').innerText = `Rp ${tMasuk.toLocaleString('id-ID')}`;
@@ -827,46 +844,46 @@
 
       document.getElementById('list-inventaris').innerHTML = (data.inventaris || []).map(i => `
         <div class="p-3.5 bg-white border rounded-2xl text-xs space-y-1 shadow-sm">
-          <h4 class="font-bold text-slate-800">${i.namaBarang}</h4>
-          <p class="text-slate-500 text-[10px]">Stok Tersedia: <b class="text-emerald-700 font-bold">${i.jumlahTotal} unit</b> • Kondisi: ${i.kondisi}</p>
+          <h4 class="font-bold text-slate-800">${escapeHtml(i.namaBarang)}</h4>
+          <p class="text-slate-500 text-[10px]">Stok Tersedia: <b class="text-emerald-700 font-bold">${i.jumlahTotal} unit</b> • Kondisi: ${escapeHtml(i.kondisi)}</p>
         </div>
       `).join('') || '<p class="text-xs text-slate-400">Belum ada aset inventaris terdata.</p>';
 
       document.getElementById('list-ronda').innerHTML = (data.ronda || []).map(r => `
-        <div class="p-4 bg-white/90 border rounded-2xl space-y-1 shadow-sm"><span class="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">${r.hari}</span><h4 class="font-bold text-xs pt-1">${r.namaPetugas}</h4><p class="text-[10px] text-slate-500">${r.pos}</p></div>
+        <div class="p-4 bg-white/90 border rounded-2xl space-y-1 shadow-sm"><span class="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">${escapeHtml(r.hari)}</span><h4 class="font-bold text-xs pt-1">${escapeHtml(r.namaPetugas)}</h4><p class="text-[10px] text-slate-500">${escapeHtml(r.pos)}</p></div>
       `).join('');
 
       document.getElementById('list-agenda').innerHTML = (data.agenda || []).map(a => `
-        <div class="p-4 bg-white/90 border rounded-2xl flex justify-between items-center shadow-sm"><div><span class="text-[10px] text-emerald-700 font-bold">${a.tanggal} • ${a.waktu}</span><h4 class="font-bold text-xs">${a.kegiatan}</h4><p class="text-[10px] text-slate-500">${a.lokasi}</p></div><button onclick="shareToWA('*AGENDA RT 06*\\n\\n📌 *Kegiatan:* ${a.kegiatan}\\n📅 *Tanggal:* ${a.tanggal}\\n📍 *Lokasi:* ${a.lokasi}')" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp"></i> Share</button></div>
+        <div class="p-4 bg-white/90 border rounded-2xl flex justify-between items-center shadow-sm"><div><span class="text-[10px] text-emerald-700 font-bold">${escapeHtml(a.tanggal)} • ${escapeHtml(a.waktu)}</span><h4 class="font-bold text-xs">${escapeHtml(a.kegiatan)}</h4><p class="text-[10px] text-slate-500">${escapeHtml(a.lokasi)}</p></div><button onclick="shareToWA('*AGENDA RT 06*\\n\\n📌 *Kegiatan:* ${escapeHtml(a.kegiatan)}\\n📅 *Tanggal:* ${escapeHtml(a.tanggal)}\\n📍 *Lokasi:* ${escapeHtml(a.lokasi)}')" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp"></i> Share</button></div>
       `).join('');
 
       document.getElementById('list-laporan').innerHTML = (data.laporan || []).map(l => `
-        <div class="p-3.5 bg-white/90 border rounded-2xl text-xs space-y-1 shadow-sm"><div class="flex justify-between"><span class="font-bold text-slate-800">${l.kategori} - ${l.lokasi}</span><span class="bg-amber-100 text-amber-800 text-[9px] px-2.5 py-0.5 rounded-full font-bold">${l.status}</span></div><p class="text-slate-600">${l.detail}</p></div>
+        <div class="p-3.5 bg-white/90 border rounded-2xl text-xs space-y-1 shadow-sm"><div class="flex justify-between"><span class="font-bold text-slate-800">${escapeHtml(l.kategori)} - ${escapeHtml(l.lokasi)}</span><span class="bg-amber-100 text-amber-800 text-[9px] px-2.5 py-0.5 rounded-full font-bold">${escapeHtml(l.status)}</span></div><p class="text-slate-600">${escapeHtml(l.detail)}</p></div>
       `).join('');
 
       document.getElementById('list-umkm').innerHTML = (data.umkm || []).map(u => `
-        <div class="p-4 bg-white/95 border rounded-2xl space-y-2 shadow-sm"><span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full uppercase">${u.kategori}</span><h4 class="font-bold text-sm text-slate-800">${u.namaUsaha}</h4><p class="text-xs text-slate-600">${u.deskripsi}</p><div class="pt-2 flex justify-between items-center border-t"><span class="text-[10px] text-slate-400">${u.pemilik}</span><a href="https://wa.me/${u.kontakWA}" target="_blank" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp mr-1"></i> Beli</a></div></div>
+        <div class="p-4 bg-white/95 border rounded-2xl space-y-2 shadow-sm"><span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full uppercase">${escapeHtml(u.kategori)}</span><h4 class="font-bold text-sm text-slate-800">${escapeHtml(u.namaUsaha)}</h4><p class="text-xs text-slate-600">${escapeHtml(u.deskripsi)}</p><div class="pt-2 flex justify-between items-center border-t"><span class="text-[10px] text-slate-400">${escapeHtml(u.pemilik)}</span><a href="https://wa.me/${escapeHtml(u.kontakWA)}" target="_blank" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp mr-1"></i> Beli</a></div></div>
       `).join('');
 
       document.getElementById('list-pengumuman').innerHTML = (data.pengumuman || []).map(p => `
-        <div class="glass-card p-5 sm:p-6 rounded-3xl space-y-2"><div class="flex justify-between items-start"><h3 class="font-bold text-sm text-slate-800">${p.judul}</h3><span class="text-[10px] bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-bold">${p.kategori}</span></div><p class="text-xs text-slate-600">${p.isi}</p><button onclick="shareToWA('*PENGUMUMAN RT 06*\\n\\n📌 *${p.judul}*\\n\\n${p.isi}')" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3.5 py-1.5 rounded-xl font-bold inline-flex items-center gap-1.5 mt-1"><i class="fa-brands fa-whatsapp"></i> Share WA</button></div>
+        <div class="glass-card p-5 sm:p-6 rounded-3xl space-y-2"><div class="flex justify-between items-start"><h3 class="font-bold text-sm text-slate-800">${escapeHtml(p.judul)}</h3><span class="text-[10px] bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-bold">${escapeHtml(p.kategori)}</span></div><p class="text-xs text-slate-600">${escapeHtml(p.isi)}</p><button onclick="shareToWA('*PENGUMUMAN RT 06*\\n\\n📌 *${escapeHtml(p.judul)}*\\n\\n${escapeHtml(p.isi)}')" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3.5 py-1.5 rounded-xl font-bold inline-flex items-center gap-1.5 mt-1"><i class="fa-brands fa-whatsapp"></i> Share WA</button></div>
       `).join('');
 
       document.getElementById('tbl-surat-status').innerHTML = (data.surat || []).map(s => `
-        <tr class="hover:bg-slate-50"><td class="p-3 text-slate-500">${s.tanggal}</td><td class="p-3 font-semibold text-slate-800">${s.nama}</td><td class="p-3">${s.jenis}</td><td class="p-3"><span class="bg-amber-100 text-amber-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">${s.status}</span></td></tr>
+        <tr class="hover:bg-slate-50"><td class="p-3 text-slate-500">${escapeHtml(s.tanggal)}</td><td class="p-3 font-semibold text-slate-800">${escapeHtml(s.nama)}</td><td class="p-3">${escapeHtml(s.jenis)}</td><td class="p-3"><span class="bg-amber-100 text-amber-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">${escapeHtml(s.status)}</span></td></tr>
       `).join('');
 
       const adminSuratEl = document.getElementById('tbl-admin-surat');
       if (adminSuratEl) {
         adminSuratEl.innerHTML = (data.surat || []).map(s => `
           <tr class="hover:bg-slate-50">
-            <td class="p-3 text-slate-500">${s.tanggal}</td>
-            <td class="p-3 font-semibold text-slate-800">${s.nama}</td>
-            <td class="p-3">${s.jenis}</td>
-            <td class="p-3"><span class="bg-amber-100 text-amber-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">${s.status}</span></td>
+            <td class="p-3 text-slate-500">${escapeHtml(s.tanggal)}</td>
+            <td class="p-3 font-semibold text-slate-800">${escapeHtml(s.nama)}</td>
+            <td class="p-3">${escapeHtml(s.jenis)}</td>
+            <td class="p-3"><span class="bg-amber-100 text-amber-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">${escapeHtml(s.status)}</span></td>
             <td class="p-3 text-center space-x-1">
-              <button onclick="handleUpdateSurat('${s.id}', 'Disetujui')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] px-3 py-1 rounded-xl font-bold">Setujui</button>
-              <button onclick="printSurat('${s.nama}', '${s.nik}', '${s.jenis}', '${s.keperluan}', '${s.tanggal}')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-3 py-1 rounded-xl font-bold"><i class="fa-solid fa-print"></i> Cetak PDF</button>
+              <button onclick="handleUpdateSurat('${escapeHtml(s.id)}', 'Disetujui')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] px-3 py-1 rounded-xl font-bold">Setujui</button>
+              <button onclick="printSurat('${escapeHtml(s.nama)}', '${escapeHtml(s.nik)}', '${escapeHtml(s.jenis)}', '${escapeHtml(s.keperluan)}', '${escapeHtml(s.tanggal)}')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-3 py-1 rounded-xl font-bold"><i class="fa-solid fa-print"></i> Cetak PDF</button>
             </td>
           </tr>
         `).join('');
@@ -875,24 +892,28 @@
 
     function renderWargaTable(list) {
       document.getElementById('tbl-warga-list').innerHTML = list.map((w, idx) => `
-        <tr class="hover:bg-emerald-50/40"><td class="p-3 text-slate-400 font-bold">${idx + 1}</td><td class="p-3 font-bold text-slate-800">${w.nama}</td><td class="p-3 text-slate-600">${w.blok}</td><td class="p-3 font-bold text-rose-600">${w.golDarah}</td><td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">Aktif</span></td></tr>
+        <tr class="hover:bg-emerald-50/40"><td class="p-3 text-slate-400 font-bold">${idx + 1}</td><td class="p-3 font-bold text-slate-800">${escapeHtml(w.nama)}</td><td class="p-3 text-slate-600">${escapeHtml(w.blok)}</td><td class="p-3 font-bold text-rose-600">${escapeHtml(w.golDarah)}</td><td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">Aktif</span></td></tr>
       `).join('');
     }
 
     function filterWarga() {
       const q = document.getElementById('search-warga').value.toLowerCase();
-      renderWargaTable(globalWargaList.filter(w => w.nama.toLowerCase().includes(q) || w.golDarah.toLowerCase().includes(q) || w.blok.toLowerCase().includes(q)));
+      renderWargaTable(globalWargaList.filter(w => 
+        (w.nama || '').toLowerCase().includes(q) || 
+        (w.golDarah || '').toLowerCase().includes(q) || 
+        (w.blok || '').toLowerCase().includes(q)
+      ));
     }
 
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.tab-btn').forEach(el => { el.classList.remove('bg-emerald-600', 'text-white'); el.classList.add('text-slate-200', 'bg-slate-800/60'); });
-      document.getElementById(tabId).classList.remove('hidden');
+      document.getElementById(tabId)?.classList.remove('hidden');
       btn.classList.add('bg-emerald-600', 'text-white');
     }
 
-    function toggleSOSModal() { document.getElementById('modal-sos').classList.toggle('hidden'); }
-    function toggleUmkmModal() { document.getElementById('modal-umkm').classList.toggle('hidden'); }
+    function toggleSOSModal() { document.getElementById('modal-sos')?.classList.toggle('hidden'); }
+    function toggleUmkmModal() { document.getElementById('modal-umkm')?.classList.toggle('hidden'); }
 
     async function handleUpdateSurat(id, status) {
       vibrate(20);
