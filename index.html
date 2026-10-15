@@ -43,7 +43,10 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
 
-  <!-- TOP HEADER -->
+  <!-- NOTIFIKASI TOAST MELAYANG -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- HEADER NAVBAR PERFEKTIF -->
   <header class="glass-nav text-white sticky top-0 z-50 shadow-2xl">
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
@@ -74,7 +77,7 @@
 
   <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
 
-    <!-- LOGIN PANEL -->
+    <!-- PANEL LOGIN -->
     <div id="sec-login" class="max-w-md mx-auto my-8 sm:my-14">
       <div class="glass-card rounded-3xl overflow-hidden shadow-2xl border border-white/50">
         <div class="bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-950 p-8 text-white text-center">
@@ -110,17 +113,40 @@
     <!-- DASHBOARD UTAMA -->
     <div id="sec-dashboard" class="hidden space-y-6">
 
-      <div class="flex space-x-2 border-b border-white/10 overflow-x-auto no-scrollbar pb-2">
-        <button onclick="vibrate(); switchTab('tab-ringkasan', this);" class="tab-btn active btn-smooth px-4 py-3 text-xs font-bold rounded-2xl bg-emerald-600 text-white shadow-lg whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-wallet"></i> Keuangan Kas</button>
-        <button onclick="vibrate(); switchTab('tab-warga', this);" class="tab-btn btn-smooth px-4 py-3 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-users"></i> Data Warga</button>
-        <button onclick="vibrate(); switchTab('tab-ronda', this);" class="tab-btn btn-smooth px-4 py-3 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-shield-halved"></i> Ronda Malam</button>
-        <button onclick="vibrate(); switchTab('tab-agenda', this);" class="tab-btn btn-smooth px-4 py-3 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-calendar-days"></i> Agenda Kegiatan</button>
-        <button onclick="vibrate(); switchTab('tab-inventaris', this);" class="tab-btn btn-smooth px-4 py-3 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-boxes-packing"></i> Alat RT</button>
-        <button onclick="vibrate(); switchTab('tab-laporan', this);" class="tab-btn btn-smooth px-4 py-3 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-comment-dots"></i> Laporan Aspirasi</button>
-        <button onclick="vibrate(); switchTab('tab-umkm', this);" class="tab-btn btn-smooth px-4 py-3 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-store"></i> Lapak UMKM</button>
-        <button onclick="vibrate(); switchTab('tab-pengumuman', this);" class="tab-btn btn-smooth px-4 py-3 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-bullhorn"></i> Pengumuman</button>
-        <button onclick="vibrate(); switchTab('tab-surat', this);" class="tab-btn btn-smooth px-4 py-3 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-file-signature"></i> Surat Pengantar</button>
-        <button id="btn-tab-admin" onclick="vibrate(); switchTab('tab-admin', this);" class="tab-btn hidden btn-smooth px-4 py-3 text-xs font-bold rounded-2xl text-amber-950 bg-amber-400 hover:bg-amber-300 whitespace-nowrap flex items-center gap-2 shadow-lg"><i class="fa-solid fa-sliders"></i> Panel Pengurus</button>
+      <!-- TAB NAVIGATION BAR DENGAN ANTI-TERPOTONG & DYNAMIC SHRINK (FIXED) -->
+      <div class="w-full overflow-x-auto no-scrollbar border-b border-white/10 pb-2">
+        <div class="flex flex-nowrap sm:flex-wrap gap-2 min-w-max sm:min-w-0">
+          <button onclick="vibrate(); switchTab('tab-ringkasan', this);" class="tab-btn active btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl bg-emerald-600 text-white shadow-lg flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-wallet"></i> Keuangan Kas
+          </button>
+          <button onclick="vibrate(); switchTab('tab-warga', this);" class="tab-btn btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-users"></i> Data Warga
+          </button>
+          <button onclick="vibrate(); switchTab('tab-ronda', this);" class="tab-btn btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-shield-halved"></i> Ronda Malam
+          </button>
+          <button onclick="vibrate(); switchTab('tab-agenda', this);" class="tab-btn btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-calendar-days"></i> Agenda Kegiatan
+          </button>
+          <button onclick="vibrate(); switchTab('tab-inventaris', this);" class="tab-btn btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-boxes-packing"></i> Alat RT
+          </button>
+          <button onclick="vibrate(); switchTab('tab-laporan', this);" class="tab-btn btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-comment-dots"></i> Laporan Aspirasi
+          </button>
+          <button onclick="vibrate(); switchTab('tab-umkm', this);" class="tab-btn btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-store"></i> Lapak UMKM
+          </button>
+          <button onclick="vibrate(); switchTab('tab-pengumuman', this);" class="tab-btn btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-bullhorn"></i> Pengumuman
+          </button>
+          <button onclick="vibrate(); switchTab('tab-surat', this);" class="tab-btn btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl text-slate-200 bg-slate-800/60 hover:bg-slate-800/90 flex items-center gap-2 shrink-0">
+            <i class="fa-solid fa-file-signature"></i> Surat Pengantar
+          </button>
+          <button id="btn-tab-admin" onclick="vibrate(); switchTab('tab-admin', this);" class="tab-btn hidden btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl text-amber-950 bg-amber-400 hover:bg-amber-300 flex items-center gap-2 shrink-0 shadow-lg">
+            <i class="fa-solid fa-sliders"></i> Panel Pengurus
+          </button>
+        </div>
       </div>
 
       <!-- TAB KAS TRANSPARAN & VISUAL CANVAS CHART -->
@@ -173,7 +199,7 @@
                 <h3 class="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
                   <i class="fa-solid fa-list-check text-emerald-600"></i> Rekapitulasi Alokasi Pengeluaran Kas
                 </h3>
-                <p class="text-[11px] text-slate-500">Persentase pengeluaran kas berdasarkan kategori alokasi kebutuhan.</p>
+                <p class="text-[11px] text-slate-500">Persentase pengeluaran kas berdasarkan alokasi kebutuhan.</p>
               </div>
               <button onclick="exportCSV()" class="btn-smooth bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2.5 rounded-2xl font-bold shadow-md flex items-center gap-1.5">
                 <i class="fa-solid fa-file-excel"></i> Unduh Laporan (Excel)
@@ -493,22 +519,28 @@
     let sessionToken = localStorage.getItem('sessionToken') || '';
     let globalWargaList = [], globalKasMasuk = [], globalKasKeluar = [];
 
+    function showToast(msg, isError = false) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `p-4 rounded-2xl text-xs font-bold text-white shadow-2xl transition-all duration-300 transform translate-y-2 ${isError ? 'bg-rose-600' : 'bg-emerald-600'}`;
+      toast.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-xmark' : 'fa-circle-check'} mr-2"></i> ${msg}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
     function vibrate(ms = 15) {
       if (navigator.vibrate) navigator.vibrate(ms);
     }
 
-    // SERVICE WORKER REGISTRATION (PWA)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swBlob = new Blob([`
-          const CACHE_NAME = 'portal-rt06-v1';
+          const CACHE_NAME = 'portal-rt06-v4';
           self.addEventListener('install', e => self.skipWaiting());
           self.addEventListener('activate', e => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', e => {
             if (e.request.method !== 'GET') return;
-            e.respondWith(
-              fetch(e.request).catch(() => caches.match(e.request))
-            );
+            e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
           });
         `], { type: 'text/javascript' });
         navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
@@ -535,7 +567,7 @@
         });
         return await response.json();
       } catch (err) {
-        alert('Gagal terhubung ke server. Periksa koneksi internet Anda.');
+        showToast('Gagal terhubung ke server.', true);
         return { success: false };
       }
     }
@@ -553,8 +585,9 @@
         localStorage.setItem('sessionToken', sessionToken);
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
         showDashboard();
+        showToast('Berhasil masuk portal.');
       } else {
-        alert(res.message || 'Gagal login.');
+        showToast(res.message || 'Gagal login.', true);
       }
     }
 
@@ -618,20 +651,17 @@
 
       ctx.clearRect(0, 0, cvs.width, cvs.height);
       const maxVal = Math.max(tMasuk, tKeluar, 1000);
-      const padding = 20;
       const barWidth = 40;
       const maxBarHeight = cvs.height - 40;
 
       const hMasuk = (tMasuk / maxVal) * maxBarHeight;
       const hKeluar = (tKeluar / maxVal) * maxBarHeight;
 
-      // Batang Masuk
       ctx.fillStyle = '#10b981';
       ctx.beginPath();
       ctx.roundRect(cvs.width / 4 - barWidth / 2, cvs.height - hMasuk - 10, barWidth, hMasuk, 8);
       ctx.fill();
 
-      // Batang Keluar
       ctx.fillStyle = '#f43f5e';
       ctx.beginPath();
       ctx.roundRect((3 * cvs.width) / 4 - barWidth / 2, cvs.height - hKeluar - 10, barWidth, hKeluar, 8);
@@ -867,52 +897,52 @@
     async function handleUpdateSurat(id, status) {
       vibrate(20);
       const res = await apiRequest('updatesurat', { id, status });
-      alert(res.message); if (res.success) loadPublicData();
+      showToast(res.message, !res.success); if (res.success) loadPublicData();
     }
     async function handleAddPinjam(e) {
       e.preventDefault();
       const res = await apiRequest('addpinjam', { namaPeminjam: document.getElementById('pj-nama').value, namaBarang: document.getElementById('pj-barang').value, jumlah: document.getElementById('pj-jumlah').value, tglKembali: document.getElementById('pj-kembali').value });
-      alert(res.message); if (res.success) { e.target.reset(); autofillUserInputs(); loadPublicData(); }
+      showToast(res.message, !res.success); if (res.success) { e.target.reset(); autofillUserInputs(); loadPublicData(); }
     }
     async function handleAddInventaris(e) {
       e.preventDefault();
       const res = await apiRequest('addinventaris', { namaBarang: document.getElementById('inv-nama').value, jumlahTotal: document.getElementById('inv-jumlah').value, kondisi: document.getElementById('inv-kondisi').value });
-      alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
+      showToast(res.message, !res.success); if (res.success) { e.target.reset(); loadPublicData(); }
     }
     async function handleAddSurat(e) {
       e.preventDefault();
       const res = await apiRequest('addsurat', { nama: document.getElementById('s-nama').value, nik: document.getElementById('s-nik').value, jenis: document.getElementById('s-jenis').value, keperluan: document.getElementById('s-keperluan').value });
-      alert(res.message); if (res.success) { e.target.reset(); autofillUserInputs(); loadPublicData(); }
+      showToast(res.message, !res.success); if (res.success) { e.target.reset(); autofillUserInputs(); loadPublicData(); }
     }
     async function handleAddLaporan(e) {
       e.preventDefault();
       const res = await apiRequest('addlaporan', { nama: document.getElementById('lap-nama').value, kategori: document.getElementById('lap-kategori').value, lokasi: document.getElementById('lap-lokasi').value, detail: document.getElementById('lap-detail').value });
-      alert(res.message); if (res.success) { e.target.reset(); autofillUserInputs(); loadPublicData(); }
+      showToast(res.message, !res.success); if (res.success) { e.target.reset(); autofillUserInputs(); loadPublicData(); }
     }
     async function handleAddUmkm(e) {
       e.preventDefault();
       const res = await apiRequest('addumkm', { namaUsaha: document.getElementById('u-namaUsaha').value, pemilik: document.getElementById('u-pemilik').value, kategori: document.getElementById('u-kategori').value, kontakWA: document.getElementById('u-wa').value, deskripsi: document.getElementById('u-deskripsi').value });
-      alert(res.message); if (res.success) { toggleUmkmModal(); e.target.reset(); autofillUserInputs(); loadPublicData(); }
+      showToast(res.message, !res.success); if (res.success) { toggleUmkmModal(); e.target.reset(); autofillUserInputs(); loadPublicData(); }
     }
     async function handleAddMasuk(e) {
       e.preventDefault();
       const res = await apiRequest('addmasuk', { nama: document.getElementById('km-nama').value, kategori: document.getElementById('km-kategori').value, jumlah: document.getElementById('km-jumlah').value });
-      alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
+      showToast(res.message, !res.success); if (res.success) { e.target.reset(); loadPublicData(); }
     }
     async function handleAddKeluar(e) {
       e.preventDefault();
       const res = await apiRequest('addkeluar', { keterangan: document.getElementById('kk-keterangan').value, kategori: document.getElementById('kk-kategori').value, jumlah: document.getElementById('kk-jumlah').value });
-      alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
+      showToast(res.message, !res.success); if (res.success) { e.target.reset(); loadPublicData(); }
     }
     async function handleAddWarga(e) {
       e.preventDefault();
       const res = await apiRequest('addwarga', { nama: document.getElementById('w-nama').value, blok: document.getElementById('w-blok').value });
-      alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
+      showToast(res.message, !res.success); if (res.success) { e.target.reset(); loadPublicData(); }
     }
     async function handleAddPengumuman(e) {
       e.preventDefault();
       const res = await apiRequest('addpengumuman', { judul: document.getElementById('p-judul').value, kategori: document.getElementById('p-kategori').value, isi: document.getElementById('p-isi').value });
-      alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
+      showToast(res.message, !res.success); if (res.success) { e.target.reset(); loadPublicData(); }
     }
   </script>
 </body>
