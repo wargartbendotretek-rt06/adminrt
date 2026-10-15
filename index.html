@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Portal Digital RT 06 RW 01</title>
-  <!-- Tailwind CSS & Google Font -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -16,54 +16,48 @@
       background-attachment: fixed;
       -webkit-tap-highlight-color: transparent;
     }
-
     .glass-card {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.6);
       box-shadow: 0 20px 40px -15px rgba(6, 78, 59, 0.12);
     }
-
     .glass-nav {
-      background: rgba(6, 78, 59, 0.85);
+      background: rgba(6, 78, 59, 0.88);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-
     .glow-emerald { box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.4); }
     .glow-rose { box-shadow: 0 0 25px -5px rgba(244, 63, 94, 0.5); }
-
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
     .btn-smooth { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .btn-smooth:active { transform: scale(0.96); }
   </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
+<body class="text-slate-800 min-h-screen flex flex-col antialiased">
 
   <!-- TOP HEADER -->
   <header class="glass-nav text-white sticky top-0 z-50 shadow-lg">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <div class="bg-gradient-to-tr from-emerald-500 to-teal-400 p-2.5 rounded-2xl text-white shadow-md glow-emerald">
           <i class="fa-solid fa-house-flag text-lg"></i>
         </div>
         <div>
-          <h1 class="font-extrabold text-base sm:text-lg leading-tight tracking-tight text-slate-100">RT 06 Bendotretek</h1>
-          <p class="text-[10px] sm:text-xs text-emerald-200/90 font-medium tracking-wide">Portal Digital Warga</p>
+          <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-slate-100">RT 06 Bendotretek</h1>
+          <p class="text-[10px] text-emerald-200/90 font-medium">Portal Digital Warga</p>
         </div>
       </div>
       
       <div class="flex items-center space-x-2">
-        <button onclick="vibrate(); toggleSOSModal();" class="btn-smooth bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white text-xs px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5 shadow-lg glow-rose animate-pulse">
+        <button onclick="vibrate(); toggleSOSModal();" class="btn-smooth bg-gradient-to-r from-rose-600 to-pink-600 text-white text-xs px-3.5 py-2 rounded-xl font-bold shadow-lg glow-rose animate-pulse">
           <i class="fa-solid fa-triangle-exclamation"></i> SOS RT
         </button>
         <div id="user-info-bar" class="hidden flex items-center space-x-2 border-l border-emerald-700/50 pl-3">
           <span id="user-name-display" class="font-bold text-xs text-emerald-100 hidden md:inline-block"></span>
-          <button onclick="vibrate(); logout();" class="btn-smooth bg-emerald-800/80 hover:bg-emerald-700 text-emerald-200 hover:text-white text-xs p-2 rounded-xl transition border border-emerald-600/30" title="Keluar">
+          <button onclick="vibrate(); logout();" class="btn-smooth bg-emerald-800/80 text-emerald-200 text-xs p-2 rounded-xl border border-emerald-600/30" title="Keluar">
             <i class="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
@@ -71,35 +65,33 @@
     </div>
   </header>
 
-  <!-- MAIN AUTO-RESPONSIVE CONTAINER -->
-  <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 flex-1 w-full space-y-5 sm:space-y-8">
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 flex-1 w-full space-y-5">
 
     <!-- LOGIN PANEL -->
     <div id="sec-login" class="max-w-md mx-auto my-6 sm:my-12">
-      <div class="glass-card rounded-3xl overflow-hidden shadow-2xl transition-all duration-500">
-        <div class="bg-gradient-to-br from-emerald-900 via-teal-900 to-emerald-950 p-7 text-white text-center relative overflow-hidden">
+      <div class="glass-card rounded-3xl overflow-hidden shadow-2xl">
+        <div class="bg-gradient-to-br from-emerald-900 via-teal-900 to-emerald-950 p-7 text-white text-center">
           <i class="fa-solid fa-user-shield text-4xl mb-3 text-emerald-400"></i>
-          <h2 class="text-2xl font-extrabold tracking-tight">Masuk Portal</h2>
+          <h2 class="text-2xl font-extrabold">Masuk Portal</h2>
           <p class="text-xs text-emerald-200/80 mt-1 font-medium">Akses Layanan Terpadu Warga RT 06</p>
         </div>
-        
         <form onsubmit="handleLogin(event)" class="p-6 sm:p-8 space-y-4">
           <div>
-            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Username</label>
-            <input type="text" id="login-username" required class="w-full p-3 text-sm bg-slate-50/80 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition" placeholder="Username">
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Username</label>
+            <input type="text" id="login-username" required class="w-full p-3 text-sm bg-slate-50 border rounded-2xl outline-none" placeholder="Username">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Password</label>
-            <input type="password" id="login-password" required class="w-full p-3 text-sm bg-slate-50/80 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition" placeholder="••••••••">
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Password</label>
+            <input type="password" id="login-password" required class="w-full p-3 text-sm bg-slate-50 border rounded-2xl outline-none" placeholder="••••••••">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Jenis Hak Akses</label>
-            <select id="login-role" class="w-full p-3 text-sm bg-slate-50/80 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none transition">
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Jenis Hak Akses</label>
+            <select id="login-role" class="w-full p-3 text-sm bg-slate-50 border rounded-2xl outline-none">
               <option value="viewer">Warga RT 06</option>
               <option value="admin">Pengurus / Admin</option>
             </select>
           </div>
-          <button type="submit" onclick="vibrate(30)" class="btn-smooth w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3.5 rounded-2xl text-sm shadow-lg glow-emerald mt-2">
+          <button type="submit" onclick="vibrate(30)" class="btn-smooth w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold py-3.5 rounded-2xl text-sm shadow-lg glow-emerald">
             Masuk Sekarang <i class="fa-solid fa-arrow-right ml-1"></i>
           </button>
         </form>
@@ -107,70 +99,46 @@
     </div>
 
     <!-- DASHBOARD UTAMA -->
-    <div id="sec-dashboard" class="hidden space-y-5 sm:space-y-8">
+    <div id="sec-dashboard" class="hidden space-y-5">
 
       <!-- SCROLLABLE TABS NAV -->
       <div class="flex space-x-2 border-b border-white/20 overflow-x-auto no-scrollbar pb-2">
-        <button onclick="vibrate(); switchTab('tab-ringkasan', this);" class="tab-btn active btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl bg-emerald-600 text-white shadow-md whitespace-nowrap flex items-center gap-2">
-          <i class="fa-solid fa-wallet"></i> Kas Keuangan
-        </button>
-        <button onclick="vibrate(); switchTab('tab-warga', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2">
-          <i class="fa-solid fa-users"></i> Daftar Warga
-        </button>
-        <button onclick="vibrate(); switchTab('tab-ronda', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2">
-          <i class="fa-solid fa-shield-halved"></i> Ronda
-        </button>
-        <button onclick="vibrate(); switchTab('tab-agenda', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2">
-          <i class="fa-solid fa-calendar-days"></i> Agenda
-        </button>
-        <button onclick="vibrate(); switchTab('tab-laporan', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2">
-          <i class="fa-solid fa-comment-dots"></i> Aspirasi
-        </button>
-        <button onclick="vibrate(); switchTab('tab-umkm', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2">
-          <i class="fa-solid fa-store"></i> UMKM
-        </button>
-        <button onclick="vibrate(); switchTab('tab-pengumuman', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2">
-          <i class="fa-solid fa-bullhorn"></i> Pengumuman
-        </button>
-        <button onclick="vibrate(); switchTab('tab-surat', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2">
-          <i class="fa-solid fa-file-signature"></i> Surat
-        </button>
-        <button onclick="vibrate(); switchTab('tab-berkas', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2">
-          <i class="fa-solid fa-folder-open"></i> Berkas
-        </button>
-        <button id="btn-tab-admin" onclick="vibrate(); switchTab('tab-admin', this);" class="tab-btn hidden btn-smooth px-4 py-2.5 text-xs sm:text-sm font-bold rounded-2xl text-amber-900 bg-amber-400 hover:bg-amber-300 whitespace-nowrap flex items-center gap-2 shadow-md">
-          <i class="fa-solid fa-sliders"></i> Panel Pengurus
-        </button>
+        <button onclick="vibrate(); switchTab('tab-ringkasan', this);" class="tab-btn active btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl bg-emerald-600 text-white shadow-md whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-wallet"></i> Kas</button>
+        <button onclick="vibrate(); switchTab('tab-warga', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-users"></i> Warga</button>
+        <button onclick="vibrate(); switchTab('tab-ronda', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-shield-halved"></i> Ronda</button>
+        <button onclick="vibrate(); switchTab('tab-agenda', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-calendar-days"></i> Agenda</button>
+        <button onclick="vibrate(); switchTab('tab-inventaris', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-boxes-packing"></i> Alat RT</button>
+        <button onclick="vibrate(); switchTab('tab-laporan', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-comment-dots"></i> Aspirasi</button>
+        <button onclick="vibrate(); switchTab('tab-umkm', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-store"></i> UMKM</button>
+        <button onclick="vibrate(); switchTab('tab-pengumuman', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-bullhorn"></i> Pengumuman</button>
+        <button onclick="vibrate(); switchTab('tab-surat', this);" class="tab-btn btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl text-slate-700 bg-white/60 hover:bg-white/90 whitespace-nowrap flex items-center gap-2"><i class="fa-solid fa-file-signature"></i> Surat</button>
+        <button id="btn-tab-admin" onclick="vibrate(); switchTab('tab-admin', this);" class="tab-btn hidden btn-smooth px-4 py-2.5 text-xs font-bold rounded-2xl text-amber-900 bg-amber-400 hover:bg-amber-300 whitespace-nowrap flex items-center gap-2 shadow-md"><i class="fa-solid fa-sliders"></i> Panel Pengurus</button>
       </div>
 
-      <!-- TAB 1: KEUANGAN KAS -->
-      <div id="tab-ringkasan" class="tab-content space-y-5 sm:space-y-6">
+      <!-- TAB 1: KEUANGAN KAS & KATEGORI -->
+      <div id="tab-ringkasan" class="tab-content space-y-5">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-          <div class="glass-card p-4 sm:p-5 rounded-3xl flex flex-col justify-between">
-            <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Pemasukan</span>
-            <h3 id="total-masuk" class="text-base sm:text-2xl font-black text-emerald-600 mt-1">Rp 0</h3>
-          </div>
-          <div class="glass-card p-4 sm:p-5 rounded-3xl flex flex-col justify-between">
-            <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Pengeluaran</span>
-            <h3 id="total-keluar" class="text-base sm:text-2xl font-black text-rose-600 mt-1">Rp 0</h3>
-          </div>
-          <div class="glass-card p-4 sm:p-5 rounded-3xl flex flex-col justify-between">
-            <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Saldo Kas</span>
-            <h3 id="total-saldo" class="text-base sm:text-2xl font-black text-teal-800 mt-1">Rp 0</h3>
-          </div>
-          <div class="glass-card p-4 sm:p-5 rounded-3xl flex flex-col justify-between">
-            <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wider">Warga RT 06</span>
-            <h3 id="total-warga-count" class="text-base sm:text-2xl font-black text-slate-800 mt-1">0 Warga</h3>
-          </div>
+          <div class="glass-card p-4 rounded-3xl"><span class="text-[11px] text-slate-500 font-bold uppercase">Pemasukan</span><h3 id="total-masuk" class="text-base sm:text-2xl font-black text-emerald-600 mt-1">Rp 0</h3></div>
+          <div class="glass-card p-4 rounded-3xl"><span class="text-[11px] text-slate-500 font-bold uppercase">Pengeluaran</span><h3 id="total-keluar" class="text-base sm:text-2xl font-black text-rose-600 mt-1">Rp 0</h3></div>
+          <div class="glass-card p-4 rounded-3xl"><span class="text-[11px] text-slate-500 font-bold uppercase">Saldo Kas</span><h3 id="total-saldo" class="text-base sm:text-2xl font-black text-teal-800 mt-1">Rp 0</h3></div>
+          <div class="glass-card p-4 rounded-3xl"><span class="text-[11px] text-slate-500 font-bold uppercase">Warga</span><h3 id="total-warga-count" class="text-base sm:text-2xl font-black text-slate-800 mt-1">0 Warga</h3></div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
+        <div class="glass-card p-5 rounded-3xl space-y-3">
+          <div class="flex justify-between items-center">
+            <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-chart-column text-emerald-600 mr-2"></i> Grafik Arus Kas RT 06</h3>
+            <button onclick="exportCSV()" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-solid fa-file-excel mr-1"></i> Ekspor Excel/CSV</button>
+          </div>
+          <div class="h-48 sm:h-64"><canvas id="kasChart"></canvas></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <div class="glass-card rounded-3xl overflow-hidden">
-            <div class="p-4 border-b border-slate-200/60 font-bold text-sm text-slate-800"><i class="fa-solid fa-arrow-down-left text-emerald-600 mr-2"></i> Kas Masuk Terbaru</div>
+            <div class="p-4 border-b font-bold text-sm text-slate-800"><i class="fa-solid fa-arrow-down-left text-emerald-600 mr-2"></i> Kas Masuk Terbaru</div>
             <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="tbl-masuk" class="divide-y divide-slate-100"></tbody></table></div>
           </div>
           <div class="glass-card rounded-3xl overflow-hidden">
-            <div class="p-4 border-b border-slate-200/60 font-bold text-sm text-slate-800"><i class="fa-solid fa-arrow-up-right text-rose-600 mr-2"></i> Kas Keluar Terbaru</div>
+            <div class="p-4 border-b font-bold text-sm text-slate-800"><i class="fa-solid fa-arrow-up-right text-rose-600 mr-2"></i> Kas Keluar Terbaru</div>
             <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="tbl-keluar" class="divide-y divide-slate-100"></tbody></table></div>
           </div>
         </div>
@@ -178,15 +146,15 @@
 
       <!-- TAB 2: DAFTAR WARGA -->
       <div id="tab-warga" class="tab-content hidden">
-        <div class="glass-card rounded-3xl p-5 sm:p-7 space-y-4">
+        <div class="glass-card rounded-3xl p-5 space-y-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <h2 class="font-bold text-slate-800 text-base sm:text-lg">Daftar Warga Terdaftar</h2>
-            <input type="text" id="search-warga" oninput="filterWarga()" placeholder="Cari nama warga..." class="p-3 text-xs bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-64">
+            <h2 class="font-bold text-slate-800 text-base">Daftar Warga RT 06</h2>
+            <input type="text" id="search-warga" oninput="filterWarga()" placeholder="Cari nama / gol darah..." class="p-3 text-xs bg-slate-50 border rounded-2xl outline-none w-full sm:w-64">
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
               <thead class="bg-slate-100/70 text-slate-500 uppercase font-bold border-b">
-                <tr><th class="p-3">No</th><th class="p-3">Nama Warga</th><th class="p-3">Status</th></tr>
+                <tr><th class="p-3">No</th><th class="p-3">Nama Warga</th><th class="p-3">Blok/Gang</th><th class="p-3">Gol. Darah</th><th class="p-3">Status</th></tr>
               </thead>
               <tbody id="tbl-warga-list" class="divide-y divide-slate-100"></tbody>
             </table>
@@ -196,30 +164,48 @@
 
       <!-- TAB 3: JADWAL RONDA -->
       <div id="tab-ronda" class="tab-content hidden space-y-4">
-        <div class="glass-card p-5 sm:p-7 rounded-3xl">
-          <h2 class="font-bold text-slate-800 text-base sm:text-lg mb-4"><i class="fa-solid fa-shield-cat text-emerald-600 mr-2"></i> Jadwal Siskamling / Ronda Malam</h2>
+        <div class="glass-card p-5 rounded-3xl">
+          <h2 class="font-bold text-slate-800 text-base mb-4"><i class="fa-solid fa-shield-cat text-emerald-600 mr-2"></i> Jadwal Siskamling / Ronda Malam</h2>
           <div id="list-ronda" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </div>
       </div>
 
       <!-- TAB 4: AGENDA RT -->
       <div id="tab-agenda" class="tab-content hidden space-y-4">
-        <div class="glass-card p-5 sm:p-7 rounded-3xl">
-          <h2 class="font-bold text-slate-800 text-base sm:text-lg mb-4"><i class="fa-solid fa-calendar-check text-emerald-600 mr-2"></i> Agenda & Kegiatan Warga</h2>
+        <div class="glass-card p-5 rounded-3xl">
+          <h2 class="font-bold text-slate-800 text-base mb-4"><i class="fa-solid fa-calendar-check text-emerald-600 mr-2"></i> Agenda & Kegiatan Warga</h2>
           <div id="list-agenda" class="space-y-3"></div>
         </div>
       </div>
 
-      <!-- TAB 5: LAPORAN & ASPIRASI -->
+      <!-- TAB 5: INVENTARIS & PINJAM BARANG RT -->
+      <div id="tab-inventaris" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div class="lg:col-span-1 glass-card p-5 rounded-3xl h-fit space-y-3">
+          <h3 class="font-bold text-slate-800 text-sm">Form Pinjam Alat RT</h3>
+          <form onsubmit="handleAddPinjam(event)" class="space-y-3">
+            <input type="text" id="pj-nama" placeholder="Nama Peminjam" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+            <input type="text" id="pj-barang" placeholder="Nama Barang (Tenda/Kursi/Sound)" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+            <input type="number" id="pj-jumlah" placeholder="Jumlah" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+            <input type="date" id="pj-kembali" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+            <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 text-white text-xs py-3 rounded-2xl font-bold shadow-md">Ajukan Pinjaman</button>
+          </form>
+        </div>
+        <div class="lg:col-span-2 glass-card p-5 rounded-3xl space-y-4">
+          <h3 class="font-bold text-slate-800 text-sm">Daftar Inventaris Aset RT</h3>
+          <div id="list-inventaris" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+        </div>
+      </div>
+
+      <!-- TAB 6: LAPORAN & ASPIRASI -->
       <div id="tab-laporan" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-5">
         <div class="lg:col-span-1 glass-card p-5 rounded-3xl h-fit">
           <h2 class="font-bold text-slate-800 text-sm mb-3">Sampaikan Aspirasi / Laporan</h2>
           <form onsubmit="handleAddLaporan(event)" class="space-y-3">
             <input type="text" id="lap-nama" placeholder="Nama Anda" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
-            <input type="text" id="lap-kategori" placeholder="Kategori (Jalan, Lampu, Kebersihan)" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+            <input type="text" id="lap-kategori" placeholder="Kategori (Jalan, Kebersihan)" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
             <input type="text" id="lap-lokasi" placeholder="Lokasi Spesifik" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
             <textarea id="lap-detail" rows="3" placeholder="Detail laporan..." required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none"></textarea>
-            <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 text-white text-xs py-3 rounded-2xl font-bold shadow-md glow-emerald">Kirim Laporan</button>
+            <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 text-white text-xs py-3 rounded-2xl font-bold shadow-md">Kirim Laporan</button>
           </form>
         </div>
         <div class="lg:col-span-2 glass-card p-5 rounded-3xl">
@@ -228,32 +214,32 @@
         </div>
       </div>
 
-      <!-- TAB 6: LAPAK UMKM -->
+      <!-- TAB 7: LAPAK UMKM -->
       <div id="tab-umkm" class="tab-content hidden space-y-4">
-        <div class="glass-card p-5 sm:p-7 rounded-3xl space-y-4">
+        <div class="glass-card p-5 rounded-3xl space-y-4">
           <div class="flex items-center justify-between">
-            <h2 class="font-bold text-slate-800 text-base sm:text-lg"><i class="fa-solid fa-store text-emerald-600 mr-2"></i> Lapak & Usaha Warga RT 06</h2>
-            <button onclick="vibrate(); toggleUmkmModal();" class="btn-smooth bg-emerald-600 text-white text-xs px-3.5 py-2 rounded-2xl font-bold hover:bg-emerald-700 shadow-md">+ Tambah Usaha Saya</button>
+            <h2 class="font-bold text-slate-800 text-base"><i class="fa-solid fa-store text-emerald-600 mr-2"></i> Lapak UMKM Warga</h2>
+            <button onclick="vibrate(); toggleUmkmModal();" class="btn-smooth bg-emerald-600 text-white text-xs px-3.5 py-2 rounded-2xl font-bold shadow-md">+ Tambah Usaha Saya</button>
           </div>
           <div id="list-umkm" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </div>
       </div>
 
-      <!-- TAB 7: PENGUMUMAN & SHARE WA -->
+      <!-- TAB 8: PENGUMUMAN -->
       <div id="tab-pengumuman" class="tab-content hidden space-y-4">
         <div id="list-pengumuman" class="space-y-4"></div>
       </div>
 
-      <!-- TAB 8: PERMOHONAN SURAT -->
+      <!-- TAB 9: PERMOHONAN SURAT -->
       <div id="tab-surat" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-5">
         <div class="lg:col-span-1 glass-card p-5 rounded-3xl h-fit">
           <h2 class="font-bold text-slate-800 text-sm mb-3">Pengajuan Surat Pengantar</h2>
           <form onsubmit="handleAddSurat(event)" class="space-y-3">
-            <input type="text" id="s-nama" placeholder="Nama Lengkap Pemohon" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+            <input type="text" id="s-nama" placeholder="Nama Pemohon" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
             <input type="text" id="s-nik" maxlength="16" pattern="\d{16}" placeholder="NIK (16 Digit)" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
-            <input type="text" id="s-jenis" placeholder="Jenis Surat (Domisili / SKTM)" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+            <input type="text" id="s-jenis" placeholder="Jenis Surat (Domisili/SKTM)" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
             <textarea id="s-keperluan" rows="3" placeholder="Keperluan..." required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none"></textarea>
-            <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 text-white text-xs py-3 rounded-2xl font-bold shadow-md glow-emerald">Kirim Permohonan Surat</button>
+            <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 text-white text-xs py-3 rounded-2xl font-bold shadow-md">Kirim Permohonan Surat</button>
           </form>
         </div>
         <div class="lg:col-span-2 glass-card p-5 rounded-3xl">
@@ -262,24 +248,7 @@
         </div>
       </div>
 
-      <!-- TAB 9: PUSAT BERKAS -->
-      <div id="tab-berkas" class="tab-content hidden">
-        <div class="glass-card p-5 sm:p-7 rounded-3xl space-y-4">
-          <h2 class="font-bold text-slate-800 text-base sm:text-lg"><i class="fa-solid fa-folder-open text-emerald-600 mr-2"></i> Pusat Berkas & Panduan RT 06</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="p-4 bg-white/70 border rounded-2xl flex items-center justify-between">
-              <div><h4 class="font-bold text-xs text-slate-800">Tata Tertib RT 06</h4><p class="text-[10px] text-slate-500">Aturan lingkungan</p></div>
-              <a href="#" onclick="vibrate()" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold">Unduh PDF</a>
-            </div>
-            <div class="p-4 bg-white/70 border rounded-2xl flex items-center justify-between">
-              <div><h4 class="font-bold text-xs text-slate-800">Form Pendataan Warga Baru</h4><p class="text-[10px] text-slate-500">Pendataan pendatang</p></div>
-              <a href="#" onclick="vibrate()" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold">Unduh DOC</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 10: PANEL KELOLA RT (LENGKAP DENGAN SHARE WA & VERIFIKASI) -->
+      <!-- TAB 10: PANEL KELOLA RT (LENGKAP PENGKATEGORIAN KAS) -->
       <div id="tab-admin" class="tab-content hidden space-y-6">
         
         <!-- PENGUMUMAN & SHARE WA -->
@@ -288,81 +257,83 @@
           <form onsubmit="handleAddPengumuman(event)" class="space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <input type="text" id="p-judul" placeholder="Judul Pengumuman" required class="p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
-              <input type="text" id="p-kategori" placeholder="Kategori (Kegiatan / Kerja Bakti)" required class="p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+              <input type="text" id="p-kategori" placeholder="Kategori (Kegiatan/Kerja Bakti)" required class="p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
             </div>
-            <textarea id="p-isi" rows="3" placeholder="Isi pengumuman lengkap..." required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none"></textarea>
+            <textarea id="p-isi" rows="3" placeholder="Isi pengumuman..." required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none"></textarea>
             <button type="submit" onclick="vibrate(20)" class="btn-smooth bg-emerald-600 text-white text-xs px-4 py-2.5 rounded-2xl font-bold">Publikasikan Pengumuman</button>
           </form>
         </div>
 
-        <!-- PERSETUJUAN SURAT WARGA -->
+        <!-- INPUT TRANSAKSI KAS DENGAN KATEGORI TERSTRUKTUR -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- INPUT KAS MASUK -->
+          <div class="glass-card p-5 rounded-3xl space-y-3">
+            <h2 class="font-bold text-xs uppercase text-emerald-600"><i class="fa-solid fa-circle-plus mr-1"></i> + Input Kas Masuk</h2>
+            <form onsubmit="handleAddMasuk(event)" class="space-y-2.5">
+              <input type="text" id="km-nama" placeholder="Nama Warga / Sumber Dana" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
+              <select id="km-kategori" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none font-bold text-slate-700">
+                <option value="Iuran Bulanan">Iuran Bulanan Warga</option>
+                <option value="Sumbangan / Donasi">Sumbangan / Donasi</option>
+                <option value="Sewa Fasilitas RT">Sewa Fasilitas RT</option>
+                <option value="Dana Bantuan Pemerintah">Dana Bantuan Govt/Kelurahan</option>
+                <option value="Lain-lain">Lain-lain</option>
+              </select>
+              <input type="number" id="km-jumlah" placeholder="Nominal (Rp)" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
+              <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 text-white text-xs py-2.5 rounded-xl font-bold shadow-md">Simpan Pemasukan</button>
+            </form>
+          </div>
+
+          <!-- INPUT KAS KELUAR -->
+          <div class="glass-card p-5 rounded-3xl space-y-3">
+            <h2 class="font-bold text-xs uppercase text-rose-600"><i class="fa-solid fa-circle-minus mr-1"></i> - Input Kas Keluar</h2>
+            <form onsubmit="handleAddKeluar(event)" class="space-y-2.5">
+              <input type="text" id="kk-keterangan" placeholder="Keterangan Pengeluaran" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
+              <select id="kk-kategori" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none font-bold text-slate-700">
+                <option value="Kebersihan & Sampah">Kebersihan & Pengangkutan Sampah</option>
+                <option value="Keamanan & Siskamling">Keamanan & Honor Siskamling</option>
+                <option value="Perbaikan Infrastruktur / Lampu">Perbaikan Jalan / Lampu RT</option>
+                <option value="Acara & Kegiatan RT">Acara / Kerja Bakti / PHBN</option>
+                <option value="Konsumsi / Sosial">Konsumsi & Duka Cita / Sosial</option>
+                <option value="Operasional RT / ATK">Operasional & ATK RT</option>
+                <option value="Lain-lain">Lain-lain</option>
+              </select>
+              <input type="number" id="kk-jumlah" placeholder="Nominal (Rp)" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
+              <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-rose-600 text-white text-xs py-2.5 rounded-xl font-bold shadow-md">Simpan Pengeluaran</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- VERIFIKASI SURAT & PRINT GENERATOR -->
         <div class="glass-card p-5 rounded-3xl space-y-3">
-          <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-file-check text-indigo-600 mr-2"></i> Verifikasi Permohonan Surat Warga</h3>
+          <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-file-check text-indigo-600 mr-2"></i> Verifikasi Surat & Cetak PDF Otomatis</h3>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
               <thead class="bg-slate-100/70 font-bold uppercase border-b">
-                <tr><th class="p-3">Tanggal</th><th class="p-3">Pemohon</th><th class="p-3">Jenis Surat</th><th class="p-3">Status</th><th class="p-3 text-center">Aksi Verifikasi</th></tr>
+                <tr><th class="p-3">Tanggal</th><th class="p-3">Pemohon</th><th class="p-3">Jenis Surat</th><th class="p-3">Status</th><th class="p-3 text-center">Aksi Verifikasi & Cetak</th></tr>
               </thead>
               <tbody id="tbl-admin-surat" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
 
-        <!-- TINDAK LANJUT LAPORAN WARGA -->
-        <div class="glass-card p-5 rounded-3xl space-y-3">
-          <h3 class="font-bold text-slate-800 text-sm"><i class="fa-solid fa-list-check text-emerald-600 mr-2"></i> Penanganan Aspirasi & Laporan Warga</h3>
-          <div id="list-admin-laporan" class="space-y-3"></div>
-        </div>
-
-        <!-- INPUT RONDA & AGENDA RT -->
+        <!-- TAMBAH DATA WARGA & INVENTARIS RT -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div class="glass-card p-5 rounded-3xl space-y-3">
-            <h3 class="font-bold text-slate-800 text-xs uppercase text-emerald-700">+ Set Jadwal Ronda Malam</h3>
-            <form onsubmit="handleAddRonda(event)" class="space-y-2">
-              <input type="text" id="ro-hari" placeholder="Hari (misal: Senin)" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="text" id="ro-petugas" placeholder="Nama-nama Petugas (Pak Budi, Pak Joko)" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="text" id="ro-pos" placeholder="Pos Ronda (Pos Utama RT 06)" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 text-white text-xs py-2.5 rounded-xl font-bold">Simpan Jadwal Ronda</button>
+            <h3 class="font-bold text-slate-800 text-xs uppercase text-emerald-700">+ Tambah Data Warga Baru</h3>
+            <form onsubmit="handleAddWarga(event)" class="space-y-2">
+              <input type="text" id="w-nama" placeholder="Nama Warga Baru" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
+              <input type="text" id="w-blok" placeholder="Blok / Gang" class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
+              <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-700 text-white text-xs py-2.5 rounded-xl font-bold">Tambah Warga</button>
             </form>
           </div>
 
           <div class="glass-card p-5 rounded-3xl space-y-3">
-            <h3 class="font-bold text-slate-800 text-xs uppercase text-indigo-700">+ Tambah Agenda / Kegiatan RT</h3>
-            <form onsubmit="handleAddAgenda(event)" class="space-y-2">
-              <input type="text" id="ag-kegiatan" placeholder="Nama Kegiatan (Kerja Bakti / Posyandu)" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="date" id="ag-tanggal" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="text" id="ag-waktu" placeholder="Waktu (08.00 WIB - Selesai)" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="text" id="ag-lokasi" placeholder="Lokasi Kegiatan" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-indigo-600 text-white text-xs py-2.5 rounded-xl font-bold">Simpan Agenda</button>
-            </form>
-          </div>
-        </div>
-
-        <!-- INPUT TRANSAKSI KAS & DATA WARGA -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          <div class="glass-card p-5 rounded-3xl">
-            <h2 class="font-bold text-xs uppercase mb-3 text-emerald-600">+ Kas Masuk</h2>
-            <form onsubmit="handleAddMasuk(event)" class="space-y-2">
-              <input type="text" id="km-nama" placeholder="Nama Warga" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="text" id="km-kategori" placeholder="Kategori" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="number" id="km-jumlah" placeholder="Nominal Rp" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-600 text-white text-xs py-2.5 rounded-xl font-bold">Simpan Pemasukan</button>
-            </form>
-          </div>
-          <div class="glass-card p-5 rounded-3xl">
-            <h2 class="font-bold text-xs uppercase mb-3 text-rose-600">- Kas Keluar</h2>
-            <form onsubmit="handleAddKeluar(event)" class="space-y-2">
-              <input type="text" id="kk-keterangan" placeholder="Keterangan" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="text" id="kk-kategori" placeholder="Kategori" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <input type="number" id="kk-jumlah" placeholder="Nominal Rp" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-rose-600 text-white text-xs py-2.5 rounded-xl font-bold">Simpan Pengeluaran</button>
-            </form>
-          </div>
-          <div class="glass-card p-5 rounded-3xl">
-            <h2 class="font-bold text-xs uppercase mb-3 text-emerald-700">+ Data Warga</h2>
-            <form onsubmit="handleAddWarga(event)" class="space-y-2">
-              <input type="text" id="w-nama" placeholder="Nama Warga Baru" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
-              <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-emerald-700 text-white text-xs py-2.5 rounded-xl font-bold">Tambah Warga</button>
+            <h3 class="font-bold text-slate-800 text-xs uppercase text-indigo-700">+ Tambah Inventaris Barang RT</h3>
+            <form onsubmit="handleAddInventaris(event)" class="space-y-2">
+              <input type="text" id="inv-nama" placeholder="Nama Barang" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
+              <input type="number" id="inv-jumlah" placeholder="Jumlah" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
+              <input type="text" id="inv-kondisi" placeholder="Kondisi (Baik/Perlu Servis)" required class="w-full p-2.5 text-xs bg-slate-50 border rounded-xl outline-none">
+              <button type="submit" onclick="vibrate(20)" class="btn-smooth w-full bg-indigo-600 text-white text-xs py-2.5 rounded-xl font-bold">Simpan Aset</button>
             </form>
           </div>
         </div>
@@ -375,21 +346,13 @@
 
   <!-- MODAL SOS EMERGENCY -->
   <div id="modal-sos" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="glass-card rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border-rose-500/30">
-      <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-lg glow-rose animate-bounce">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-      </div>
+    <div class="glass-card rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl">
+      <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-3xl glow-rose animate-bounce"><i class="fa-solid fa-triangle-exclamation"></i></div>
       <h3 class="font-black text-slate-800 text-lg">KONTAK DARURAT RT 06</h3>
       <div class="space-y-2 text-left text-xs">
-        <a href="tel:08123456789" onclick="vibrate()" class="p-3 bg-rose-50/80 border border-rose-200 rounded-2xl flex items-center justify-between text-rose-700 font-bold hover:bg-rose-100 transition">
-          <span><i class="fa-solid fa-phone mr-2"></i> Pak RT 06</span> <span>0812-xxxx-xxxx</span>
-        </a>
-        <a href="tel:110" onclick="vibrate()" class="p-3 bg-slate-100/80 border rounded-2xl flex items-center justify-between text-slate-700 font-bold hover:bg-slate-200 transition">
-          <span><i class="fa-solid fa-shield mr-2"></i> Polsek Prambon</span> <span>110</span>
-        </a>
-        <a href="tel:118" onclick="vibrate()" class="p-3 bg-slate-100/80 border rounded-2xl flex items-center justify-between text-slate-700 font-bold hover:bg-slate-200 transition">
-          <span><i class="fa-solid fa-ambulance mr-2"></i> Puskesmas / Ambulans</span> <span>118</span>
-        </a>
+        <a href="tel:08123456789" onclick="vibrate()" class="p-3 bg-rose-50 border rounded-2xl flex items-center justify-between text-rose-700 font-bold"><span><i class="fa-solid fa-phone mr-2"></i> Pak RT 06</span> <span>0812-xxxx-xxxx</span></a>
+        <a href="tel:110" onclick="vibrate()" class="p-3 bg-slate-100 border rounded-2xl flex items-center justify-between text-slate-700 font-bold"><span><i class="fa-solid fa-shield mr-2"></i> Polsek Prambon</span> <span>110</span></a>
+        <a href="tel:118" onclick="vibrate()" class="p-3 bg-slate-100 border rounded-2xl flex items-center justify-between text-slate-700 font-bold"><span><i class="fa-solid fa-ambulance mr-2"></i> Puskesmas</span> <span>118</span></a>
       </div>
       <button onclick="vibrate(); toggleSOSModal();" class="btn-smooth w-full bg-slate-200 text-slate-700 py-3 rounded-2xl text-xs font-bold">Tutup Modal</button>
     </div>
@@ -402,9 +365,9 @@
       <form onsubmit="handleAddUmkm(event)" class="space-y-3">
         <input type="text" id="u-namaUsaha" placeholder="Nama Usaha / Produk" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
         <input type="text" id="u-pemilik" placeholder="Nama Pemilik" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
-        <input type="text" id="u-kategori" placeholder="Kategori (Kuliner, Jasa, Sembako)" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
-        <input type="text" id="u-wa" placeholder="Nomor WhatsApp (08xxxx)" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
-        <textarea id="u-deskripsi" rows="3" placeholder="Deskripsi singkat..." required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none"></textarea>
+        <input type="text" id="u-kategori" placeholder="Kategori" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+        <input type="text" id="u-wa" placeholder="Nomor WhatsApp" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+        <textarea id="u-deskripsi" rows="3" placeholder="Deskripsi..." required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none"></textarea>
         <div class="flex gap-2">
           <button type="button" onclick="vibrate(); toggleUmkmModal();" class="btn-smooth w-1/2 bg-slate-200 text-slate-700 py-3 rounded-2xl text-xs font-bold">Batal</button>
           <button type="submit" onclick="vibrate(20)" class="btn-smooth w-1/2 bg-emerald-600 text-white py-3 rounded-2xl text-xs font-bold shadow-md glow-emerald">Simpan Lapak</button>
@@ -418,7 +381,8 @@
 
     let currentUser = null;
     let sessionToken = localStorage.getItem('sessionToken') || '';
-    let globalWargaList = [];
+    let globalWargaList = [], globalKasMasuk = [], globalKasKeluar = [];
+    let kasChartInstance = null;
 
     function vibrate(ms = 15) {
       if (navigator.vibrate) navigator.vibrate(ms);
@@ -501,21 +465,78 @@
 
     function shareToWA(text) {
       vibrate();
-      const encodedText = encodeURIComponent(text);
-      window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function printSurat(nama, nik, jenis, keperluan, tanggal) {
+      vibrate();
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+        <head><title>Surat Pengantar RT 06</title>
+        <style>
+          body { font-family: 'Times New Roman', serif; padding: 40px; line-height: 1.6; }
+          .header { text-align: center; border-bottom: 3px double #000; padding-bottom: 10px; margin-bottom: 20px; }
+          .title { text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 20px; }
+          .content { margin-bottom: 30px; }
+          .footer { display: flex; justify-content: space-between; margin-top: 50px; text-align: center; }
+        </style>
+        </head>
+        <body>
+          <div class="header">
+            <h2 style="margin:0;">RUKUN TETANGGA 06 RUKUN WARGA 01</h2>
+            <h3 style="margin:0;">DESA BENDOTRETEK KECAMATAN PRAMBON</h3>
+            <p style="margin:0; font-size: 12px;">Kabupaten Sidoarjo, Jawa Timur</p>
+          </div>
+          <div class="title">SURAT PENGANTAR<br><span style="font-weight:normal; font-size:14px;">Nomor: 06/RT06/${new Date().getFullYear()}</span></div>
+          <div class="content">
+            <p>Yang bertanda tangan di bawah ini Pengurus RT 06 RW 01 Desa Bendotretek, menerangkan bahwa:</p>
+            <table style="margin-left: 20px;">
+              <tr><td>Nama Lengkap</td><td>: <b>${nama}</b></td></tr>
+              <tr><td>NIK</td><td>: ${nik}</td></tr>
+              <tr><td>Keperluan</td><td>: ${keperluan}</td></tr>
+              <tr><td>Jenis Surat</td><td>: <b>${jenis}</b></td></tr>
+            </table>
+            <p>Demikian surat pengantar ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p>
+          </div>
+          <div class="footer">
+            <div><br>Pemohon,<br><br><br><b>(${nama})</b></div>
+            <div>Bendotretek, ${tanggal}<br>Ketua RT 06 RW 01,<br><br><br><b>( _________________ )</b></div>
+          </div>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    }
+
+    function exportCSV() {
+      vibrate();
+      let csv = 'Tanggal,Nama/Keterangan,Kategori,Pemasukan,Pengeluaran\n';
+      globalKasMasuk.forEach(r => csv += `"${r.tanggal}","${r.nama}","${r.kategori}",${r.jumlah},0\n`);
+      globalKasKeluar.forEach(r => csv += `"${r.tanggal}","${r.keterangan}","${r.kategori}",0,${r.jumlah}\n`);
+      
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `Laporan_Kas_RT06_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
     }
 
     function renderData(data) {
+      globalKasMasuk = data.riwayat || [];
+      globalKasKeluar = data.pengeluaran || [];
+
       let tMasuk = 0;
-      document.getElementById('tbl-masuk').innerHTML = (data.riwayat || []).map(r => {
+      document.getElementById('tbl-masuk').innerHTML = globalKasMasuk.map(r => {
         tMasuk += Number(r.jumlah || 0);
-        return `<tr class="hover:bg-emerald-50/50 transition"><td class="p-3">${r.tanggal}</td><td class="p-3 font-semibold">${r.nama}</td><td class="p-3 text-right text-emerald-600 font-bold">Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td></tr>`;
+        return `<tr class="hover:bg-emerald-50/50"><td class="p-3">${r.tanggal}</td><td class="p-3 font-semibold">${r.nama}<br><span class="inline-block bg-emerald-100 text-emerald-800 text-[9px] px-2 py-0.5 rounded-full font-bold mt-0.5">${r.kategori}</span></td><td class="p-3 text-right text-emerald-600 font-bold">Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td></tr>`;
       }).join('');
 
       let tKeluar = 0;
-      document.getElementById('tbl-keluar').innerHTML = (data.pengeluaran || []).map(r => {
+      document.getElementById('tbl-keluar').innerHTML = globalKasKeluar.map(r => {
         tKeluar += Number(r.jumlah || 0);
-        return `<tr class="hover:bg-rose-50/50 transition"><td class="p-3">${r.tanggal}</td><td class="p-3 font-semibold">${r.keterangan}</td><td class="p-3 text-right text-rose-600 font-bold">Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td></tr>`;
+        return `<tr class="hover:bg-rose-50/50"><td class="p-3">${r.tanggal}</td><td class="p-3 font-semibold">${r.keterangan}<br><span class="inline-block bg-rose-100 text-rose-800 text-[9px] px-2 py-0.5 rounded-full font-bold mt-0.5">${r.kategori}</span></td><td class="p-3 text-right text-rose-600 font-bold">Rp ${Number(r.jumlah).toLocaleString('id-ID')}</td></tr>`;
       }).join('');
 
       document.getElementById('total-masuk').innerText = `Rp ${tMasuk.toLocaleString('id-ID')}`;
@@ -525,94 +546,44 @@
       globalWargaList = data.warga || [];
       document.getElementById('total-warga-count').innerText = `${globalWargaList.length} Warga`;
       renderWargaTable(globalWargaList);
+      renderChart(tMasuk, tKeluar);
 
-      // Ronda
+      // Inventaris
+      document.getElementById('list-inventaris').innerHTML = (data.inventaris || []).map(i => `
+        <div class="p-3.5 bg-white border rounded-2xl text-xs space-y-1">
+          <h4 class="font-bold text-slate-800">${i.namaBarang}</h4>
+          <p class="text-slate-500 text-[10px]">Total: ${i.jumlahTotal} unit • Kondisi: ${i.kondisi}</p>
+        </div>
+      `).join('') || '<p class="text-xs text-slate-400">Belum ada data barang.</p>';
+
+      // Ronda & Agenda
       document.getElementById('list-ronda').innerHTML = (data.ronda || []).map(r => `
-        <div class="p-4 bg-white/80 border border-slate-200/80 rounded-2xl space-y-1 shadow-sm">
-          <span class="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">${r.hari}</span>
-          <h4 class="font-bold text-xs text-slate-800">${r.namaPetugas}</h4>
-          <p class="text-[10px] text-slate-500">${r.pos}</p>
-        </div>
-      `).join('') || '<p class="text-xs text-slate-500">Jadwal ronda belum diisi.</p>';
+        <div class="p-4 bg-white/80 border rounded-2xl space-y-1"><span class="text-[10px] font-black uppercase text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">${r.hari}</span><h4 class="font-bold text-xs">${r.namaPetugas}</h4><p class="text-[10px] text-slate-500">${r.pos}</p></div>
+      `).join('');
 
-      // Agenda
       document.getElementById('list-agenda').innerHTML = (data.agenda || []).map(a => `
-        <div class="p-4 bg-white/80 border border-slate-200/80 rounded-2xl flex items-center justify-between shadow-sm">
-          <div>
-            <span class="text-[10px] text-emerald-700 font-bold">${a.tanggal} • ${a.waktu}</span>
-            <h4 class="font-bold text-xs text-slate-800">${a.kegiatan}</h4>
-            <p class="text-[10px] text-slate-500">${a.lokasi}</p>
-          </div>
-          <button onclick="shareToWA('*AGENDA RT 06 BENOOTRETEK*\\n\\n📌 *Kegiatan:* ${a.kegiatan}\\n📅 *Tanggal:* ${a.tanggal}\\n⏰ *Waktu:* ${a.waktu}\\n📍 *Lokasi:* ${a.lokasi}')" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp"></i> Share WA</button>
-        </div>
-      `).join('') || '<p class="text-xs text-slate-500">Belum ada agenda terdekat.</p>';
+        <div class="p-4 bg-white/80 border rounded-2xl flex justify-between items-center"><div><span class="text-[10px] text-emerald-700 font-bold">${a.tanggal} • ${a.waktu}</span><h4 class="font-bold text-xs">${a.kegiatan}</h4><p class="text-[10px] text-slate-500">${a.lokasi}</p></div><button onclick="shareToWA('*AGENDA RT 06*\\n\\n📌 *Kegiatan:* ${a.kegiatan}\\n📅 *Tanggal:* ${a.tanggal}\\n📍 *Lokasi:* ${a.lokasi}')" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp"></i> Share</button></div>
+      `).join('');
 
-      // Laporan Warga
+      // Laporan
       document.getElementById('list-laporan').innerHTML = (data.laporan || []).map(l => `
-        <div class="p-3.5 bg-white/80 border rounded-2xl text-xs space-y-1 shadow-sm">
-          <div class="flex justify-between items-center">
-            <span class="font-bold text-slate-800">${l.kategori} - ${l.lokasi}</span>
-            <span class="bg-amber-100 text-amber-700 text-[9px] px-2 py-0.5 rounded-full font-bold">${l.status}</span>
-          </div>
-          <p class="text-slate-600 text-[11px]">${l.detail}</p>
-          <span class="text-[9px] text-slate-400">Oleh: ${l.namaPelapor} • ${l.tanggal}</span>
-        </div>
+        <div class="p-3.5 bg-white/80 border rounded-2xl text-xs space-y-1"><div class="flex justify-between"><span class="font-bold">${l.kategori} - ${l.lokasi}</span><span class="bg-amber-100 text-amber-700 text-[9px] px-2 py-0.5 rounded-full font-bold">${l.status}</span></div><p class="text-slate-600">${l.detail}</p></div>
       `).join('');
 
-      // Admin Laporan List
-      const adminLapEl = document.getElementById('list-admin-laporan');
-      if (adminLapEl) {
-        adminLapEl.innerHTML = (data.laporan || []).map(l => `
-          <div class="p-3.5 bg-white/90 border rounded-2xl text-xs space-y-2 flex flex-col sm:flex-row sm:items-center justify-between">
-            <div>
-              <span class="font-bold text-slate-800">${l.kategori} - ${l.lokasi}</span>
-              <p class="text-slate-600 text-[11px]">${l.detail}</p>
-              <span class="text-[9px] text-slate-400">Pelapor: ${l.namaPelapor} • Status: ${l.status}</span>
-            </div>
-            <div class="flex gap-1.5 pt-2 sm:pt-0">
-              <button onclick="handleUpdateLaporan('${l.id}', 'Selesai Ditangani')" class="bg-emerald-600 text-white text-[10px] px-2.5 py-1 rounded-xl font-bold">Selesai</button>
-              <button onclick="handleUpdateLaporan('${l.id}', 'Ditolak')" class="bg-rose-600 text-white text-[10px] px-2.5 py-1 rounded-xl font-bold">Tolak</button>
-            </div>
-          </div>
-        `).join('');
-      }
-
-      // UMKM
+      // UMKM & Pengumuman
       document.getElementById('list-umkm').innerHTML = (data.umkm || []).map(u => `
-        <div class="p-4 bg-white/90 border border-slate-200/80 rounded-2xl space-y-2 shadow-sm">
-          <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full uppercase">${u.kategori}</span>
-          <h4 class="font-bold text-sm text-slate-800">${u.namaUsaha}</h4>
-          <p class="text-xs text-slate-600 leading-relaxed">${u.deskripsi}</p>
-          <div class="pt-2 flex justify-between items-center border-t">
-            <span class="text-[10px] text-slate-400">Pemilik: ${u.pemilik}</span>
-            <a href="https://wa.me/${u.kontakWA}" onclick="vibrate()" target="_blank" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp mr-1"></i> Beli</a>
-          </div>
-        </div>
+        <div class="p-4 bg-white/90 border rounded-2xl space-y-2"><span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full uppercase">${u.kategori}</span><h4 class="font-bold text-sm">${u.namaUsaha}</h4><p class="text-xs text-slate-600">${u.deskripsi}</p><div class="pt-2 flex justify-between items-center border-t"><span class="text-[10px] text-slate-400">${u.pemilik}</span><a href="https://wa.me/${u.kontakWA}" target="_blank" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp mr-1"></i> Beli</a></div></div>
       `).join('');
 
-      // Pengumuman & Share WA Button
       document.getElementById('list-pengumuman').innerHTML = (data.pengumuman || []).map(p => `
-        <div class="glass-card p-5 sm:p-6 rounded-3xl space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="font-bold text-slate-800 text-sm sm:text-base">${p.judul}</h3>
-            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-bold uppercase">${p.kategori}</span>
-          </div>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${p.isi}</p>
-          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
-            <span class="text-[10px] text-slate-400"><i class="fa-regular fa-clock"></i> ${p.tanggal}</span>
-            <button onclick="shareToWA('*PENGUMUMAN RESMI RT 06 BENOOTRETEK*\\n\\n📌 *${p.judul}* (${p.kategori})\\n📅 *Tanggal:* ${p.tanggal}\\n\\n${p.isi}\\n\\n_Pengurus RT 06 Bendotretek_')" class="btn-smooth bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold flex items-center gap-1">
-              <i class="fa-brands fa-whatsapp"></i> Bagikan ke WA Warga
-            </button>
-          </div>
-        </div>
+        <div class="glass-card p-5 rounded-3xl space-y-2"><div class="flex justify-between"><h3 class="font-bold text-sm">${p.judul}</h3><span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">${p.kategori}</span></div><p class="text-xs text-slate-600">${p.isi}</p><button onclick="shareToWA('*PENGUMUMAN RT 06*\\n\\n📌 *${p.judul}*\\n\\n${p.isi}')" class="btn-smooth bg-emerald-600 text-white text-[10px] px-3 py-1.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp"></i> Share WA</button></div>
       `).join('');
 
-      // Surat Status Warga
+      // Surat Status Warga & Admin Table
       document.getElementById('tbl-surat-status').innerHTML = (data.surat || []).map(s => `
-        <tr class="hover:bg-slate-50"><td class="p-3">${s.tanggal}</td><td class="p-3 font-semibold">${s.nama}</td><td class="p-3">${s.jenis}</td><td class="p-3"><span class="bg-amber-100 text-amber-700 text-[10px] px-2.5 py-0.5 rounded-full font-bold">${s.status}</span></td></tr>
+        <tr class="hover:bg-slate-50"><td class="p-3">${s.tanggal}</td><td class="p-3 font-semibold">${s.nama}</td><td class="p-3">${s.jenis}</td><td class="p-3"><span class="bg-amber-100 text-amber-700 text-[10px] px-2 py-0.5 rounded-full font-bold">${s.status}</span></td></tr>
       `).join('');
 
-      // Admin Surat Approval Table
       const adminSuratEl = document.getElementById('tbl-admin-surat');
       if (adminSuratEl) {
         adminSuratEl.innerHTML = (data.surat || []).map(s => `
@@ -623,129 +594,100 @@
             <td class="p-3"><span class="bg-amber-100 text-amber-700 text-[10px] px-2 py-0.5 rounded-full font-bold">${s.status}</span></td>
             <td class="p-3 text-center space-x-1">
               <button onclick="handleUpdateSurat('${s.id}', 'Disetujui', '${s.nama}', '${s.jenis}')" class="bg-emerald-600 text-white text-[10px] px-2.5 py-1 rounded-xl font-bold">Setujui</button>
-              <button onclick="handleUpdateSurat('${s.id}', 'Ditolak', '${s.nama}', '${s.jenis}')" class="bg-rose-600 text-white text-[10px] px-2.5 py-1 rounded-xl font-bold">Tolak</button>
+              <button onclick="printSurat('${s.nama}', '${s.nik}', '${s.jenis}', '${s.keperluan}', '${s.tanggal}')" class="bg-indigo-600 text-white text-[10px] px-2.5 py-1 rounded-xl font-bold"><i class="fa-solid fa-print"></i> Cetak</button>
             </td>
           </tr>
         `).join('');
       }
     }
 
+    function renderChart(masuk, keluar) {
+      const ctx = document.getElementById('kasChart').getContext('2d');
+      if (kasChartInstance) kasChartInstance.destroy();
+      kasChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Pemasukan Kas', 'Pengeluaran Kas'],
+          datasets: [{
+            data: [masuk, keluar],
+            backgroundColor: ['rgba(16, 185, 129, 0.8)', 'rgba(244, 63, 94, 0.8)'],
+            borderRadius: 12
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+      });
+    }
+
     function renderWargaTable(list) {
       document.getElementById('tbl-warga-list').innerHTML = list.map((w, idx) => `
-        <tr class="hover:bg-emerald-50/40 transition"><td class="p-3 text-slate-400 font-bold">${idx + 1}</td><td class="p-3 font-bold text-slate-700">${w.nama}</td><td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">Aktif</span></td></tr>
+        <tr class="hover:bg-emerald-50/40"><td class="p-3 text-slate-400 font-bold">${idx + 1}</td><td class="p-3 font-bold text-slate-700">${w.nama}</td><td class="p-3">${w.blok}</td><td class="p-3 font-bold text-rose-600">${w.golDarah}</td><td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-bold">Aktif</span></td></tr>
       `).join('');
     }
 
     function filterWarga() {
       const q = document.getElementById('search-warga').value.toLowerCase();
-      renderWargaTable(globalWargaList.filter(w => w.nama.toLowerCase().includes(q)));
+      renderWargaTable(globalWargaList.filter(w => w.nama.toLowerCase().includes(q) || w.golDarah.toLowerCase().includes(q)));
     }
 
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.tab-btn').forEach(el => {
-        el.classList.remove('bg-emerald-600', 'text-white', 'shadow-md');
-        el.classList.add('text-slate-700', 'bg-white/60');
-      });
+      document.querySelectorAll('.tab-btn').forEach(el => { el.classList.remove('bg-emerald-600', 'text-white'); el.classList.add('text-slate-700', 'bg-white/60'); });
       document.getElementById(tabId).classList.remove('hidden');
-      btn.classList.add('bg-emerald-600', 'text-white', 'shadow-md');
-      btn.classList.remove('text-slate-700', 'bg-white/60');
+      btn.classList.add('bg-emerald-600', 'text-white');
     }
 
     function toggleSOSModal() { document.getElementById('modal-sos').classList.toggle('hidden'); }
     function toggleUmkmModal() { document.getElementById('modal-umkm').classList.toggle('hidden'); }
 
-    // Admin Action Handlers
+    // Handlers
     async function handleUpdateSurat(id, status, nama, jenis) {
       vibrate(20);
       const res = await apiRequest('updatesurat', { id, status });
-      alert(res.message);
-      if (res.success) {
-        loadPublicData();
-        if (confirm(`Bagikan pemberitahuan status '${status}' ke WhatsApp warga?`)) {
-          shareToWA(`*PEMBERITAHUAN SURAT PENGANTAR RT 06*\\n\\nYth. *${nama}*,\\nPermohonan *${jenis}* Anda telah: *${status.toUpperCase()}* oleh Pengurus RT 06.\\n\\n_Terima kasih._`);
-        }
-      }
+      alert(res.message); if (res.success) loadPublicData();
     }
-
-    async function handleUpdateLaporan(id, status) {
-      vibrate(20);
-      const res = await apiRequest('updatelaporan', { id, status });
-      alert(res.message);
-      if (res.success) loadPublicData();
-    }
-
-    async function handleAddPengumuman(e) {
+    async function handleAddPinjam(e) {
       e.preventDefault();
-      const judul = document.getElementById('p-judul').value;
-      const kategori = document.getElementById('p-kategori').value;
-      const isi = document.getElementById('p-isi').value;
-      
-      const res = await apiRequest('addpengumuman', { judul, kategori, isi });
-      alert(res.message);
-      if (res.success) {
-        e.target.reset();
-        loadPublicData();
-        if (confirm("Bagikan pengumuman baru ini ke grup WhatsApp warga sekarang?")) {
-          shareToWA(`*PENGUMUMAN RESMI RT 06 BENOOTRETEK*\\n\\n📌 *${judul}* (${kategori})\\n\\n${isi}\\n\\n_Pengurus RT 06 Bendotretek_`);
-        }
-      }
-    }
-
-    async function handleAddRonda(e) {
-      e.preventDefault();
-      const payload = { hari: document.getElementById('ro-hari').value, namaPetugas: document.getElementById('ro-petugas').value, pos: document.getElementById('ro-pos').value };
-      const res = await apiRequest('addronda', payload);
+      const res = await apiRequest('addpinjam', { namaPeminjam: document.getElementById('pj-nama').value, namaBarang: document.getElementById('pj-barang').value, jumlah: document.getElementById('pj-jumlah').value, tglKembali: document.getElementById('pj-kembali').value });
       alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
     }
-
-    async function handleAddAgenda(e) {
+    async function handleAddInventaris(e) {
       e.preventDefault();
-      const payload = { kegiatan: document.getElementById('ag-kegiatan').value, tanggal: document.getElementById('ag-tanggal').value, waktu: document.getElementById('ag-waktu').value, lokasi: document.getElementById('ag-lokasi').value };
-      const res = await apiRequest('addagenda', payload);
+      const res = await apiRequest('addinventaris', { namaBarang: document.getElementById('inv-nama').value, jumlahTotal: document.getElementById('inv-jumlah').value, kondisi: document.getElementById('inv-kondisi').value });
       alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
     }
-
-    // Submit Handlers
     async function handleAddSurat(e) {
       e.preventDefault();
-      const payload = { nama: document.getElementById('s-nama').value, nik: document.getElementById('s-nik').value, jenis: document.getElementById('s-jenis').value, keperluan: document.getElementById('s-keperluan').value };
-      const res = await apiRequest('addsurat', payload);
+      const res = await apiRequest('addsurat', { nama: document.getElementById('s-nama').value, nik: document.getElementById('s-nik').value, jenis: document.getElementById('s-jenis').value, keperluan: document.getElementById('s-keperluan').value });
       alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
     }
-
     async function handleAddLaporan(e) {
       e.preventDefault();
-      const payload = { nama: document.getElementById('lap-nama').value, kategori: document.getElementById('lap-kategori').value, lokasi: document.getElementById('lap-lokasi').value, detail: document.getElementById('lap-detail').value };
-      const res = await apiRequest('addlaporan', payload);
+      const res = await apiRequest('addlaporan', { nama: document.getElementById('lap-nama').value, kategori: document.getElementById('lap-kategori').value, lokasi: document.getElementById('lap-lokasi').value, detail: document.getElementById('lap-detail').value });
       alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
     }
-
     async function handleAddUmkm(e) {
       e.preventDefault();
-      const payload = { namaUsaha: document.getElementById('u-namaUsaha').value, pemilik: document.getElementById('u-pemilik').value, kategori: document.getElementById('u-kategori').value, kontakWA: document.getElementById('u-wa').value, deskripsi: document.getElementById('u-deskripsi').value };
-      const res = await apiRequest('addumkm', payload);
+      const res = await apiRequest('addumkm', { namaUsaha: document.getElementById('u-namaUsaha').value, pemilik: document.getElementById('u-pemilik').value, kategori: document.getElementById('u-kategori').value, kontakWA: document.getElementById('u-wa').value, deskripsi: document.getElementById('u-deskripsi').value });
       alert(res.message); if (res.success) { toggleUmkmModal(); e.target.reset(); loadPublicData(); }
     }
-
     async function handleAddMasuk(e) {
       e.preventDefault();
-      const payload = { nama: document.getElementById('km-nama').value, kategori: document.getElementById('km-kategori').value, jumlah: document.getElementById('km-jumlah').value };
-      const res = await apiRequest('addmasuk', payload);
+      const res = await apiRequest('addmasuk', { nama: document.getElementById('km-nama').value, kategori: document.getElementById('km-kategori').value, jumlah: document.getElementById('km-jumlah').value });
       alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
     }
-
     async function handleAddKeluar(e) {
       e.preventDefault();
-      const payload = { keterangan: document.getElementById('kk-keterangan').value, kategori: document.getElementById('kk-kategori').value, jumlah: document.getElementById('kk-jumlah').value };
-      const res = await apiRequest('addkeluar', payload);
+      const res = await apiRequest('addkeluar', { keterangan: document.getElementById('kk-keterangan').value, kategori: document.getElementById('kk-kategori').value, jumlah: document.getElementById('kk-jumlah').value });
       alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
     }
-
     async function handleAddWarga(e) {
       e.preventDefault();
-      const payload = { nama: document.getElementById('w-nama').value };
-      const res = await apiRequest('addwarga', payload);
+      const res = await apiRequest('addwarga', { nama: document.getElementById('w-nama').value, blok: document.getElementById('w-blok').value });
+      alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
+    }
+    async function handleAddPengumuman(e) {
+      e.preventDefault();
+      const res = await apiRequest('addpengumuman', { judul: document.getElementById('p-judul').value, kategori: document.getElementById('p-kategori').value, isi: document.getElementById('p-isi').value });
       alert(res.message); if (res.success) { e.target.reset(); loadPublicData(); }
     }
   </script>
