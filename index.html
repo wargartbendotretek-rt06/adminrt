@@ -113,7 +113,7 @@
     <!-- MAIN DASHBOARD -->
     <div id="sec-dashboard" class="hidden space-y-6">
 
-      <!-- TAB NAVIGATION BAR DENGAN SHRINK-PRESERVATION & WRAP AMAN -->
+      <!-- TAB NAVIGATION BAR -->
       <div class="w-full overflow-x-auto no-scrollbar border-b border-white/10 pb-2">
         <div class="flex flex-nowrap sm:flex-wrap gap-2 min-w-max sm:min-w-0">
           <button onclick="vibrate(); switchTab('tab-ringkasan', this);" class="tab-btn active btn-smooth px-3.5 py-2.5 text-xs font-bold rounded-2xl bg-emerald-600 text-white shadow-lg flex items-center gap-2 shrink-0">
@@ -175,7 +175,6 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <!-- VISUAL CHART CANVAS -->
           <div class="lg:col-span-1 glass-card p-5 sm:p-6 rounded-3xl space-y-3 flex flex-col justify-between">
             <div>
               <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
@@ -192,7 +191,6 @@
             </div>
           </div>
 
-          <!-- REKAPITULASI PROGRESS BARS -->
           <div class="lg:col-span-2 glass-card p-5 sm:p-6 rounded-3xl space-y-4">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b pb-3">
               <div>
@@ -385,7 +383,7 @@
         </div>
       </div>
 
-      <!-- TAB PANEL ADMIN -->
+      <!-- TAB PANEL ADMIN FULL CRUD CONTROL -->
       <div id="tab-admin" class="tab-content hidden space-y-6">
         
         <div class="glass-card p-5 sm:p-6 rounded-3xl space-y-4">
@@ -439,6 +437,30 @@
           </div>
         </div>
 
+        <!-- MANAJEMEN EDIT WARGA FULL CONTROL -->
+        <div class="glass-card p-5 sm:p-6 rounded-3xl space-y-4">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-users-gear text-emerald-600"></i> Kelola & Edit Data Warga
+            </h3>
+            <span class="text-xs text-slate-500 font-medium">Akses Pengurus RT</span>
+          </div>
+
+          <div class="overflow-x-auto rounded-2xl border">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 font-bold uppercase border-b text-slate-600">
+                <tr>
+                  <th class="p-3">Nama</th>
+                  <th class="p-3">Blok/Gang</th>
+                  <th class="p-3">Gol. Darah</th>
+                  <th class="p-3 text-center">Tindakan Pengurus</th>
+                </tr>
+              </thead>
+              <tbody id="tbl-admin-manage-warga" class="divide-y divide-slate-100 bg-white/50"></tbody>
+            </table>
+          </div>
+        </div>
+
         <div class="glass-card p-5 sm:p-6 rounded-3xl space-y-3">
           <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b pb-2">
             <i class="fa-solid fa-file-check text-indigo-600"></i> Verifikasi Surat & Cetak PDF Otomatis
@@ -480,6 +502,22 @@
 
   </main>
 
+  <!-- MODAL EDIT GENERIC -->
+  <div id="modal-edit-generic" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <h3 id="modal-edit-title" class="font-bold text-slate-800 text-base border-b pb-2">Edit Data</h3>
+      <form id="form-edit-generic" onsubmit="handleSaveEdit(event)" class="space-y-3">
+        <input type="hidden" id="edit-item-id">
+        <input type="hidden" id="edit-target-type">
+        <div id="modal-edit-fields" class="space-y-3"></div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeEditModal()" class="btn-smooth w-1/2 bg-slate-200 text-slate-700 py-3 rounded-2xl text-xs font-bold">Batal</button>
+          <button type="submit" class="btn-smooth w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-2xl text-xs font-bold shadow-md">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- MODAL SOS EMERGENCY -->
   <div id="modal-sos" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="glass-card rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl">
@@ -519,7 +557,6 @@
     let sessionToken = localStorage.getItem('sessionToken') || '';
     let globalWargaList = [], globalKasMasuk = [], globalKasKeluar = [];
 
-    // XSS SANITIZER UTAMA
     function escapeHtml(str) {
       return String(str || '')
         .replace(/&/g, "&amp;")
@@ -546,7 +583,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swBlob = new Blob([`
-          const CACHE_NAME = 'portal-rt06-v5';
+          const CACHE_NAME = 'portal-rt06-v8';
           self.addEventListener('install', e => self.skipWaiting());
           self.addEventListener('activate', e => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', e => {
@@ -683,6 +720,78 @@
       ctx.beginPath();
       ctx.roundRect((3 * cvs.width) / 4 - barWidth / 2, cvs.height - hKeluar - 10, barWidth, hKeluar, 8);
       ctx.fill();
+    }
+
+    function renderAdminWargaManager(wargaList) {
+      const el = document.getElementById('tbl-admin-manage-warga');
+      if (!el) return;
+
+      el.innerHTML = wargaList.map(w => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-3 font-bold text-slate-800">${escapeHtml(w.nama)}</td>
+          <td class="p-3 text-slate-600">${escapeHtml(w.blok)}</td>
+          <td class="p-3 font-bold text-rose-600">${escapeHtml(w.golDarah)}</td>
+          <td class="p-3 text-center space-x-1">
+            <button onclick="openEditWargaModal('${escapeHtml(w.id)}', '${escapeHtml(w.nama)}', '${escapeHtml(w.blok)}', '${escapeHtml(w.golDarah)}')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2.5 py-1 rounded-xl font-bold">
+              <i class="fa-solid fa-pen-to-square mr-1"></i> Edit
+            </button>
+            <button onclick="confirmDelete('Warga', '${escapeHtml(w.id)}', '${escapeHtml(w.nama)}')" class="bg-rose-600 hover:bg-rose-700 text-white text-[10px] px-2.5 py-1 rounded-xl font-bold">
+              <i class="fa-solid fa-trash mr-1"></i> Hapus
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openEditWargaModal(id, nama, blok, golDarah) {
+      vibrate(15);
+      document.getElementById('modal-edit-title').innerText = 'Edit Data Warga';
+      document.getElementById('edit-item-id').value = id;
+      document.getElementById('edit-target-type').value = 'warga';
+
+      document.getElementById('modal-edit-fields').innerHTML = `
+        <input type="text" id="edit-w-nama" value="${nama}" placeholder="Nama Warga" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+        <input type="text" id="edit-w-blok" value="${blok}" placeholder="Blok / Gang" required class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+        <input type="text" id="edit-w-gol" value="${golDarah}" placeholder="Golongan Darah" class="w-full p-3 text-xs bg-slate-50 border rounded-2xl outline-none">
+      `;
+
+      document.getElementById('modal-edit-generic').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('modal-edit-generic').classList.add('hidden');
+    }
+
+    async function handleSaveEdit(e) {
+      e.preventDefault();
+      const id = document.getElementById('edit-item-id').value;
+      const type = document.getElementById('edit-target-type').value;
+
+      let res = { success: false };
+
+      if (type === 'warga') {
+        res = await apiRequest('editwarga', {
+          id: id,
+          nama: document.getElementById('edit-w-nama').value,
+          blok: document.getElementById('edit-w-blok').value,
+          golDarah: document.getElementById('edit-w-gol').value
+        });
+      }
+
+      showToast(res.message, !res.success);
+      if (res.success) {
+        closeEditModal();
+        loadPublicData();
+      }
+    }
+
+    async function confirmDelete(sheetTarget, id, namaLabel) {
+      vibrate(30);
+      if (confirm(`Apakah Anda yakin ingin menghapus data "${namaLabel}" secara permanen?`)) {
+        const res = await apiRequest('deleteitem', { targetSheet: sheetTarget, id: id });
+        showToast(res.message, !res.success);
+        if (res.success) loadPublicData();
+      }
     }
 
     function printSurat(nama, nik, jenis, keperluan, tanggal) {
@@ -841,6 +950,7 @@
       document.getElementById('p-lainnya-bar').style.width = `${pctLain}%`;
 
       renderWargaTable(globalWargaList);
+      renderAdminWargaManager(globalWargaList);
 
       document.getElementById('list-inventaris').innerHTML = (data.inventaris || []).map(i => `
         <div class="p-3.5 bg-white border rounded-2xl text-xs space-y-1 shadow-sm">
