@@ -51,7 +51,6 @@
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
       --radius: 1.25rem;
-      --nav-height: 72px;
     }
     body.dark {
       --bg: #0f172a;
@@ -72,7 +71,7 @@
       background-color: var(--bg);
       color: var(--text);
       -webkit-tap-highlight-color: transparent;
-      padding-bottom: calc(var(--nav-height) + 20px);
+      padding-bottom: 30px;
       transition: background-color 0.2s, color 0.2s;
     }
     html { scroll-behavior: smooth; }
@@ -158,11 +157,6 @@
     .kk-name { font-size: 0.72rem; font-weight: 800; overflow-wrap: anywhere; }
     
     .chart-box { height: 230px; position: relative; }
-    
-    .bottom-nav { position: fixed; z-index: 1000; left: 0; right: 0; bottom: 0; min-height: var(--nav-height); display: flex; align-items: center; justify-content: space-around; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); background: rgba(255,255,255,0.92); border-top: 1px solid var(--border); backdrop-filter: blur(16px); }
-    body.dark .bottom-nav { background: rgba(30,41,59,0.92); }
-    .nav-item { flex: 1; min-width: 0; height: 54px; border: 0; background: transparent; color: var(--muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 0.58rem; font-weight: 700; border-radius: 12px; transition: all 0.2s; }
-    .nav-item.active { color: var(--primary); background: var(--primary-soft); }
 
     #toast { position: fixed; z-index: 5000; top: 18px; left: 50%; transform: translate(-50%, -20px); opacity: 0; visibility: hidden; max-width: calc(100% - 24px); padding: 12px 18px; border-radius: 30px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-lg); font-size: 0.72rem; font-weight: 800; transition: .25s ease; text-align: center; }
     #toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
@@ -197,7 +191,6 @@
     <main id="screen-login" class="view-screen active">
       <div class="login-screen">
         <div class="login-card">
-          <!-- Logo Rumah Pengganti Ikon Perisai Romawi -->
           <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100 shadow-inner text-2xl">
             <i class="fa-solid fa-house"></i>
           </div>
@@ -246,7 +239,6 @@
         </div>
         <div class="flex items-center space-x-2 shrink-0">
           <button class="btn btn-light btn-sm" type="button" onclick="toggleTheme()" title="Ganti tema" aria-label="Ganti tema">🌓</button>
-          <!-- Tombol Logout Diperbaiki & Diperjelas -->
           <button class="btn btn-danger btn-sm" type="button" onclick="handleLogout()" title="Keluar Akun" aria-label="Keluar"><i class="fa-solid fa-right-from-bracket"></i></button>
         </div>
       </header>
@@ -571,15 +563,6 @@
         <div id="chart-empty" class="empty-state hidden">Belum ada data pengeluaran untuk ditampilkan.</div>
       </section>
 
-      <!-- BOTTOM NAVIGATION -->
-      <nav class="bottom-nav" aria-label="Navigasi utama">
-        <button id="nav-info" class="nav-item active" type="button" onclick="switchNav('info')"><i class="fa-solid fa-bullhorn text-base"></i><span>Informasi</span></button>
-        <button id="nav-surat" class="nav-item" type="button" onclick="switchNav('surat')"><i class="fa-solid fa-file-signature text-base"></i><span>E-Surat</span></button>
-        <button id="nav-masuk" class="nav-item" type="button" onclick="switchNav('masuk')"><i class="fa-solid fa-wallet text-base"></i><span>Kas</span></button>
-        <button id="nav-ronda" class="nav-item" type="button" onclick="switchNav('ronda')"><i class="fa-solid fa-shield-cat text-base"></i><span>Ronda</span></button>
-        <button id="nav-agenda" class="nav-item" type="button" onclick="switchNav('agenda')"><i class="fa-solid fa-calendar-days text-base"></i><span>Agenda</span></button>
-      </nav>
-
     </main>
   </div>
 
@@ -606,10 +589,10 @@
     const CONFIG = {
       API_URL: "https://script.google.com/macros/s/AKfycbyhA5-Ke7UFKzRKAZZ0eQvAly4oQiTGnZXlKz9EJbkcCAyYy04pUW9kmCWI6HIIvFGd7g/exec",
       WA_RT: "6281234567890",
-      CACHE_KAS: "rt06_kas_cache_v9",
-      CACHE_PENGUMUMAN: "rt06_pengumuman_v9",
-      SESSION: "rt06_user_session_v9",
-      THEME: "rt06_theme_v9",
+      CACHE_KAS: "rt06_kas_cache_v10",
+      CACHE_PENGUMUMAN: "rt06_pengumuman_v10",
+      SESSION: "rt06_user_session_v10",
+      THEME: "rt06_theme_v10",
       CACHE_TTL: 7 * 24 * 60 * 60 * 1000
     };
 
@@ -690,7 +673,7 @@
 
     function completeLogin() {
       if (!currentUser) return;
-      try { sessionStorage.setItem(CONFIG.SESSION, JSON.stringify(currentUser)); } catch (e) {}
+      try { localStorage.setItem(CONFIG.SESSION, JSON.stringify(currentUser)); } catch (e) {}
       updateRoleUI();
       showScreen('screen-portal');
       loadCachedData();
@@ -701,7 +684,7 @@
 
     function checkSession() {
       try {
-        const raw = sessionStorage.getItem(CONFIG.SESSION);
+        const raw = localStorage.getItem(CONFIG.SESSION);
         if (raw) {
           const u = JSON.parse(raw);
           if (u && typeof u.name === 'string' && typeof u.role === 'string' && u.sessionToken) {
@@ -727,7 +710,7 @@
           body: JSON.stringify({ action: 'deletesession', sessionToken: token })
         }).catch(() => {});
       }
-      try { sessionStorage.removeItem(CONFIG.SESSION); } catch (e) {}
+      try { localStorage.removeItem(CONFIG.SESSION); } catch (e) {}
       currentUser = null;
       state.surat = [];
       showScreen('screen-login');
@@ -741,7 +724,7 @@
 
     function updateRoleUI() {
       document.querySelectorAll('.role-editor-only').forEach(el => el.classList.toggle('hidden', !isEditor()));
-      ['nav-kk', 'tab-button-kk'].forEach(id => {
+      ['tab-button-kk', 'tab-button-warga'].forEach(id => {
         const el = $(id);
         if (el) el.classList.toggle('hidden', !isEditor());
       });
@@ -763,10 +746,6 @@
       document.querySelectorAll('.section-tab').forEach(el => el.classList.remove('active'));
       const activeTabBtn = $('tab-button-' + tab);
       if (activeTabBtn) activeTabBtn.classList.add('active');
-
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-      const activeNavBtn = $('nav-' + tab);
-      if (activeNavBtn) activeNavBtn.classList.add('active');
 
       const isKas = ['masuk', 'keluar'].includes(tab);
       $('section-table').classList.toggle('hidden', !isKas);
@@ -830,16 +809,10 @@
       renderKKStatus();
       renderWarga();
       renderAnnouncements();
-      renderQuickStats();
       renderChart();
       renderSuratAdmin();
       renderExtraModules();
       $('last-sync').textContent = state.lastSync ? 'Sinkron terakhir: ' + new Date(state.lastSync).toLocaleString('id-ID') : 'Data lokal aktif';
-    }
-
-    function renderQuickStats() {
-      $('quick-kk').textContent = state.warga.length + ' KK';
-      $('quick-pengumuman').textContent = state.pengumuman.length + ' Agenda';
     }
 
     function renderExtraModules() {
@@ -1104,7 +1077,6 @@
       });
     }
 
-    // Fungsi Teruskan / Bagikan ke WhatsApp
     function shareAnnouncementsToWA() {
       const items = state.pengumuman.length ? state.pengumuman : loadAnnouncementsCache();
       if (!items.length) return showToast('Tidak ada pengumuman.', '⚠️');
@@ -1434,7 +1406,7 @@
     }
 
     function handleExpiredSession() {
-      try { sessionStorage.removeItem(CONFIG.SESSION); } catch (e) {}
+      try { localStorage.removeItem(CONFIG.SESSION); } catch (e) {}
       currentUser = null;
       showScreen('screen-login');
       showToast('Sesi berakhir. Silakan masuk kembali.', '🔒');
