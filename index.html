@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="id" class="h-full bg-slate-100">
+<html lang="id" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#556b2f">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="mobile-web-app-capable" content="yes">
-  <title>Portal Resmi & Keuangan RT 06 Bendotretek</title>
-  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6366f1">
+  <title>Portal Warga RT 06 Bendotretek</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,9 +18,7 @@
       theme: {
         extend: {
           colors: {
-            primary: '#03ac0e',
-            'primary-dark': '#028a0b',
-            'primary-soft': '#edfef0',
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
           }
         }
       }
@@ -32,574 +26,621 @@
   </script>
   <style>
     :root {
-      --bg: #f4f6f9;
-      --card: #ffffff;
-      --soft: #f8f9fa;
-      --border: #e2e8f0;
-      --text: #1e293b;
+      --bg: #f8fafc;
+      --card: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #0f172a;
       --muted: #64748b;
-      --primary: #03ac0e;
-      --primary-dark: #028a0b;
-      --primary-soft: #edfef0;
-      --gold: #c59a20;
-      --green: #03ac0e;
-      --green-soft: #e6f7e9;
-      --red: #ef4444;
-      --red-soft: #fef2f2;
-      --blue: #0062ff;
-      --blue-soft: #eef2ff;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      --radius: 1.25rem;
+      --shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.08);
+      --glow: 0 0 25px rgba(99, 102, 241, 0.15);
     }
     body.dark {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --soft: #090d16;
-      --border: #334155;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --primary-soft: #064e3b;
-      --green-soft: #064e3b;
-      --red-soft: #7f1d1d;
-      --blue-soft: #1e3a8a;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+      --bg: #030712;
+      --card: rgba(17, 24, 39, 0.8);
+      --border: rgba(31, 41, 55, 0.8);
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      --glow: 0 0 25px rgba(99, 102, 241, 0.25);
     }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg);
       color: var(--text);
       -webkit-tap-highlight-color: transparent;
-      padding-bottom: 30px;
-      transition: background-color 0.2s, color 0.2s;
+      padding-bottom: 110px;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
     html { scroll-behavior: smooth; }
-    button, input, select, textarea { font: inherit; }
-    button { cursor: pointer; }
-    button:disabled { opacity: .55; cursor: not-allowed; }
-    .hidden { display: none !important; }
     
-    .container { width: 100%; max-width: 800px; margin: auto; padding: 12px; }
-    .view-screen { display: none; }
-    .view-screen.active { display: block; }
-
-    .app-card {
+    /* Aesthetic Glassmorphism & Gradients */
+    .glass-card {
       background: var(--card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border);
       box-shadow: var(--shadow);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 14px;
-      transition: background-color 0.2s, border-color 0.2s;
+      border-radius: 1.75rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      box-shadow: var(--glow);
+      transform: translateY(-2px);
     }
 
-    .toped-header { background: linear-gradient(135deg, #03ac0e 0%, #028a0b 100%); }
-    .jmo-hero { background: linear-gradient(135deg, #0062ff 0%, #0043b3 100%); }
+    .hero-gradient {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.4);
+    }
 
-    .login-screen { min-height: 85vh; display: flex; align-items: center; justify-content: center; padding: 20px 0; }
-    .login-card { width: 100%; max-width: 420px; background: var(--card); border: 1px solid var(--border); border-radius: 1.5rem; padding: 28px 22px; box-shadow: var(--shadow-lg); text-align: center; }
-    
-    .role-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; background: var(--soft); padding: 4px; border-radius: 14px; border: 1px solid var(--border); }
-    .role-btn { border: 0; padding: 10px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 800; color: var(--muted); background: transparent; transition: all 0.2s; }
-    .role-btn.active { background: var(--card); color: var(--text); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    /* Smooth Slide & Fade Transition */
+    .view-screen {
+      display: none;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .view-screen.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-    .btn { border: 0; min-height: 44px; padding: 10px 16px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.78rem; font-weight: 800; transition: transform .18s, opacity .18s; text-decoration: none; }
-    .btn:active { transform: scale(.97); }
-    .btn-primary { color: #fff; background: linear-gradient(135deg, #03ac0e, #028a0b); box-shadow: 0 4px 12px rgba(3,172,14,0.25); }
-    .btn-success { color: #fff; background: linear-gradient(135deg, #10b981, #059669); }
-    .btn-danger { color: #fff; background: linear-gradient(135deg, #ef4444, #dc2626); }
-    .btn-light { color: var(--text); background: var(--card); border: 1px solid var(--border); }
-    .btn-gold { color: #fff; background: linear-gradient(135deg, #c59a20, #987313); }
-    .btn-blue { color: #fff; background: linear-gradient(135deg, #0062ff, #0043b3); }
-    .btn-sm { min-height: 36px; padding: 6px 12px; border-radius: 10px; font-size: 0.7rem; }
-    .btn-block { width: 100%; }
+    /* Floating Bottom Nav Dock */
+    .floating-dock {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 28px);
+      max-width: 600px;
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.12);
+      border-radius: 2rem;
+      padding: 8px 12px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .dock-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 1.25rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dock-item i {
+      font-size: 1.15rem;
+      transition: transform 0.25s;
+    }
+    .dock-item.active {
+      color: #6366f1;
+      background: rgba(99, 102, 241, 0.1);
+    }
+    .dock-item.active i {
+      transform: scale(1.15);
+    }
 
-    .connection-status { display: flex; align-items: center; gap: 6px; margin-top: 3px; font-size: 0.6rem; font-weight: 700; color: var(--muted); }
-    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #aaa; }
-    .status-dot.online { background: #03ac0e; box-shadow: 0 0 0 3px rgba(3,172,14,0.2); }
-    .status-dot.offline { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.2); }
+    /* Menu Grid Styling */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .menu-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 6px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow);
+    }
+    .menu-tile:active {
+      transform: scale(0.94);
+    }
+    .menu-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.4);
+    }
 
-    .input-control { width: 100%; min-height: 46px; padding: 11px 14px; border: 1px solid var(--border); border-radius: 12px; outline: none; background: var(--soft); color: var(--text); font-size: 0.78rem; transition: border .2s, box-shadow .2s; }
-    .input-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(3,172,14,0.15); }
-    .input-label { display: block; margin-bottom: 6px; font-size: 0.68rem; font-weight: 700; color: var(--muted); text-align: left; }
-    textarea.input-control { resize: vertical; min-height: 90px; }
+    .input-control {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      outline: none;
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.8rem;
+      transition: all 0.25s;
+    }
+    .input-control:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    }
 
-    .section-tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
-    .section-tabs::-webkit-scrollbar { display: none; }
-    .section-tab { flex: 0 0 auto; min-height: 40px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); color: var(--muted); font-size: 0.68rem; font-weight: 800; white-space: nowrap; padding: 0 12px; transition: all 0.2s; }
-    .section-tab.active { color: #fff; background: #03ac0e; border-color: #03ac0e; box-shadow: 0 4px 12px rgba(3,172,14,0.2); }
+    .btn {
+      border: 0;
+      min-height: 46px;
+      padding: 10px 18px;
+      border-radius: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.4);
+    }
 
-    .info-card-item { padding: 14px; border: 1px solid var(--border); border-radius: 14px; background: var(--soft); margin-bottom: 10px; }
-    .info-tag { display: inline-block; font-size: 0.58rem; font-weight: 800; padding: 4px 8px; border-radius: 6px; background: var(--primary-soft); color: var(--primary); margin-bottom: 6px; }
-    .info-date { font-size: 0.6rem; color: var(--muted); float: right; }
-    .info-title { font-size: 0.8rem; font-weight: 800; margin-bottom: 4px; }
-    .info-body { font-size: 0.7rem; color: var(--muted); line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    #toast {
+      position: fixed;
+      z-index: 5000;
+      top: 24px;
+      left: 50%;
+      transform: translate(-50%, -20px);
+      opacity: 0;
+      visibility: hidden;
+      padding: 12px 22px;
+      border-radius: 3rem;
+      background: var(--card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      font-size: 0.75rem;
+      font-weight: 700;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
 
-    .table-wrap { overflow-x: auto; margin: 0 -4px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.72rem; }
-    th { color: var(--muted); font-size: 0.6rem; font-weight: 800; text-transform: uppercase; padding: 10px 8px; white-space: nowrap; border-bottom: 1px solid var(--border); text-align: left; }
-    td { padding: 11px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-    .transaction-title { font-weight: 800; }
-    .transaction-sub { margin-top: 2px; color: var(--muted); font-size: 0.62rem; }
-    .amount { white-space: nowrap; font-weight: 800; }
-    .amount.masuk { color: var(--green); }
-    .amount.keluar { color: var(--red); }
-    .badge { display: inline-flex; align-items: center; justify-content: center; padding: 4px 8px; border-radius: 20px; font-size: 0.58rem; font-weight: 800; white-space: nowrap; }
-    .badge-masuk { color: var(--green); background: var(--green-soft); }
-    .badge-keluar { color: var(--red); background: var(--red-soft); }
-    .badge-pending { color: var(--gold); background: rgba(197,154,32,0.15); }
-    .badge-neutral { color: var(--muted); background: var(--soft); }
+    .loader-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(3, 7, 18, 0.6);
+      backdrop-filter: blur(8px);
+    }
 
-    .kk-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-    .kk-card { padding: 12px; border: 1px solid var(--border); border-radius: 14px; background: var(--soft); min-width: 0; }
-    .kk-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-    .kk-name { font-size: 0.72rem; font-weight: 800; overflow-wrap: anywhere; }
-    
-    .chart-box { height: 230px; position: relative; }
-
-    #toast { position: fixed; z-index: 5000; top: 18px; left: 50%; transform: translate(-50%, -20px); opacity: 0; visibility: hidden; max-width: calc(100% - 24px); padding: 12px 18px; border-radius: 30px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-lg); font-size: 0.72rem; font-weight: 800; transition: .25s ease; text-align: center; }
-    #toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
-    
-    .loader-overlay { position: fixed; inset: 0; z-index: 4000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-    .loader-card { padding: 18px 22px; border-radius: 16px; background: var(--card); font-size: 0.75rem; font-weight: 800; box-shadow: var(--shadow-lg); }
-    
-    .empty-state { text-align: center; padding: 26px 10px; color: var(--muted); font-size: 0.75rem; line-height: 1.6; }
-    .sync-note { font-size: 0.62rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
-    .inline-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .status-summary { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
-    .status-summary span { font-size: 0.66rem; font-weight: 800; padding: 6px 10px; border-radius: 10px; background: var(--soft); border: 1px solid var(--border); }
-    
-    @media(max-width: 390px) {
-      .kk-grid { grid-template-columns: 1fr; }
+    @media(max-width: 480px) {
+      .menu-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+      .menu-tile { padding: 10px 4px; }
+      .menu-icon { width: 40px; height: 40px; font-size: 1rem; }
+      .menu-tile span { font-size: 0.6rem; }
     }
   </style>
 </head>
 <body>
 
   <div id="loader" class="loader-overlay hidden" aria-live="polite">
-    <div class="loader-card" id="loader-text">⏳ Memproses...</div>
+    <div class="glass-card p-5 text-xs font-bold text-center">✨ Sedang memproses...</div>
   </div>
 
   <div id="toast" role="status" aria-live="polite">
-    <span id="toast-icon">✓</span> <span id="toast-msg">Notifikasi</span>
+    <span id="toast-icon">✨</span> <span id="toast-msg">Notifikasi</span>
   </div>
 
-  <div class="container">
+  <div class="container max-w-lg mx-auto p-4">
     
     <!-- SCREEN LOGIN -->
     <main id="screen-login" class="view-screen active">
-      <div class="login-screen">
-        <div class="login-card">
-          <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100 shadow-inner text-2xl">
-            <i class="fa-solid fa-house"></i>
+      <div class="min-h-[85vh] flex items-center justify-center py-6">
+        <div class="glass-card w-full p-8 text-center space-y-6">
+          <div class="w-20 h-20 hero-gradient rounded-3xl flex items-center justify-center mx-auto text-white shadow-xl text-3xl">
+            <i class="fa-solid fa-house-chimney-user"></i>
           </div>
-          <h1 style="font-size:1.25rem; font-weight:800; margin-bottom:6px">Portal RT 06 Bendotretek</h1>
-          <p style="font-size:0.72rem; color:var(--muted); margin-bottom:20px; line-height:1.6">Pusat informasi warga dan transparansi kas lingkungan</p>
+          <div>
+            <h1 class="text-xl font-extrabold tracking-tight">RT 06 Bendotretek</h1>
+            <p class="text-xs text-muted mt-1">Portal Eksklusif Warga & Transparansi Lingkungan</p>
+          </div>
           
-          <div class="role-selector">
-            <button id="role-btn-viewer" class="role-btn active" type="button" onclick="switchLoginRole('viewer')">👤 Warga</button>
-            <button id="role-btn-admin" class="role-btn" type="button" onclick="switchLoginRole('admin')">🔑 Pengurus</button>
+          <div class="role-selector grid grid-cols-2 gap-2 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700">
+            <button id="role-btn-viewer" class="py-2.5 rounded-xl text-xs font-bold transition text-muted active bg-white dark:bg-slate-900 shadow-sm" type="button" onclick="switchLoginRole('viewer')">👤 Warga</button>
+            <button id="role-btn-admin" class="py-2.5 rounded-xl text-xs font-bold transition text-muted" type="button" onclick="switchLoginRole('admin')">🔑 Pengurus</button>
           </div>
 
-          <form id="login-form" class="space-y-3 text-left">
+          <form id="login-form" class="space-y-4 text-left">
             <div>
-              <label class="input-label" id="label-user" for="login-user">Username Warga</label>
+              <label class="block text-xs font-bold text-muted mb-1.5" id="label-user" for="login-user">Username Warga</label>
               <input id="login-user" class="input-control" type="text" autocomplete="username" placeholder="Masukkan username" required>
             </div>
             <div>
-              <label class="input-label" for="login-pass">Password</label>
+              <label class="block text-xs font-bold text-muted mb-1.5" for="login-pass">Password</label>
               <input id="login-pass" class="input-control" type="password" autocomplete="current-password" placeholder="Masukkan password" required>
             </div>
-            <button id="login-button" class="btn btn-primary btn-block mt-2" type="submit">🔓 Masuk Portal</button>
+            <button id="login-button" class="btn btn-primary w-full mt-2" type="submit">Masuk Portal</button>
           </form>
-          <p style="margin-top:16px; font-size:0.64rem; color:var(--muted); line-height:1.6">Gunakan akun resmi yang diberikan pengurus RT 06.</p>
         </div>
       </div>
     </main>
 
     <!-- SCREEN PORTAL -->
-    <main id="screen-portal" class="view-screen">
+    <main id="screen-portal" class="view-screen space-y-4">
       
       <!-- HEADER -->
-      <header class="app-card toped-header text-white flex items-center justify-between p-4 mb-4">
+      <header class="glass-card p-4 flex items-center justify-between">
         <div class="flex items-center space-x-3 min-w-0">
-          <div class="bg-white/10 p-2.5 rounded-xl border border-white/20">
-            <i class="fa-solid fa-house text-lg text-white"></i>
+          <div class="w-11 h-11 hero-gradient rounded-2xl flex items-center justify-center text-white shrink-0 shadow-md">
+            <i class="fa-solid fa-house"></i>
           </div>
           <div class="min-w-0">
-            <h1 class="font-bold text-sm sm:text-base tracking-tight text-white flex items-center gap-1.5 truncate">
-              RT 06 Bendotretek <span class="w-2 h-2 rounded-full bg-emerald-300 animate-ping shrink-0"></span>
-            </h1>
-            <p id="user-role-text" class="text-[11px] text-emerald-100 font-medium truncate">Pusat Informasi & Kas Warga</p>
-            <div class="connection-status text-emerald-100 mt-0.5">
-              <span id="connection-dot" class="status-dot"></span><span id="connection-text">Memeriksa koneksi...</span>
-            </div>
+            <h2 class="font-extrabold text-sm tracking-tight truncate">RT 06 Bendotretek</h2>
+            <p id="user-role-text" class="text-[11px] text-muted font-medium truncate">Pusat Informasi Warga</p>
           </div>
         </div>
         <div class="flex items-center space-x-2 shrink-0">
-          <button class="btn btn-light btn-sm" type="button" onclick="toggleTheme()" title="Ganti tema" aria-label="Ganti tema">🌓</button>
-          <button class="btn btn-danger btn-sm" type="button" onclick="handleLogout()" title="Keluar Akun" aria-label="Keluar"><i class="fa-solid fa-right-from-bracket"></i></button>
+          <button class="btn btn-primary btn-sm px-3 py-1.5 text-xs" type="button" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+          <button class="btn bg-rose-50 text-rose-600 dark:bg-rose-950/50 dark:text-rose-400 btn-sm px-3 py-1.5 text-xs" type="button" onclick="handleLogout()" title="Keluar"><i class="fa-solid fa-right-from-bracket"></i></button>
         </div>
       </header>
 
       <!-- WALLET HERO CARD -->
-      <section class="jmo-hero rounded-2xl p-5 text-white shadow-lg space-y-4 relative overflow-hidden mb-4">
-        <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
-        <div class="flex justify-between items-center">
+      <section class="hero-gradient rounded-3xl p-6 text-white shadow-xl space-y-4 relative overflow-hidden">
+        <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="flex justify-between items-center relative z-10">
           <div>
-            <span class="text-[11px] text-blue-100 uppercase tracking-wider font-bold">SALDO KAS BERSIH RT 06</span>
-            <h2 id="stat-saldo" class="text-2xl sm:text-3xl font-black mt-0.5 tracking-tight">Rp 0</h2>
+            <span class="text-[11px] text-indigo-100 uppercase tracking-widest font-extrabold">SALDO KAS BERSIH</span>
+            <h2 id="stat-saldo" class="text-3xl font-black mt-1 tracking-tight">Rp 0</h2>
           </div>
-          <button onclick="fetchCloudData()" class="bg-white/20 hover:bg-white/30 p-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-rotate-right"></i> <span class="hidden sm:inline">Refresh</span>
+          <button onclick="fetchCloudData()" class="bg-white/20 hover:bg-white/30 backdrop-blur-md p-3 rounded-2xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-rotate-right"></i>
           </button>
         </div>
-        <div class="grid grid-cols-2 gap-3 pt-3 border-t border-white/20">
-          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
-            <span class="text-[10px] text-blue-100 font-semibold block">TOTAL PEMASUKAN</span>
-            <span id="stat-masuk" class="text-sm sm:text-base font-extrabold text-emerald-300">Rp 0</span>
+        <div class="grid grid-cols-2 gap-3 pt-3 border-t border-white/20 relative z-10">
+          <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10">
+            <span class="text-[10px] text-indigo-100 font-bold block">PEMASUKAN</span>
+            <span id="stat-masuk" class="text-sm font-black text-emerald-300">Rp 0</span>
           </div>
-          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
-            <span class="text-[10px] text-blue-100 font-semibold block">TOTAL PENGELUARAN</span>
-            <span id="stat-keluar" class="text-sm sm:text-base font-extrabold text-rose-300">Rp 0</span>
+          <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10">
+            <span class="text-[10px] text-indigo-100 font-bold block">PENGELUARAN</span>
+            <span id="stat-keluar" class="text-sm font-black text-rose-300">Rp 0</span>
           </div>
         </div>
-        <div class="sync-note text-[10px] text-blue-100/80" id="last-sync">Menunggu data...</div>
+        <div class="text-[10px] text-indigo-100/80 relative z-10" id="last-sync">Sinkronisasi data siap...</div>
       </section>
 
-      <!-- QUICK MENU GRID -->
-      <div class="app-card p-4">
-        <h3 class="font-bold text-xs uppercase tracking-wider text-slate-500 mb-3">Menu Layanan Warga</h3>
-        <div class="grid grid-cols-4 gap-3 text-center">
-          <button onclick="switchNav('info')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-emerald-100"><i class="fa-solid fa-bullhorn"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Pengumuman</span>
+      <!-- QUICK MENU GRID (Estetik & Bersih) -->
+      <section class="glass-card p-4 space-y-3">
+        <h3 class="text-xs font-extrabold uppercase tracking-wider text-muted px-1">Menu Layanan Warga</h3>
+        <div class="menu-grid">
+          <button onclick="switchNav('info')" class="menu-tile">
+            <div class="menu-icon bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50"><i class="fa-solid fa-bullhorn"></i></div>
+            <span class="text-[11px] font-bold">Info</span>
           </button>
-          <button onclick="switchNav('masuk')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-green-100"><i class="fa-solid fa-wallet"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Kas RT</span>
+          <button onclick="switchNav('masuk')" class="menu-tile">
+            <div class="menu-icon bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50"><i class="fa-solid fa-wallet"></i></div>
+            <span class="text-[11px] font-bold">Kas RT</span>
           </button>
-          <button onclick="switchNav('ronda')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-amber-100"><i class="fa-solid fa-shield-cat"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Ronda</span>
+          <button onclick="switchNav('ronda')" class="menu-tile">
+            <div class="menu-icon bg-amber-50 text-amber-600 dark:bg-amber-950/50"><i class="fa-solid fa-shield-cat"></i></div>
+            <span class="text-[11px] font-bold">Ronda</span>
           </button>
-          <button onclick="switchNav('agenda')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-purple-100"><i class="fa-solid fa-calendar-days"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Agenda</span>
+          <button onclick="switchNav('agenda')" class="menu-tile">
+            <div class="menu-icon bg-purple-50 text-purple-600 dark:bg-purple-950/50"><i class="fa-solid fa-calendar-days"></i></div>
+            <span class="text-[11px] font-bold">Agenda</span>
           </button>
-          <button onclick="switchNav('inventaris')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-rose-100"><i class="fa-solid fa-boxes-packing"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Inventaris</span>
+          <button onclick="switchNav('inventaris')" class="menu-tile">
+            <div class="menu-icon bg-rose-50 text-rose-600 dark:bg-rose-950/50"><i class="fa-solid fa-boxes-packing"></i></div>
+            <span class="text-[11px] font-bold">Aset</span>
           </button>
-          <button onclick="switchNav('laporan')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-indigo-100"><i class="fa-solid fa-comment-dots"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Aspirasi</span>
+          <button onclick="switchNav('laporan')" class="menu-tile">
+            <div class="menu-icon bg-sky-50 text-sky-600 dark:bg-sky-950/50"><i class="fa-solid fa-comment-dots"></i></div>
+            <span class="text-[11px] font-bold">Aspirasi</span>
           </button>
-          <button onclick="switchNav('umkm')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-teal-100"><i class="fa-solid fa-store"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">UMKM</span>
+          <button onclick="switchNav('umkm')" class="menu-tile">
+            <div class="menu-icon bg-teal-50 text-teal-600 dark:bg-teal-950/50"><i class="fa-solid fa-store"></i></div>
+            <span class="text-[11px] font-bold">UMKM</span>
           </button>
-          <button onclick="switchNav('surat')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-cyan-50 text-cyan-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-cyan-100"><i class="fa-solid fa-file-signature"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Surat</span>
-          </button>
-          <button onclick="switchNav('warga')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition role-editor-only hidden">
-            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-blue-100"><i class="fa-solid fa-users"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Warga</span>
-          </button>
-          <button onclick="switchNav('kk')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition role-editor-only hidden">
-            <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-orange-100"><i class="fa-solid fa-house-chimney"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Status KK</span>
-          </button>
-          <button onclick="switchNav('keluar')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition role-editor-only hidden">
-            <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-rose-100"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Kas Keluar</span>
+          <button onclick="switchNav('surat')" class="menu-tile">
+            <div class="menu-icon bg-cyan-50 text-cyan-600 dark:bg-cyan-950/50"><i class="fa-solid fa-file-signature"></i></div>
+            <span class="text-[11px] font-bold">Surat</span>
           </button>
         </div>
-      </div>
+      </section>
 
-      <!-- SECTION TABS -->
-      <div class="section-tabs" role="tablist" aria-label="Menu portal">
-        <button id="tab-button-info" class="section-tab active" type="button" onclick="switchNav('info')">📢 Pengumuman</button>
-        <button id="tab-button-agenda" class="section-tab" type="button" onclick="switchNav('agenda')">📅 Agenda Kegiatan</button>
-        <button id="tab-button-surat" class="section-tab" type="button" onclick="switchNav('surat')">📄 E-Surat</button>
-        <button id="tab-button-masuk" class="section-tab" type="button" onclick="switchNav('masuk')">📥 Kas Masuk</button>
-        <button id="tab-button-keluar" class="section-tab role-editor-only hidden" type="button" onclick="switchNav('keluar')">📤 Kas Keluar</button>
-        <button id="tab-button-ronda" class="section-tab" type="button" onclick="switchNav('ronda')">🛡️ Ronda</button>
-        <button id="tab-button-inventaris" class="section-tab" type="button" onclick="switchNav('inventaris')">📦 Inventaris</button>
-        <button id="tab-button-laporan" class="section-tab" type="button" onclick="switchNav('laporan')">💬 Aspirasi</button>
-        <button id="tab-button-umkm" class="section-tab" type="button" onclick="switchNav('umkm')">🏪 UMKM</button>
-        <button id="tab-button-kk" class="section-tab role-editor-only hidden" type="button" onclick="switchNav('kk')">🏠 Status KK</button>
-        <button id="tab-button-warga" class="section-tab role-editor-only hidden" type="button" onclick="switchNav('warga')">⚙️ Warga</button>
-      </div>
-
-      <!-- TAB INFO / PENGUMUMAN -->
-      <section id="tab-info" class="tab-content">
-        <div class="app-card role-editor-only hidden" id="box-pengumuman-form">
-          <div class="card-header flex justify-between items-center mb-3">
-            <div>
-              <div class="card-title text-sm font-bold">Buat Pengumuman Warga</div>
-              <div class="card-subtitle text-xs text-muted">Pengumuman penting lingkungan RT 06.</div>
-            </div>
-          </div>
-          <form id="form-pengumuman" class="space-y-3">
-            <input id="in-info-judul" class="input-control" type="text" placeholder="Judul pengumuman" maxlength="120" required>
-            <select id="in-info-kat" class="input-control font-bold">
-              <option>Kerja Bakti</option>
-              <option>Posyandu & Kesehatan</option>
-              <option>Rapat Warga</option>
-              <option>Berita Duka</option>
-              <option>Informasi Umum</option>
-            </select>
-            <textarea id="in-info-isi" class="input-control" rows="3" placeholder="Isi pengumuman..." maxlength="2000" required></textarea>
-            <button class="btn btn-primary" type="submit">📢 Publikasikan Pengumuman</button>
-          </form>
-        </div>
+      <!-- TAB CONTENT PANELS -->
+      <div id="tab-content-container">
         
-        <div class="app-card">
-          <div class="flex justify-between items-center mb-3">
-            <div>
-              <div class="card-title text-sm font-bold">📌 Papan Pengumuman RT 06</div>
-              <div class="card-subtitle text-xs text-muted">Informasi dan berita terbaru untuk warga.</div>
+        <!-- PENGUMUMAN -->
+        <section id="tab-info" class="tab-content space-y-4">
+          <div class="glass-card role-editor-only hidden p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">Buat Pengumuman Baru</h3>
+            <form id="form-pengumuman" class="space-y-3">
+              <input id="in-info-judul" class="input-control" type="text" placeholder="Judul pengumuman" required>
+              <select id="in-info-kat" class="input-control font-bold">
+                <option>Kerja Bakti</option>
+                <option>Posyandu & Kesehatan</option>
+                <option>Rapat Warga</option>
+                <option>Berita Duka</option>
+                <option>Informasi Umum</option>
+              </select>
+              <textarea id="in-info-isi" class="input-control" rows="3" placeholder="Tulis isi pengumuman..." required></textarea>
+              <button class="btn btn-primary w-full" type="submit">Publikasikan</button>
+            </form>
+          </div>
+          <div class="glass-card p-5 space-y-3">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-extrabold">📌 Papan Informasi RT 06</h3>
+              <button class="btn btn-primary btn-sm text-xs" type="button" onclick="shareAnnouncementsToWA()"><i class="fa-brands fa-whatsapp"></i> Bagikan</button>
             </div>
-            <div class="flex gap-2">
-              <button class="btn btn-success btn-sm" type="button" onclick="shareAnnouncementsToWA()"><i class="fa-brands fa-whatsapp"></i> Bagikan</button>
-              <button class="btn btn-light btn-sm" type="button" onclick="fetchCloudData()">↻ Segarkan</button>
+            <div id="pengumuman-list-container" class="space-y-3"></div>
+          </div>
+        </section>
+
+        <!-- SURAT PENGANTAR -->
+        <section id="tab-surat" class="tab-content hidden space-y-4">
+          <div class="glass-card p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">📄 Pengajuan Surat Pengantar RT</h3>
+            <form id="form-surat" class="space-y-3">
+              <input id="surat-nama" class="input-control" type="text" placeholder="Nama lengkap" required>
+              <input id="surat-nik" class="input-control" type="text" inputmode="numeric" maxlength="16" placeholder="16 digit NIK" required>
+              <select id="surat-jenis" class="input-control font-bold">
+                <option>Pengantar KTP / KK Baru</option>
+                <option>Surat Keterangan Domisili</option>
+                <option>Surat Keterangan Tidak Mampu (SKTM)</option>
+              </select>
+              <textarea id="surat-keperluan" class="input-control" rows="2" placeholder="Keperluan surat..." required></textarea>
+              <button class="btn btn-primary w-full" type="submit">Kirim Permohonan</button>
+            </form>
+          </div>
+          <div id="admin-surat-box" class="glass-card role-editor-only hidden p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">📋 Kelola Permohonan Surat</h3>
+            <div id="admin-surat-list"></div>
+          </div>
+        </section>
+
+        <!-- KAS MASUK -->
+        <section id="tab-masuk" class="tab-content hidden space-y-4">
+          <div id="box-masuk" class="glass-card role-editor-only hidden p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">📥 Catat Pemasukan Kas</h3>
+            <form id="form-masuk" class="space-y-3">
+              <input id="in-nama" class="input-control" type="text" list="warga-list" placeholder="Nama warga" required>
+              <datalist id="warga-list"></datalist>
+              <select id="in-kat-masuk" class="input-control font-bold">
+                <option>Iuran Kas Bulanan</option>
+                <option>Iuran Kebersihan</option>
+                <option>Sumbangan</option>
+                <option>Lainnya</option>
+              </select>
+              <input id="in-jumlah-masuk" class="input-control" type="text" inputmode="numeric" placeholder="Nominal (Rp)" required>
+              <button class="btn btn-primary w-full" type="submit">Simpan Pemasukan</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- KAS KELUAR -->
+        <section id="tab-keluar" class="tab-content hidden space-y-4">
+          <div id="box-keluar" class="glass-card role-editor-only hidden p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">📤 Catat Pengeluaran Kas</h3>
+            <form id="form-keluar" class="space-y-3">
+              <input id="in-ket" class="input-control" type="text" placeholder="Keterangan pengeluaran" required>
+              <select id="in-kat-keluar" class="input-control font-bold">
+                <option>Kebersihan</option>
+                <option>Keamanan</option>
+                <option>Operasional RT</option>
+                <option>Sosial</option>
+                <option>Lainnya</option>
+              </select>
+              <input id="in-jumlah-keluar" class="input-control" type="text" inputmode="numeric" placeholder="Nominal (Rp)" required>
+              <button class="btn btn-primary w-full bg-gradient-to-r from-rose-500 to-pink-600" type="submit">Simpan Pengeluaran</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- RONDA -->
+        <section id="tab-ronda" class="tab-content hidden space-y-4">
+          <div class="glass-card p-5 space-y-3">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-extrabold">🛡️ Jadwal Siskamling / Ronda</h3>
+              <button class="btn btn-primary btn-sm text-xs" type="button" onclick="shareRondaToWA()"><i class="fa-brands fa-whatsapp"></i> WA</button>
             </div>
+            <div id="list-ronda" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
           </div>
-          <div id="pengumuman-list-container"></div>
-        </div>
-      </section>
+        </section>
 
-      <!-- TAB SURAT -->
-      <section id="tab-surat" class="tab-content hidden space-y-4">
-        <div class="app-card">
-          <div class="mb-3">
-            <div class="card-title text-sm font-bold">📄 Pengajuan Surat Pengantar RT</div>
-            <div class="card-subtitle text-xs text-muted">Isi formulir untuk mengirim permohonan langsung ke pengurus RT 06.</div>
+        <!-- AGENDA -->
+        <section id="tab-agenda" class="tab-content hidden space-y-4">
+          <div class="glass-card role-editor-only hidden p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">Tambah Agenda Kegiatan</h3>
+            <form id="form-agenda" class="space-y-3" onsubmit="handleAddAgenda(event)">
+              <input id="ag-kegiatan" class="input-control" type="text" placeholder="Nama kegiatan" required>
+              <input id="ag-tanggal" class="input-control" type="date" required>
+              <input id="ag-waktu" class="input-control" type="text" placeholder="Waktu (Cth: 19:00 WIB)" required>
+              <input id="ag-lokasi" class="input-control" type="text" placeholder="Lokasi kegiatan" required>
+              <button class="btn btn-primary w-full" type="submit">Simpan Agenda</button>
+            </form>
           </div>
-          <form id="form-surat" class="space-y-3">
-            <input id="surat-nama" class="input-control" type="text" placeholder="Nama lengkap" maxlength="120" required>
-            <input id="surat-nik" class="input-control" type="text" inputmode="numeric" pattern="[0-9]{16}" maxlength="16" placeholder="16 digit NIK" required>
-            <select id="surat-jenis" class="input-control font-bold">
-              <option>Pengantar KTP / KK Baru</option>
-              <option>Surat Keterangan Domisili</option>
-              <option>Surat Keterangan Tidak Mampu (SKTM)</option>
-            </select>
-            <textarea id="surat-keperluan" class="input-control" rows="2" maxlength="1000" placeholder="Keperluan surat..." required></textarea>
-            <button class="btn btn-blue btn-block" type="submit">📨 Kirim Permohonan Surat</button>
-          </form>
-        </div>
-        
-        <div id="admin-surat-box" class="app-card role-editor-only hidden">
-          <div class="flex justify-between items-center mb-3">
-            <div>
-              <div class="card-title text-sm font-bold">📋 Permohonan Surat Warga</div>
-              <div class="card-subtitle text-xs text-muted">Daftar ini dapat diproses oleh pengurus.</div>
+          <div class="glass-card p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">📅 Agenda Warga RT 06</h3>
+            <div id="list-agenda" class="space-y-3"></div>
+          </div>
+        </section>
+
+        <!-- INVENTARIS -->
+        <section id="tab-inventaris" class="tab-content hidden space-y-4">
+          <div class="glass-card p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">📦 Stok & Aset Inventaris RT</h3>
+            <div id="list-inventaris" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+          </div>
+        </section>
+
+        <!-- ASPIRASI -->
+        <section id="tab-laporan" class="tab-content hidden space-y-4">
+          <div class="glass-card p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">💬 Kirim Aspirasi / Pengaduan</h3>
+            <form onsubmit="handleAddLaporan(event)" class="space-y-3">
+              <input type="text" id="lap-nama" placeholder="Nama Anda" required class="input-control">
+              <input type="text" id="lap-kategori" placeholder="Kategori (Mis: Jalan / Lampu)" required class="input-control">
+              <input type="text" id="lap-lokasi" placeholder="Lokasi Spesifik" required class="input-control">
+              <textarea id="lap-detail" rows="3" placeholder="Tuliskan detail laporan..." required class="input-control"></textarea>
+              <button type="submit" class="btn btn-primary w-full">Kirim Aspirasi</button>
+            </form>
+          </div>
+          <div class="glass-card p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">Daftar Aspirasi Warga</h3>
+            <div id="list-laporan" class="space-y-3"></div>
+          </div>
+        </section>
+
+        <!-- UMKM -->
+        <section id="tab-umkm" class="tab-content hidden space-y-4">
+          <div class="glass-card p-5 space-y-3">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-extrabold">🏪 Lapak UMKM Warga</h3>
+              <button onclick="toggleUmkmModal()" class="btn btn-primary btn-sm text-xs">+ Usaha Saya</button>
             </div>
-            <button class="btn btn-light btn-sm" type="button" onclick="fetchCloudData()">↻ Segarkan</button>
+            <div id="list-umkm" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
           </div>
-          <div id="admin-surat-list"></div>
-        </div>
-      </section>
+        </section>
 
-      <!-- TAB KAS MASUK -->
-      <section id="tab-masuk" class="tab-content hidden space-y-4">
-        <div id="box-masuk" class="app-card role-editor-only hidden">
-          <div class="mb-3">
-            <div class="card-title text-sm font-bold">📥 Catat Pemasukan</div>
-            <div class="card-subtitle text-xs text-muted">Simpan transaksi kas masuk baru ke sistem.</div>
+        <!-- STATUS KK -->
+        <section id="tab-kk" class="tab-content hidden space-y-4">
+          <div class="glass-card p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">🏠 Status Iuran Kepala Keluarga</h3>
+            <input id="kk-month" type="month" class="input-control">
+            <div id="kk-summary" class="flex gap-2 flex-wrap text-xs font-bold py-1"></div>
+            <div id="kk-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2"></div>
           </div>
-          <form id="form-masuk" class="space-y-3">
-            <input id="in-nama" class="input-control" type="text" list="warga-list" placeholder="Nama warga" maxlength="120" required>
-            <datalist id="warga-list"></datalist>
-            <select id="in-kat-masuk" class="input-control font-bold">
-              <option>Iuran Kas Bulanan</option>
-              <option>Iuran Kebersihan</option>
-              <option>Sumbangan</option>
-              <option>Lainnya</option>
-            </select>
-            <input id="in-jumlah-masuk" class="input-control" type="text" inputmode="numeric" placeholder="Nominal (Rp)" required>
-            <button class="btn btn-primary" type="submit">＋ Simpan Pemasukan</button>
-          </form>
-        </div>
-      </section>
+        </section>
 
-      <!-- TAB KAS KELUAR -->
-      <section id="tab-keluar" class="tab-content hidden space-y-4">
-        <div id="box-keluar" class="app-card role-editor-only hidden">
-          <div class="mb-3">
-            <div class="card-title text-sm font-bold">📤 Catat Pengeluaran</div>
-            <div class="card-subtitle text-xs text-muted">Transaksi disimpan ke Google Sheets dan dikelola pengurus.</div>
+        <!-- WARGA -->
+        <section id="tab-warga" class="tab-content hidden space-y-4">
+          <div class="glass-card role-editor-only hidden p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">Tambah Kepala Keluarga</h3>
+            <form id="form-warga" class="space-y-3">
+              <input id="in-warga-nama" class="input-control" type="text" placeholder="Nama kepala keluarga" required>
+              <button class="btn btn-primary w-full" type="submit">Simpan Warga</button>
+            </form>
           </div>
-          <form id="form-keluar" class="space-y-3">
-            <input id="in-ket" class="input-control" type="text" placeholder="Keterangan pengeluaran" maxlength="200" required>
-            <select id="in-kat-keluar" class="input-control font-bold">
-              <option>Kebersihan</option>
-              <option>Keamanan</option>
-              <option>Operasional RT</option>
-              <option>Sosial</option>
-              <option>Lainnya</option>
-            </select>
-            <input id="in-jumlah-keluar" class="input-control" type="text" inputmode="numeric" placeholder="Nominal (Rp)" required>
-            <button class="btn btn-danger" type="submit">＋ Simpan Pengeluaran</button>
-          </form>
-        </div>
-      </section>
-
-      <!-- TAB RONDA MALAM -->
-      <section id="tab-ronda" class="tab-content hidden">
-        <div class="app-card">
-          <div class="flex justify-between items-center mb-3">
-            <div class="card-title text-sm font-bold">🛡️ Jadwal Siskamling / Ronda Malam</div>
-            <button class="btn btn-success btn-sm" type="button" onclick="shareRondaToWA()"><i class="fa-brands fa-whatsapp"></i> Teruskan ke WA</button>
+          <div class="glass-card p-5 space-y-3">
+            <h3 class="text-sm font-extrabold">Daftar Warga RT 06</h3>
+            <div id="warga-list-container" class="space-y-2"></div>
           </div>
-          <div id="list-ronda" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
-        </div>
-      </section>
+        </section>
 
-      <!-- TAB AGENDA -->
-      <section id="tab-agenda" class="tab-content hidden">
-        <div class="app-card role-editor-only hidden mb-4" id="box-agenda-form">
-          <div class="card-title text-sm font-bold mb-3">Tambah Agenda Baru</div>
-          <form id="form-agenda" class="space-y-3" onsubmit="handleAddAgenda(event)">
-            <input id="ag-kegiatan" class="input-control" type="text" placeholder="Nama kegiatan" required>
-            <input id="ag-tanggal" class="input-control" type="date" required>
-            <input id="ag-waktu" class="input-control" type="text" placeholder="Waktu (Cth: 19:00 WIB)" required>
-            <input id="ag-lokasi" class="input-control" type="text" placeholder="Lokasi kegiatan" required>
-            <button class="btn btn-primary" type="submit">＋ Simpan Agenda</button>
-          </form>
-        </div>
-        <div class="app-card">
-          <div class="card-title text-sm font-bold mb-3">📅 Agenda Kegiatan Warga</div>
-          <div id="list-agenda" class="space-y-3"></div>
-        </div>
-      </section>
-
-      <!-- TAB INVENTARIS -->
-      <section id="tab-inventaris" class="tab-content hidden">
-        <div class="app-card">
-          <div class="card-title text-sm font-bold mb-3">📦 Stok & Aset Inventaris RT</div>
-          <div id="list-inventaris" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
-        </div>
-      </section>
-
-      <!-- TAB ASPIRASI -->
-      <section id="tab-laporan" class="tab-content hidden space-y-4">
-        <div class="app-card">
-          <div class="card-title text-sm font-bold mb-3">💬 Buat Aspirasi / Laporan Warga</div>
-          <form onsubmit="handleAddLaporan(event)" class="space-y-3">
-            <input type="text" id="lap-nama" placeholder="Nama Anda" required class="input-control">
-            <input type="text" id="lap-kategori" placeholder="Kategori (Jalan / Kebersihan)" required class="input-control">
-            <input type="text" id="lap-lokasi" placeholder="Lokasi Spesifik" required class="input-control">
-            <textarea id="lap-detail" rows="3" placeholder="Tuliskan detail laporan..." required class="input-control"></textarea>
-            <button type="submit" class="btn btn-primary w-full">Kirim Aspirasi</button>
-          </form>
-        </div>
-        <div class="app-card">
-          <div class="card-title text-sm font-bold mb-3">Status Laporan Warga</div>
-          <div id="list-laporan" class="space-y-2.5"></div>
-        </div>
-      </section>
-
-      <!-- TAB UMKM -->
-      <section id="tab-umkm" class="tab-content hidden">
-        <div class="app-card">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
-            <div class="card-title text-sm font-bold">🏪 Lapak UMKM Warga RT 06</div>
-            <button onclick="toggleUmkmModal()" class="btn btn-primary btn-sm">+ Usaha Saya</button>
-          </div>
-          <div id="list-umkm" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
-        </div>
-      </section>
-
-      <!-- TAB STATUS KK -->
-      <section id="tab-kk" class="tab-content hidden">
-        <div class="app-card">
-          <div class="mb-3">
-            <div class="card-title text-sm font-bold">🏠 Status Iuran Kepala Keluarga</div>
-            <div class="card-subtitle text-xs text-muted">Tinjau status pembayaran iuran warga per bulan.</div>
-          </div>
-          <label class="input-label" for="kk-month">Bulan iuran</label>
-          <input id="kk-month" type="month" class="input-control mb-3">
-          <div id="kk-summary" class="status-summary"></div>
-          <div id="kk-container" class="kk-grid mt-2"></div>
-        </div>
-      </section>
-
-      <!-- TAB WARGA -->
-      <section id="tab-warga" class="tab-content hidden space-y-4">
-        <div class="app-card role-editor-only hidden">
-          <div class="card-title text-sm font-bold mb-3">Tambah Kepala Keluarga</div>
-          <form id="form-warga" class="space-y-3">
-            <input id="in-warga-nama" class="input-control" type="text" placeholder="Nama kepala keluarga" maxlength="120" required>
-            <button class="btn btn-primary" type="submit">＋ Tambah Data Warga</button>
-          </form>
-        </div>
-        <div class="app-card">
-          <div class="card-title text-sm font-bold mb-3">Daftar Warga Terdaftar</div>
-          <div id="warga-list-container"></div>
-        </div>
-      </section>
+      </div>
 
       <!-- TRANSACTION TABLE & EXPORT -->
-      <section id="section-table" class="app-card hidden">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+      <section id="section-table" class="glass-card hidden p-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <div class="card-title text-sm font-bold" id="transaction-title">Riwayat Transaksi</div>
-            <div class="card-subtitle text-xs text-muted" id="transaction-count">0 transaksi</div>
+            <h3 class="text-sm font-extrabold" id="transaction-title">Riwayat Transaksi</h3>
+            <p class="text-xs text-muted" id="transaction-count">0 transaksi</p>
           </div>
-          <div class="inline-actions">
-            <button class="btn btn-success btn-sm" type="button" onclick="shareKasToWA()"><i class="fa-brands fa-whatsapp"></i> WA</button>
-            <button class="btn btn-gold btn-sm" type="button" onclick="downloadLaporanPDF()">📄 PDF</button>
-            <button class="btn btn-light btn-sm" type="button" onclick="downloadLaporanCSV()">📊 CSV</button>
-          </div>
-        </div>
-        <div class="space-y-2 mb-3">
-          <input id="search-input" class="input-control" type="search" placeholder="🔍 Cari nama, kategori, keterangan..." aria-label="Cari transaksi">
-          <div class="inline-actions flex gap-2">
-            <input id="filter-from" class="input-control" type="date" aria-label="Dari tanggal" style="flex:1;">
-            <input id="filter-to" class="input-control" type="date" aria-label="Sampai tanggal" style="flex:1;">
-            <button class="btn btn-light btn-sm shrink-0" type="button" onclick="clearFilters()">Reset</button>
+          <div class="flex gap-2 flex-wrap">
+            <button class="btn btn-primary btn-sm text-xs bg-emerald-600" type="button" onclick="shareKasToWA()"><i class="fa-brands fa-whatsapp"></i> WA</button>
+            <button class="btn btn-primary btn-sm text-xs bg-amber-600" type="button" onclick="downloadLaporanPDF()">PDF</button>
+            <button class="btn btn-primary btn-sm text-xs bg-slate-700" type="button" onclick="downloadLaporanCSV()">CSV</button>
           </div>
         </div>
-        <div class="table-wrap">
-          <table>
+        <div class="space-y-2">
+          <input id="search-input" class="input-control" type="search" placeholder="🔍 Cari transaksi...">
+          <div class="flex gap-2">
+            <input id="filter-from" class="input-control text-xs" type="date">
+            <input id="filter-to" class="input-control text-xs" type="date">
+            <button class="btn btn-primary btn-sm text-xs shrink-0" type="button" onclick="clearFilters()">Reset</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
             <thead>
-              <tr><th>Tanggal</th><th>Transaksi</th><th>Jumlah</th><th>Status</th><th>Aksi</th></tr>
+              <tr class="text-muted border-b border-slate-200 dark:border-slate-800">
+                <th class="py-2.5 text-left">Tanggal</th>
+                <th class="py-2.5 text-left">Transaksi</th>
+                <th class="py-2.5 text-right">Jumlah</th>
+                <th class="py-2.5 text-center">Status</th>
+                <th class="py-2.5 text-center">Aksi</th>
+              </tr>
             </thead>
             <tbody id="table-body"></tbody>
           </table>
         </div>
-        <div id="table-empty" class="empty-state hidden">Belum ada transaksi yang cocok.</div>
+        <div id="table-empty" class="text-center py-6 text-muted text-xs hidden">Belum ada transaksi.</div>
       </section>
 
       <!-- EXPENSE CHART -->
-      <section id="section-chart" class="app-card hidden">
-        <div class="mb-3">
-          <div class="card-title text-sm font-bold">📊 Alokasi Pengeluaran</div>
-          <div class="card-subtitle text-xs text-muted">Ringkasan berdasarkan kategori pengeluaran.</div>
-        </div>
-        <div class="chart-box"><canvas id="expenseChart"></canvas></div>
-        <div id="chart-empty" class="empty-state hidden">Belum ada data pengeluaran untuk ditampilkan.</div>
+      <section id="section-chart" class="glass-card hidden p-5 space-y-3">
+        <h3 class="text-sm font-extrabold">📊 Alokasi Pengeluaran</h3>
+        <div class="h-56 relative"><canvas id="expenseChart"></canvas></div>
+        <div id="chart-empty" class="text-center py-4 text-muted text-xs hidden">Belum ada data grafik.</div>
       </section>
 
     </main>
   </div>
 
+  <!-- FLOATING BOTTOM NAVIGATION DOCK -->
+  <nav class="floating-dock role-user-nav">
+    <button onclick="switchNav('info')" id="dock-btn-info" class="dock-item active">
+      <i class="fa-solid fa-bullhorn"></i>
+      <span>Info</span>
+    </button>
+    <button onclick="switchNav('masuk')" id="dock-btn-masuk" class="dock-item">
+      <i class="fa-solid fa-wallet"></i>
+      <span>Kas RT</span>
+    </button>
+    <button onclick="switchNav('agenda')" id="dock-btn-agenda" class="dock-item">
+      <i class="fa-solid fa-calendar-days"></i>
+      <span>Agenda</span>
+    </button>
+    <button onclick="switchNav('ronda')" id="dock-btn-ronda" class="dock-item">
+      <i class="fa-solid fa-shield-cat"></i>
+      <span>Ronda</span>
+    </button>
+    <button onclick="switchNav('surat')" id="dock-btn-surat" class="dock-item">
+      <i class="fa-solid fa-file-signature"></i>
+      <span>Surat</span>
+    </button>
+  </nav>
+
   <!-- MODAL UMKM -->
-  <div id="modal-umkm" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="app-card max-w-md w-full p-5 space-y-3 bg-white">
-      <h3 class="font-bold text-slate-800 text-sm">Daftarkan Lapak UMKM Warga</h3>
+  <div id="modal-umkm" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="glass-card max-w-md w-full p-6 space-y-4 bg-white dark:bg-slate-900">
+      <h3 class="font-extrabold text-sm">Daftarkan Lapak UMKM Warga</h3>
       <form onsubmit="handleAddUmkm(event)" class="space-y-3">
         <input type="text" id="u-namaUsaha" placeholder="Nama Usaha / Produk" required class="input-control">
         <input type="text" id="u-pemilik" placeholder="Nama Pemilik" required class="input-control">
         <input type="text" id="u-kategori" placeholder="Kategori Produk" required class="input-control">
         <input type="text" id="u-wa" placeholder="Nomor WhatsApp (Cth: 0812...)" required class="input-control">
         <textarea id="u-deskripsi" rows="3" placeholder="Deskripsi produk..." required class="input-control"></textarea>
-        <div class="flex gap-2 pt-1">
-          <button type="button" onclick="toggleUmkmModal()" class="btn btn-light w-1/2">Batal</button>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="toggleUmkmModal()" class="btn bg-slate-200 dark:bg-slate-800 w-1/2">Batal</button>
           <button type="submit" class="btn btn-primary w-1/2">Simpan</button>
         </div>
       </form>
@@ -610,16 +651,15 @@
     'use strict';
     const CONFIG = {
       API_URL: "https://script.google.com/macros/s/AKfycbyhA5-Ke7UFKzRKAZZ0eQvAly4oQiTGnZXlKz9EJbkcCAyYy04pUW9kmCWI6HIIvFGd7g/exec",
-      WA_RT: "6281234567890",
-      CACHE_KAS: "rt06_kas_cache_v13",
-      CACHE_PENGUMUMAN: "rt06_pengumuman_v13",
-      SESSION: "rt06_user_session_v13",
-      THEME: "rt06_theme_v13",
+      CACHE_KAS: "rt06_kas_cache_v14",
+      CACHE_PENGUMUMAN: "rt06_pengumuman_v14",
+      SESSION: "rt06_user_session_v14",
+      THEME: "rt06_theme_v14",
       CACHE_TTL: 7 * 24 * 60 * 60 * 1000
     };
 
     let currentUser = null, currentLoginRole = "viewer", expenseChart = null;
-    const state = { currentTab: "info", riwayat: [], pengeluaran: [], warga: [], pengumuman: [], surat: [], ronda: [], laporan: [], agenda: [], umkm: [], inventaris: [], lastSync: null, hasCloudData: false };
+    const state = { currentTab: "info", riwayat: [], pengeluaran: [], warga: [], pengumuman: [], surat: [], ronda: [], laporan: [], agenda: [], umkm: [], inventaris: [], lastSync: null };
     const $ = id => document.getElementById(id);
     const defaultAnnouncements = [{ id: "p1", judul: "Selamat Datang di Portal RT 06", kategori: "Informasi Umum", tanggal: new Date().toLocaleDateString("id-ID"), isi: "Portal informasi dan transparansi kas warga RT 06 Bendotretek." }];
 
@@ -631,10 +671,11 @@
       bindForms();
       bindFilters();
       renderAnnouncements();
-      updateConnection();
-      window.addEventListener("online", updateConnection);
-      window.addEventListener("offline", updateConnection);
       checkSession();
+    }
+
+    function triggerHaptic() {
+      if (navigator.vibrate) navigator.vibrate(15);
     }
 
     function bindForms() {
@@ -655,15 +696,16 @@
     }
 
     function switchLoginRole(role) {
+      triggerHaptic();
       currentLoginRole = role;
       $('role-btn-viewer').classList.toggle('active', role === 'viewer');
       $('role-btn-admin').classList.toggle('active', role === 'admin');
       $('label-user').textContent = role === 'admin' ? 'Username Pengurus' : 'Username Warga';
       $('login-user').placeholder = role === 'admin' ? 'Masukkan username admin' : 'Masukkan username warga';
-      $('login-pass').placeholder = 'Masukkan password';
     }
 
     async function handleLogin() {
+      triggerHaptic();
       const username = $('login-user').value.trim(), password = $('login-pass').value;
       if (!username || !password) return showToast('Username dan password wajib diisi.', '⚠️');
       showLoader(true, 'Memverifikasi akun...');
@@ -673,7 +715,6 @@
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({ action: 'login', username, password, role: currentLoginRole })
         });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
         if (data && data.success && data.user && data.user.role) {
           currentUser = {
@@ -687,7 +728,7 @@
         }
         showToast(data?.message || 'Username atau password tidak sesuai.', '❌');
       } catch (err) {
-        showToast('Server tidak dapat dihubungi. Periksa koneksi.', '📡');
+        showToast('Server tidak dapat dihubungi.', '📡');
       } finally {
         showLoader(false);
       }
@@ -701,7 +742,7 @@
       loadCachedData();
       renderAll();
       fetchCloudData();
-      showToast('Selamat datang, ' + currentUser.name, '🔓');
+      showToast('Selamat datang, ' + currentUser.name, '✨');
     }
 
     function checkSession() {
@@ -709,7 +750,7 @@
         const raw = localStorage.getItem(CONFIG.SESSION);
         if (raw) {
           const u = JSON.parse(raw);
-          if (u && typeof u.name === 'string' && typeof u.role === 'string' && u.sessionToken) {
+          if (u && u.sessionToken) {
             currentUser = u;
             updateRoleUI();
             showScreen('screen-portal');
@@ -724,20 +765,12 @@
     }
 
     function handleLogout() {
-      const token = currentUser && currentUser.sessionToken;
-      if (token) {
-        fetch(CONFIG.API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'deletesession', sessionToken: token })
-        }).catch(() => {});
-      }
+      triggerHaptic();
       try { localStorage.removeItem(CONFIG.SESSION); } catch (e) {}
       currentUser = null;
-      state.surat = [];
       showScreen('screen-login');
       $('login-pass').value = '';
-      showToast('Anda telah keluar.', '🚪');
+      showToast('Anda telah keluar.', '👋');
     }
 
     function isEditor() {
@@ -746,7 +779,7 @@
 
     function updateRoleUI() {
       document.querySelectorAll('.role-editor-only').forEach(el => el.classList.toggle('hidden', !isEditor()));
-      $('user-role-text').textContent = currentUser ? `${currentUser.name} (${isEditor() ? 'Pengurus' : 'Warga'})` : 'Pusat Informasi & Kas Warga';
+      $('user-role-text').textContent = currentUser ? `${currentUser.name} (${isEditor() ? 'Pengurus' : 'Warga'})` : 'Pusat Informasi Warga';
     }
 
     function showScreen(id) {
@@ -754,53 +787,45 @@
     }
 
     function switchNav(tab) {
-      if (!['info', 'surat', 'masuk', 'keluar', 'kk', 'warga', 'ronda', 'agenda', 'inventaris', 'laporan', 'umkm'].includes(tab)) return;
-      if (['warga', 'kk', 'keluar'].includes(tab) && !isEditor()) { showToast('Menu ini khusus pengurus.', '🔒'); return; }
+      triggerHaptic();
+      if (['warga', 'kk', 'keluar'].includes(tab) && !isEditor()) { showToast('Menu khusus pengurus.', '🔒'); return; }
       state.currentTab = tab;
+      
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       const activeContent = $('tab-' + tab);
       if (activeContent) activeContent.classList.remove('hidden');
 
-      document.querySelectorAll('.section-tab').forEach(el => el.classList.remove('active'));
-      const activeTabBtn = $('tab-button-' + tab);
-      if (activeTabBtn) activeTabBtn.classList.add('active');
+      document.querySelectorAll('.dock-item').forEach(el => el.classList.remove('active'));
+      const dockBtn = $('dock-btn-' + tab);
+      if (dockBtn) dockBtn.classList.add('active');
 
       const isKas = ['masuk', 'keluar'].includes(tab);
-      $('section-table').classList.toggle('hidden', !isKas);
-      $('section-chart').classList.toggle('hidden', tab !== 'keluar');
+      $('section-table').classList.toggle('hidden', !isKas);$('section-chart').classList.toggle('hidden', tab !== 'keluar');
       if (tab === 'warga') renderWarga();
       if (isKas) renderData();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     async function postApi(payload) {
-      if (!currentUser || !currentUser.sessionToken) throw new Error('Sesi login tidak tersedia. Silakan masuk kembali.');
+      if (!currentUser || !currentUser.sessionToken) throw new Error('Sesi tidak valid.');
       const res = await fetch(CONFIG.API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ ...payload, sessionToken: currentUser.sessionToken })
       });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
       return await res.json();
     }
 
     async function fetchCloudData() {
-      if (!currentUser || !currentUser.sessionToken) { updateConnection(); return; }
-      if (!navigator.onLine) { updateConnection(); return; }
+      if (!currentUser || !currentUser.sessionToken || !navigator.onLine) return;
       try {
         const res = await fetch(CONFIG.API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'getdata', sessionToken: currentUser.sessionToken }),
-          cache: 'no-store'
+          body: JSON.stringify({ action: 'getdata', sessionToken: currentUser.sessionToken })
         });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        if (!data || typeof data !== 'object') throw new Error('Respons tidak valid');
-        if (data.success === false) {
-          if (data.code === 'SESSION_INVALID') { handleExpiredSession(); return; }
-          throw new Error(data.message || 'Gagal memuat data');
-        }
+        if (data.success === false && data.code === 'SESSION_INVALID') { handleExpiredSession(); return; }
         state.riwayat = Array.isArray(data.riwayat) ? data.riwayat : [];
         state.pengeluaran = Array.isArray(data.pengeluaran) ? data.pengeluaran : [];
         state.warga = Array.isArray(data.warga) ? data.warga : [];
@@ -811,15 +836,10 @@
         state.agenda = Array.isArray(data.agenda) ? data.agenda : [];
         state.umkm = Array.isArray(data.umkm) ? data.umkm : [];
         state.inventaris = Array.isArray(data.inventaris) ? data.inventaris : [];
-        state.hasCloudData = true;
         state.lastSync = new Date().toISOString();
         saveKasCache();
-        saveAnnouncementsCache();
         renderAll();
-        updateConnection();
-      } catch (err) {
-        updateConnection();
-      }
+      } catch (err) {}
     }
 
     function renderAll() {
@@ -830,73 +850,73 @@
       renderChart();
       renderSuratAdmin();
       renderExtraModules();
-      $('last-sync').textContent = state.lastSync ? 'Sinkron terakhir: ' + new Date(state.lastSync).toLocaleString('id-ID') : 'Data lokal aktif';
+      $('last-sync').textContent = state.lastSync ? 'Sinkron: ' + new Date(state.lastSync).toLocaleTimeString('id-ID') : 'Mode offline';
     }
 
     function renderExtraModules() {
       const rondaC = $('list-ronda');
       if (rondaC) {
         rondaC.innerHTML = state.ronda.map(r => `
-          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
-            <span class="text-[10px] font-bold uppercase text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">${escapeHtml(r.hari)}</span>
-            <h4 class="font-bold text-xs text-slate-800 pt-1">${escapeHtml(r.namaPetugas)}</h4>
-            <p class="text-[10px] text-slate-500">${escapeHtml(r.pos)}</p>
+          <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-1">
+            <span class="text-[10px] font-extrabold uppercase text-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-0.5 rounded-md">${escapeHtml(r.hari)}</span>
+            <h4 class="font-bold text-xs pt-1">${escapeHtml(r.namaPetugas)}</h4>
+            <p class="text-[10px] text-muted">${escapeHtml(r.pos)}</p>
           </div>
-        `).join('') || '<p class="text-xs text-slate-500">Jadwal ronda belum tersedia.</p>';
+        `).join('') || '<p class="text-xs text-muted">Jadwal ronda belum tersedia.</p>';
       }
 
       const agendaC = $('list-agenda');
       if (agendaC) {
         agendaC.innerHTML = state.agenda.map(a => `
-          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center text-xs">
+          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl flex justify-between items-center text-xs">
             <div>
-              <span class="text-[10px] text-emerald-700 font-bold">${escapeHtml(a.tanggal)} • ${escapeHtml(a.waktu)}</span>
-              <h4 class="font-bold text-slate-800 mt-0.5">${escapeHtml(a.kegiatan)}</h4>
-              <p class="text-[10px] text-slate-500">${escapeHtml(a.lokasi)}</p>
+              <span class="text-[10px] text-indigo-600 font-bold">${escapeHtml(a.tanggal)} • ${escapeHtml(a.waktu)}</span>
+              <h4 class="font-extrabold mt-0.5">${escapeHtml(a.kegiatan)}</h4>
+              <p class="text-[10px] text-muted">${escapeHtml(a.lokasi)}</p>
             </div>
           </div>
-        `).join('') || '<p class="text-xs text-slate-500">Tidak ada agenda saat ini.</p>';
+        `).join('') || '<p class="text-xs text-muted">Tidak ada agenda saat ini.</p>';
       }
 
       const invC = $('list-inventaris');
       if (invC) {
         invC.innerHTML = state.inventaris.map(i => `
-          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs space-y-1">
-            <div class="flex justify-between items-start font-bold text-slate-800">
+          <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs space-y-1">
+            <div class="flex justify-between items-start font-bold">
               <span>${escapeHtml(i.namaBarang)}</span>
-              <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md">${escapeHtml(i.kondisi)}</span>
+              <span class="text-[10px] bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 px-2 py-0.5 rounded-md">${escapeHtml(i.kondisi)}</span>
             </div>
-            <p class="text-slate-500 text-[11px]">Stok: <b class="text-slate-700">${i.jumlahTotal} unit</b></p>
+            <p class="text-muted text-[11px]">Stok: <b class="text-text">${i.jumlahTotal} unit</b></p>
           </div>
-        `).join('') || '<p class="text-xs text-slate-500">Belum ada inventaris.</p>';
+        `).join('') || '<p class="text-xs text-muted">Belum ada inventaris.</p>';
       }
 
       const lapC = $('list-laporan');
       if (lapC) {
         lapC.innerHTML = state.laporan.map(l => `
-          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs space-y-1">
-            <div class="flex justify-between font-bold text-slate-800">
-              <span>${escapeHtml(l.kategori)} - ${escapeHtml(l.lokasi)}</span>
-              <span class="bg-amber-100 text-amber-800 text-[9px] px-2 py-0.5 rounded-md">${escapeHtml(l.status)}</span>
+          <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs space-y-1">
+            <div class="flex justify-between font-bold">
+              <span>${escapeHtml(l.kategori)} • ${escapeHtml(l.lokasi)}</span>
+              <span class="bg-amber-50 text-amber-700 dark:bg-amber-950/50 text-[9px] px-2 py-0.5 rounded-md">${escapeHtml(l.status)}</span>
             </div>
-            <p class="text-slate-600">${escapeHtml(l.detail)}</p>
+            <p class="text-muted">${escapeHtml(l.detail)}</p>
           </div>
-        `).join('') || '<p class="text-xs text-slate-500">Belum ada aspirasi.</p>';
+        `).join('') || '<p class="text-xs text-muted">Belum ada aspirasi.</p>';
       }
 
       const umkmC = $('list-umkm');
       if (umkmC) {
         umkmC.innerHTML = state.umkm.map(u => `
-          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
-            <span class="text-[9px] bg-teal-100 text-teal-800 font-bold px-2 py-0.5 rounded-md uppercase">${escapeHtml(u.kategori)}</span>
-            <h4 class="font-bold text-sm text-slate-800">${escapeHtml(u.namaUsaha)}</h4>
-            <p class="text-xs text-slate-600">${escapeHtml(u.deskripsi)}</p>
-            <div class="pt-2 flex justify-between items-center border-t border-slate-200 text-xs">
-              <span class="text-slate-500 text-[11px]">${escapeHtml(u.pemilik)}</span>
-              <a href="https://wa.me/${escapeHtml(u.kontakWA)}" target="_blank" class="btn btn-primary btn-sm py-1 px-2.5"><i class="fa-brands fa-whatsapp mr-1"></i> Hubungi</a>
+          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2">
+            <span class="text-[9px] bg-teal-50 text-teal-700 dark:bg-teal-950/50 font-bold px-2 py-0.5 rounded-md uppercase">${escapeHtml(u.kategori)}</span>
+            <h4 class="font-extrabold text-sm">${escapeHtml(u.namaUsaha)}</h4>
+            <p class="text-xs text-muted">${escapeHtml(u.deskripsi)}</p>
+            <div class="pt-2 flex justify-between items-center border-t border-slate-200 dark:border-slate-700 text-xs">
+              <span class="text-muted text-[11px]">${escapeHtml(u.pemilik)}</span>
+              <a href="https://wa.me/${escapeHtml(u.kontakWA)}" target="_blank" class="btn btn-primary btn-sm py-1 px-3 text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i> Hubungi</a>
             </div>
           </div>
-        `).join('') || '<p class="text-xs text-slate-500">Belum ada UMKM terdaftar.</p>';
+        `).join('') || '<p class="text-xs text-muted">Belum ada UMKM terdaftar.</p>';
       }
     }
 
@@ -904,23 +924,22 @@
       const totalMasuk = state.riwayat.reduce((s, i) => s + safeAmount(i.jumlah), 0);
       const totalKeluar = state.pengeluaran.reduce((s, i) => s + safeAmount(i.jumlah), 0);
       $('stat-masuk').textContent = formatRp(totalMasuk);
-      $('stat-keluar').textContent = formatRp(totalKeluar);
-      $('stat-saldo').textContent = formatRp(totalMasuk - totalKeluar);
+      $('stat-keluar').textContent = formatRp(totalKeluar);$('stat-saldo').textContent = formatRp(totalMasuk - totalKeluar);
 
       const isMasuk = state.currentTab === 'masuk';
       const source = isMasuk ? state.riwayat : state.pengeluaran;
-      const q = $('search-input') ? $('search-input').value.trim().toLocaleLowerCase('id-ID') : '';
-      const from = $('filter-from') ? $('filter-from').value : '';
-      const to = $('filter-to') ? $('filter-to').value : '';
+      const q = $('search-input') ?$('search-input').value.trim().toLowerCase() : '';
+      const from = $('filter-from') ?$('filter-from').value : '';
+      const to = $('filter-to') ?$('filter-to').value : '';
 
       const dataset = source.filter(i => {
-        const text = [i.tanggal, i.nama, i.keterangan, i.kategori, i.status].map(v => String(v ?? '')).join(' ').toLocaleLowerCase('id-ID');
+        const text = [i.tanggal, i.nama, i.keterangan, i.kategori, i.status].map(v => String(v ?? '')).join(' ').toLowerCase();
         const iso = normalizeDate(i.tanggal);
         return (!q || text.includes(q)) && (!from || !iso || iso >= from) && (!to || !iso || iso <= to);
       });
 
-      if ($('transaction-title')) $('transaction-title').textContent = isMasuk ? 'Riwayat Pemasukan' : 'Riwayat Pengeluaran';
-      if ($('transaction-count')) $('transaction-count').textContent = `${dataset.length} dari ${source.length} transaksi`;
+      if ($('transaction-title'))$('transaction-title').textContent = isMasuk ? 'Riwayat Pemasukan' : 'Riwayat Pengeluaran';
+      if ($('transaction-count'))$('transaction-count').textContent = `${dataset.length} transaksi`;
       
       const tbody = $('table-body');
       if (!tbody) return;
@@ -928,50 +947,39 @@
 
       dataset.slice().reverse().forEach(i => {
         const tr = document.createElement('tr');
+        tr.className = 'border-b border-slate-100 dark:border-slate-800/60';
         appendCell(tr, formatDate(i.tanggal));
+        
         const td = document.createElement('td');
-        const title = document.createElement('div');
-        title.className = 'transaction-title';
-        title.textContent = String(i.nama || i.keterangan || 'Transaksi');
-        const sub = document.createElement('div');
-        sub.className = 'transaction-sub';
-        sub.textContent = String(i.kategori || '');
-        td.append(title, sub);
+        td.className = 'py-3';
+        td.innerHTML = `<div class="font-extrabold">${escapeHtml(i.nama || i.keterangan)}</div><div class="text-[10px] text-muted">${escapeHtml(i.kategori)}</div>`;
         tr.append(td);
         
         const amt = document.createElement('td');
-        amt.className = 'amount ' + (isMasuk ? 'masuk' : 'keluar');
+        amt.className = `py-3 text-right font-extrabold ${isMasuk ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`;
         amt.textContent = formatRp(safeAmount(i.jumlah));
         tr.append(amt);
         
         const st = document.createElement('td');
-        const badge = document.createElement('span');
-        badge.className = 'badge ' + (String(i.status || '').toLowerCase().includes('pending') ? 'badge-pending' : isMasuk ? 'badge-masuk' : 'badge-keluar');
-        badge.textContent = String(i.status || (isMasuk ? 'Masuk' : 'Keluar'));
-        st.append(badge);
+        st.className = 'py-3 text-center';
+        st.innerHTML = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isMasuk ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50' : 'bg-rose-50 text-rose-700 dark:bg-rose-950/50'}">${escapeHtml(i.status || (isMasuk ? 'Masuk' : 'Keluar'))}</span>`;
         tr.append(st);
 
         const act = document.createElement('td');
+        act.className = 'py-3 text-center';
         if (isEditor()) {
-          const edit = document.createElement('button');
-          edit.type = 'button';
-          edit.className = 'btn btn-light btn-sm';
-          edit.textContent = 'Edit';
-          edit.addEventListener('click', () => editTransaction(i, isMasuk ? 'masuk' : 'keluar'));
           const del = document.createElement('button');
-          del.type = 'button';
-          del.className = 'btn btn-danger btn-sm';
-          del.style.marginTop = '4px';
-          del.textContent = 'Hapus';
-          del.addEventListener('click', () => deleteTransaction(i.id, isMasuk ? 'masuk' : 'keluar'));
-          act.append(edit, del);
+          del.className = 'text-rose-500 hover:text-rose-700 p-1';
+          del.innerHTML = '<i class="fa-solid fa-trash-can text-xs"></i>';
+          del.onclick = () => deleteTransaction(i.id, isMasuk ? 'masuk' : 'keluar');
+          act.append(del);
         } else {
           act.textContent = '—';
         }
         tr.append(act);
         tbody.append(tr);
       });
-      if ($('table-empty')) $('table-empty').classList.toggle('hidden', dataset.length > 0);
+      if ($('table-empty'))$('table-empty').classList.toggle('hidden', dataset.length > 0);
       renderChart();
     }
 
@@ -992,79 +1000,35 @@
         const isPaid = payments.has(normalizeName(name));
         if (isPaid) paid++; else unknown++;
         const card = document.createElement('div');
-        card.className = 'kk-card';
-        const top = document.createElement('div');
-        top.className = 'kk-top';
-        const nm = document.createElement('span');
-        nm.className = 'kk-name';
-        nm.textContent = name;
-        const badge = document.createElement('span');
-        badge.className = 'badge ' + (isPaid ? 'badge-masuk' : 'badge-neutral');
-        badge.textContent = isPaid ? 'TERCATAT' : 'BELUM TERCATAT';
-        top.append(nm, badge);
-        card.append(top);
+        card.className = 'p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl flex justify-between items-center text-xs';
+        card.innerHTML = `<span class="font-extrabold">${escapeHtml(name)}</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${isPaid ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50' : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300'}">${isPaid ? 'TERCATAT' : 'BELUM'}</span>`;
         c.append(card);
       });
-      $('kk-summary').replaceChildren();
-      [['Tercatat lunas', paid], ['Belum tercatat', unknown]].forEach(([label, n]) => {
-        const s = document.createElement('span');
-        s.textContent = label + ': ' + n;
-        $('kk-summary').append(s);
-      });
-      if (!state.warga.length) c.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Data warga belum tersedia dari server.</div>';
+      $('kk-summary').innerHTML = `<span class="bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 px-3 py-1 rounded-xl">Lunas: ${paid}</span><span class="bg-slate-100 text-slate-600 dark:bg-slate-800 px-3 py-1 rounded-xl">Belum: ${unknown}</span>`;
     }
 
     function renderWarga() {
       const c = $('warga-list-container');
       if (!c) return;
       c.replaceChildren();
-      if (!state.warga.length) { c.innerHTML = '<div class="empty-state">Belum ada data warga.</div>'; return; }
       state.warga.forEach(w => {
         const name = typeof w === 'string' ? w : (w.nama || w.name || 'Warga');
         const row = document.createElement('div');
-        row.className = 'info-card-item';
-        const title = document.createElement('div');
-        title.className = 'info-title';
-        title.textContent = name;
-        row.append(title);
+        row.className = 'p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold';
+        row.textContent = name;
         c.append(row);
       });
-      const dl = $('warga-list');
-      if (dl) {
-        dl.replaceChildren();
-        state.warga.forEach(w => {
-          const name = typeof w === 'string' ? w : (w.nama || w.name || '');
-          if (name) {
-            const opt = document.createElement('option');
-            opt.value = name;
-            dl.append(opt);
-          }
-        });
-      }
     }
 
     function renderAnnouncements() {
       const c = $('pengumuman-list-container');
       if (!c) return;
       c.replaceChildren();
-      const items = state.pengumuman.length ? state.pengumuman : loadAnnouncementsCache();
-      if (!items.length) { c.innerHTML = '<div class="empty-state">Belum ada pengumuman.</div>'; return; }
+      const items = state.pengumuman.length ? state.pengumuman : defaultAnnouncements;
       items.slice().reverse().forEach(i => {
         const box = document.createElement('article');
-        box.className = 'info-card-item';
-        const tag = document.createElement('span');
-        tag.className = 'info-tag';
-        tag.textContent = String(i.kategori || 'Informasi');
-        const date = document.createElement('span');
-        date.className = 'info-date';
-        date.textContent = String(i.tanggal || '');
-        const title = document.createElement('div');
-        title.className = 'info-title';
-        title.textContent = String(i.judul || 'Pengumuman');
-        const body = document.createElement('div');
-        body.className = 'info-body';
-        body.textContent = String(i.isi || '');
-        box.append(tag, date, title, body);
+        box.className = 'p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-1.5';
+        box.innerHTML = `<div class="flex justify-between items-center"><span class="text-[9px] bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 font-extrabold px-2 py-0.5 rounded-md">${escapeHtml(i.kategori)}</span><span class="text-[10px] text-muted">${escapeHtml(i.tanggal)}</span></div><h4 class="font-extrabold text-sm">${escapeHtml(i.judul)}</h4><p class="text-xs text-muted leading-relaxed">${escapeHtml(i.isi)}</p>`;
         c.append(box);
       });
     }
@@ -1078,348 +1042,169 @@
         totals[k] = (totals[k] || 0) + safeAmount(i.jumlah);
       });
       const labels = Object.keys(totals), values = Object.values(totals);
-      if ($('chart-empty')) $('chart-empty').classList.toggle('hidden', values.some(v => v > 0));
+      if ($('chart-empty'))$('chart-empty').classList.toggle('hidden', values.some(v => v > 0));
       if (expenseChart) { expenseChart.destroy(); expenseChart = null; }
       if (!labels.length || !values.some(v => v > 0)) return;
       expenseChart = new Chart(canvas, {
         type: 'doughnut',
-        data: { labels, datasets: [{ data: values, borderWidth: 2, borderColor: getComputedStyle(document.body).getPropertyValue('--card').trim() || '#fff' }] },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'bottom', labels: { color: getComputedStyle(document.body).getPropertyValue('--text').trim() || '#1e293b', boxWidth: 12, font: { size: 10 } } },
-            tooltip: { callbacks: { label: ctx => `${ctx.label}: ${formatRp(ctx.raw)}` } }
-          }
-        }
+        data: { labels, datasets: [{ data: values, borderWidth: 0, backgroundColor: ['#6366f1', '#a855f7', '#ec4899', '#3b82f6', '#10b981'] }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
       });
-    }
-
-    function shareAnnouncementsToWA() {
-      const items = state.pengumuman.length ? state.pengumuman : loadAnnouncementsCache();
-      if (!items.length) return showToast('Tidak ada pengumuman.', '⚠️');
-      const latest = items[items.length - 1];
-      const text = `📢 *PENGUMUMAN RT 06 BENDOTRETEK*\n\n*${latest.judul}*\nKategori: ${latest.kategori}\nTanggal: ${latest.tanggal}\n\n${latest.isi}\n\n_Kunjungi Portal Resmi RT 06 untuk informasi selengkapnya._`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    }
-
-    function shareKasToWA() {
-      const totalMasuk = state.riwayat.reduce((s, i) => s + safeAmount(i.jumlah), 0);
-      const totalKeluar = state.pengeluaran.reduce((s, i) => s + safeAmount(i.jumlah), 0);
-      const saldo = totalMasuk - totalKeluar;
-      const text = `💰 *LAPORAN KAS RT 06 BENDOTRETEK*\n\n• Total Pemasukan: ${formatRp(totalMasuk)}\n• Total Pengeluaran: ${formatRp(totalKeluar)}\n• *Saldo Kas Bersih: ${formatRp(saldo)}*\n\n_Transparansi Keuangan Warga RT 06._`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    }
-
-    function shareRondaToWA() {
-      if (!state.ronda.length) return showToast('Jadwal ronda belum tersedia.', '⚠️');
-      let text = `🛡️ *JADWAL RONDA MALAM RT 06*\n\n`;
-      state.ronda.forEach(r => {
-        text += `• *${r.hari}* (${r.pos}): ${r.namaPetugas}\n`;
-      });
-      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
     async function tambahPengumuman() {
-      if (!isEditor()) return showToast('Hanya pengurus yang dapat membuat pengumuman.', '🔒');
+      if (!isEditor()) return showToast('Khusus pengurus.', '🔒');
       const judul = $('in-info-judul').value.trim(), isi = $('in-info-isi').value.trim(), kategori =$('in-info-kat').value;
-      if (!judul || !isi) return showToast('Judul dan isi pengumuman wajib diisi.', '⚠️');
       try {
-        showLoader(true, 'Menyimpan pengumuman...');
+        showLoader(true, 'Menyimpan...');
         const r = await postApi({ action: 'addpengumuman', judul, isi, kategori });
-        if (!r.success) throw new Error(r.message || 'Pengumuman gagal disimpan');
+        showToast(r.message || 'Berhasil dipublikasikan.');
         $('form-pengumuman').reset();
-        await fetchCloudData();
-        showToast(r.message || 'Pengumuman berhasil dipublikasikan.', '✓');
-      } catch (e) {
-        showToast(e.message || 'Pengumuman gagal disimpan.', '❌');
-      } finally {
-        showLoader(false);
-      }
+        fetchCloudData();
+      } catch (e) { showToast('Gagal menyimpan.', '❌'); } finally { showLoader(false); }
     }
 
     async function handleAddAgenda(e) {
       e.preventDefault();
-      if (!isEditor()) return showToast('Hanya pengurus yang dapat menambah agenda.', '🔒');
       const kegiatan = $('ag-kegiatan').value.trim(), tanggal =$('ag-tanggal').value, waktu = $('ag-waktu').value.trim(), lokasi =$('ag-lokasi').value.trim();
-      if (!kegiatan || !tanggal || !waktu || !lokasi) return showToast('Semua kolom agenda wajib diisi.', '⚠️');
       try {
-        showLoader(true, 'Menyimpan agenda...');
+        showLoader(true, 'Menyimpan...');
         const r = await postApi({ action: 'addagenda', kegiatan, tanggal, waktu, lokasi, keterangan: kegiatan });
-        if (!r.success) throw new Error(r.message || 'Gagal menyimpan agenda');
+        showToast(r.message || 'Agenda disimpan.');
         $('form-agenda').reset();
-        await fetchCloudData();
-        showToast('Agenda berhasil disimpan.', '✓');
-      } catch (e) {
-        showToast(e.message || 'Gagal menyimpan agenda.', '❌');
-      } finally {
-        showLoader(false);
-      }
+        fetchCloudData();
+      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
     }
 
     async function tambahPemasukan() {
-      if (!isEditor()) return showToast('Akses khusus pengurus.', '🔒');
       const nama = $('in-nama').value.trim(), kategori = $('in-kat-masuk').value, jumlah = parseRupiah($('in-jumlah-masuk').value);
-      if (!nama || jumlah <= 0) return showToast('Nama dan nominal harus diisi dengan benar.', '⚠️');
       try {
-        showLoader(true, 'Menyimpan kas masuk...');
+        showLoader(true, 'Menyimpan...');
         const r = await postApi({ action: 'addmasuk', nama, kategori, jumlah, tanggal: new Date().toISOString().slice(0, 10) });
-        if (!r.success) throw new Error(r.message || 'Gagal menyimpan');
+        showToast('Kas masuk disimpan.');
         $('form-masuk').reset();
-        await fetchCloudData();
-        showToast('Kas masuk berhasil disimpan.', '✓');
-      } catch (e) {
-        showToast(e.message || 'Gagal menyimpan.', '❌');
-      } finally {
-        showLoader(false);
-      }
+        fetchCloudData();
+      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
     }
 
     async function tambahPengeluaran() {
-      if (!isEditor()) return showToast('Akses khusus pengurus.', '🔒');
       const keterangan = $('in-ket').value.trim(), kategori = $('in-kat-keluar').value, jumlah = parseRupiah($('in-jumlah-keluar').value);
-      if (!keterangan || jumlah <= 0) return showToast('Keterangan dan nominal harus diisi dengan benar.', '⚠️');
       try {
-        showLoader(true, 'Menyimpan kas keluar...');
+        showLoader(true, 'Menyimpan...');
         const r = await postApi({ action: 'addkeluar', keterangan, kategori, jumlah, tanggal: new Date().toISOString().slice(0, 10) });
-        if (!r.success) throw new Error(r.message || 'Gagal menyimpan');
+        showToast('Kas keluar disimpan.');
         $('form-keluar').reset();
-        await fetchCloudData();
-        showToast('Kas keluar berhasil disimpan.', '✓');
-      } catch (e) {
-        showToast(e.message || 'Gagal menyimpan.', '❌');
-      } finally {
-        showLoader(false);
-      }
+        fetchCloudData();
+      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
     }
 
     async function tambahWarga() {
-      if (!isEditor()) return showToast('Akses khusus pengurus.', '🔒');
       const nama = $('in-warga-nama').value.trim();
-      if (!nama) return showToast('Nama warga wajib diisi.', '⚠️');
       try {
-        showLoader(true, 'Menyimpan data warga...');
+        showLoader(true, 'Menyimpan...');
         const r = await postApi({ action: 'addwarga', nama });
-        if (!r.success) throw new Error(r.message || 'Data warga gagal disimpan');
+        showToast(r.message || 'Warga ditambah.');
         $('form-warga').reset();
-        await fetchCloudData();
-        showToast(r.message || 'Data warga berhasil ditambahkan.', '✓');
-      } catch (e) {
-        showToast(e.message || 'Gagal menyimpan.', '❌');
-      } finally {
-        showLoader(false);
-      }
+        fetchCloudData();
+      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
     }
 
     async function kirimPermohonanSurat() {
       const nama = $('surat-nama').value.trim(), nik =$('surat-nik').value.trim(), jenis = $('surat-jenis').value, keperluan =$('surat-keperluan').value.trim();
-      if (!nama || !/^\d{16}$/.test(nik) || !keperluan) return showToast('Lengkapi nama, NIK 16 digit, dan keperluan.', '⚠️');
       try {
-        showLoader(true, 'Mengirim permohonan surat...');
+        showLoader(true, 'Mengirim...');
         const r = await postApi({ action: 'addsurat', nama, nik, jenis, keperluan });
-        if (!r.success) throw new Error(r.message || 'Permohonan gagal dikirim');
+        showToast(r.message || 'Surat dikirim.');
         $('form-surat').reset();
-        showToast(r.message || 'Permohonan surat berhasil dikirim.', '✓');
-      } catch (e) {
-        showToast(e.message || 'Gagal mengirim permohonan.', '❌');
-      } finally {
-        showLoader(false);
-      }
+      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
     }
 
     async function handleAddLaporan(e) {
       e.preventDefault();
       const nama = $('lap-nama').value, kategori =$('lap-kategori').value, lokasi = $('lap-lokasi').value, detail =$('lap-detail').value;
       try {
-        showLoader(true, 'Mengirim aspirasi...');
+        showLoader(true, 'Mengirim...');
         const r = await postApi({ action: 'addlaporan', nama, kategori, lokasi, detail });
-        showToast(r.message || 'Aspirasi berhasil dikirim.', !r.success);
-        if (r.success) { e.target.reset(); fetchCloudData(); }
-      } catch (err) { showToast('Gagal mengirim aspirasi.', true); } finally { showLoader(false); }
+        showToast(r.message || 'Aspirasi terkirim.');
+        e.target.reset();
+        fetchCloudData();
+      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
     }
 
     async function handleAddUmkm(e) {
       e.preventDefault();
       const namaUsaha = $('u-namaUsaha').value, pemilik = $('u-pemilik').value, kategori =$('u-kategori').value, kontakWA = $('u-wa').value, deskripsi =$('u-deskripsi').value;
       try {
-        showLoader(true, 'Mendaftarkan UMKM...');
+        showLoader(true, 'Menyimpan...');
         const r = await postApi({ action: 'addumkm', namaUsaha, pemilik, kategori, kontakWA, deskripsi });
-        showToast(r.message || 'UMKM berhasil didaftarkan.', !r.success);
-        if (r.success) { toggleUmkmModal(); e.target.reset(); fetchCloudData(); }
-      } catch (err) { showToast('Gagal mendaftarkan UMKM.', true); } finally { showLoader(false); }
+        showToast(r.message || 'UMKM terdaftar.');
+        toggleUmkmModal();
+        e.target.reset();
+        fetchCloudData();
+      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
     }
 
     function toggleUmkmModal() {
       $('modal-umkm')?.classList.toggle('hidden');
     }
 
-    async function editTransaction(item, type) {
-      if (!isEditor()) return showToast('Hanya admin yang dapat mengubah transaksi.', '🔒');
-      const label = type === 'masuk' ? 'nama' : 'keterangan';
-      const dateDefault = normalizeDate(item.tanggal) || new Date().toISOString().slice(0, 10);
-      const tanggal = prompt('Tanggal transaksi (YYYY-MM-DD):', dateDefault);
-      if (tanggal === null) return;
-      const nama = prompt(type === 'masuk' ? 'Nama warga:' : 'Keterangan pengeluaran:', String(item[label] || ''));
-      if (nama === null) return;
-      const kategori = prompt('Kategori:', String(item.kategori || ''));
-      if (kategori === null) return;
-      const jumlah = prompt('Nominal rupiah:', String(safeAmount(item.jumlah)));
-      if (jumlah === null) return;
-      try {
-        showLoader(true, 'Memperbarui transaksi...');
-        const r = await postApi({ action: 'updatetransaction', id: item.id, type, tanggal, nama, keterangan: nama, kategori, jumlah: parseRupiah(jumlah) });
-        if (!r.success) throw new Error(r.message || 'Gagal memperbarui');
-        await fetchCloudData();
-        showToast('Transaksi berhasil diperbarui.', '✓');
-      } catch (e) {
-        showToast(e.message || 'Gagal memperbarui.', '❌');
-      } finally {
-        showLoader(false);
-      }
-    }
-
     async function deleteTransaction(id, type) {
-      if (!isEditor()) return showToast('Hanya admin yang dapat menghapus transaksi.', '🔒');
-      if (!confirm('Yakin ingin menghapus transaksi ini?')) return;
+      if (!confirm('Yakin hapus transaksi ini?')) return;
       try {
-        showLoader(true, 'Menghapus transaksi...');
-        const r = await postApi({ action: 'deletetransaction', id, type });
-        if (!r.success) throw new Error(r.message || 'Gagal menghapus');
-        await fetchCloudData();
-        showToast('Transaksi berhasil dihapus.', '✓');
-      } catch (e) {
-        showToast(e.message || 'Gagal menghapus.', '❌');
-      } finally {
-        showLoader(false);
-      }
+        showLoader(true, 'Menghapus...');
+        await postApi({ action: 'deletetransaction', id, type });
+        showToast('Berhasil dihapus.');
+        fetchCloudData();
+      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
     }
 
     function renderSuratAdmin() {
       const box = $('admin-surat-list');
       if (!box) return;
       box.replaceChildren();
-      if (!isEditor()) return;
-      if (!state.surat.length) {
-        const p = document.createElement('p');
-        p.className = 'empty-state';
-        p.textContent = 'Belum ada permohonan surat.';
-        box.append(p);
-        return;
-      }
-      const wrap = document.createElement('div');
-      wrap.className = 'table-wrap';
-      const table = document.createElement('table');
-      const thead = document.createElement('thead'), hr = document.createElement('tr');
-      ['Tanggal', 'Pemohon', 'NIK', 'Jenis Surat', 'Keperluan', 'Status', 'Tindakan'].forEach(v => {
-        const th = document.createElement('th');
-        th.textContent = v;
-        hr.append(th);
-      });
-      thead.append(hr);
-      table.append(thead);
-      const tbody = document.createElement('tbody');
+      if (!isEditor() || !state.surat.length) return;
       state.surat.forEach(item => {
-        const tr = document.createElement('tr');
-        [formatDate(item.tanggal), item.nama, item.nik, item.jenis, item.keperluan, item.status].forEach(v => appendCell(tr, v));
-        const td = document.createElement('td');
-        const sel = document.createElement('select');
-        sel.className = 'input-control font-bold text-xs py-1 px-2';
-        ['Menunggu verifikasi', 'Diproses', 'Disetujui', 'Ditolak'].forEach(v => {
-          const op = document.createElement('option');
-          op.value = v;
-          op.textContent = v;
-          op.selected = v === item.status;
-          sel.append(op);
-        });
-        sel.addEventListener('change', () => updateSuratStatus(item.id, sel.value));
-        td.append(sel);
-        tr.append(td);
-        tbody.append(tr);
+        const div = document.createElement('div');
+        div.className = 'p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs flex justify-between items-center';
+        div.innerHTML = `<div><b>${escapeHtml(item.nama)}</b> • ${escapeHtml(item.jenis)}</div><span class="font-bold text-indigo-600">${escapeHtml(item.status)}</span>`;
+        box.append(div);
       });
-      table.append(tbody);
-      wrap.append(table);
-      box.append(wrap);
     }
 
-    async function updateSuratStatus(id, status) {
-      if (!isEditor()) return showToast('Akses khusus pengurus.', '🔒');
-      try {
-        showLoader(true, 'Memperbarui status surat...');
-        const r = await postApi({ action: 'updatesuratstatus', id, status });
-        if (!r.success) throw new Error(r.message || 'Gagal memperbarui status');
-        await fetchCloudData();
-        showToast('Status surat diperbarui.', '✓');
-      } catch (e) {
-        showToast(e.message || 'Gagal memperbarui.', '❌');
-        await fetchCloudData();
-      } finally {
-        showLoader(false);
-      }
+    function shareAnnouncementsToWA() {
+      const items = state.pengumuman.length ? state.pengumuman : defaultAnnouncements;
+      const latest = items[items.length - 1];
+      const text = `📢 *PENGUMUMAN RT 06*\n\n*${latest.judul}*\n${latest.isi}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function shareKasToWA() {
+      const totalMasuk = state.riwayat.reduce((s, i) => s + safeAmount(i.jumlah), 0);
+      const totalKeluar = state.pengeluaran.reduce((s, i) => s + safeAmount(i.jumlah), 0);
+      const text = `💰 *KAS RT 06 BENDOTRETEK*\nMasuk: ${formatRp(totalMasuk)}\nKeluar: ${formatRp(totalKeluar)}\nSaldo: ${formatRp(totalMasuk - totalKeluar)}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function shareRondaToWA() {
+      let text = `🛡️ *JADWAL RONDA RT 06*\n\n`;
+      state.ronda.forEach(r => { text += `• ${r.hari} (${r.pos}): ${r.namaPetugas}\n`; });
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
     function downloadLaporanCSV() {
-      const data = getFilteredTransactions();
-      if (!data.length) return showToast('Tidak ada transaksi untuk diekspor.', '⚠️');
-      const rows = [
-        ['Jenis', 'Tanggal', 'Nama/Keterangan', 'Kategori', 'Jumlah', 'Status'],
-        ...data.map(i => [state.currentTab === 'masuk' ? 'Pemasukan' : 'Pengeluaran', i.tanggal || '', i.nama || i.keterangan || '', i.kategori || '', safeAmount(i.jumlah), i.status || ''])
-      ];
-      const csv = '\uFEFF' + rows.map(r => r.map(csvEscape).join(';')).join('\r\n');
-      downloadBlob(csv, 'laporan-kas-rt06.csv', 'text/csv;charset=utf-8');
+      const data = state.currentTab === 'masuk' ? state.riwayat : state.pengeluaran;
+      const csv = '\uFEFFTanggal,Keterangan,Jumlah\n' + data.map(i => `${i.tanggal},"${i.nama || i.keterangan}",${i.jumlah}`).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'laporan-kas.csv'; a.click();
     }
 
     function downloadLaporanPDF() {
-      const data = getFilteredTransactions();
-      if (!data.length) return showToast('Tidak ada transaksi untuk diekspor.', '⚠️');
-      if (!window.jspdf?.jsPDF) return showToast('Pustaka PDF belum termuat.', '⚠️');
+      if (!window.jspdf?.jsPDF) return;
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      doc.setFontSize(15);
-      doc.text('Laporan Kas RT 06 Bendotretek', 14, 16);
-      doc.setFontSize(10);
-      doc.text(state.currentTab === 'masuk' ? 'Jenis: Pemasukan' : 'Jenis: Pengeluaran', 14, 24);
-      doc.text('Dibuat: ' + new Date().toLocaleString('id-ID'), 14, 30);
-      let y = 40;
-      doc.setFontSize(8);
-      doc.text('Tanggal', 14, y);
-      doc.text('Transaksi / Kategori', 42, y);
-      doc.text('Jumlah (Rp)', 160, y);
-      y += 5;
-      doc.line(14, y, 195, y);
-      y += 6;
-      let total = 0;
-      data.forEach(i => {
-        if (y > 275) { doc.addPage(); y = 18; }
-        const title = String(i.nama || i.keterangan || '-').slice(0, 58);
-        doc.text(String(i.tanggal || '-').slice(0, 16), 14, y);
-        doc.text(title, 42, y);
-        doc.text(formatNumber(safeAmount(i.jumlah)), 160, y);
-        y += 5;
-        doc.setTextColor(110);
-        doc.text(String(i.kategori || '').slice(0, 70), 42, y);
-        doc.setTextColor(0);
-        y += 5;
-        total += safeAmount(i.jumlah);
-      });
-      if (y > 275) { doc.addPage(); y = 18; }
-      doc.line(14, y, 195, y);
-      y += 7;
-      doc.setFontSize(10);
-      doc.text('Total: Rp ' + formatNumber(total), 14, y);
-      doc.save('laporan-kas-rt06.pdf');
-    }
-
-    function getFilteredTransactions() {
-      const isMasuk = state.currentTab === 'masuk';
-      const src = isMasuk ? state.riwayat : state.pengeluaran;
-      const q = $('search-input') ?$('search-input').value.trim().toLowerCase() : '';
-      const from = $('filter-from') ?$('filter-from').value : '';
-      const to = $('filter-to') ?$('filter-to').value : '';
-      return src.filter(i => {
-        const text = [i.tanggal, i.nama, i.keterangan, i.kategori, i.status].map(v => String(v ?? '')).join(' ').toLowerCase();
-        const d = normalizeDate(i.tanggal);
-        return (!q || text.includes(q)) && (!from || !d || d >= from) && (!to || !d || d <= to);
-      });
+      doc.text('Laporan Kas RT 06 Bendotretek', 14, 20);
+      doc.save('laporan-kas.pdf');
     }
 
     function clearFilters() {
@@ -1436,6 +1221,7 @@
     }
 
     function toggleTheme() {
+      triggerHaptic();
       const dark = !document.body.classList.contains('dark');
       document.body.classList.toggle('dark', dark);
       try { localStorage.setItem(CONFIG.THEME, dark ? 'dark' : 'light'); } catch (e) {}
@@ -1446,13 +1232,7 @@
       try { localStorage.removeItem(CONFIG.SESSION); } catch (e) {}
       currentUser = null;
       showScreen('screen-login');
-      showToast('Sesi berakhir. Silakan masuk kembali.', '🔒');
-    }
-
-    function updateConnection() {
-      const online = navigator.onLine;
-      if ($('connection-dot'))$('connection-dot').className = 'status-dot ' + (online ? 'online' : 'offline');
-      if ($('connection-text'))$('connection-text').textContent = online ? 'Terhubung ke jaringan' : 'Offline — data lokal';
+      showToast('Sesi berakhir.', '🔒');
     }
 
     function setDefaultMonth() {
@@ -1464,52 +1244,33 @@
         const raw = localStorage.getItem(CONFIG.CACHE_KAS);
         if (!raw) return;
         const d = JSON.parse(raw);
-        if (Date.now() - (d.savedAt || 0) > CONFIG.CACHE_TTL) return;
-        state.riwayat = Array.isArray(d.riwayat) ? d.riwayat : [];
-        state.pengeluaran = Array.isArray(d.pengeluaran) ? d.pengeluaran : [];
-        state.warga = Array.isArray(d.warga) ? d.warga : [];
-        state.pengumuman = Array.isArray(d.pengumuman) ? d.pengumuman : [];
-        state.ronda = Array.isArray(d.ronda) ? d.ronda : [];
-        state.laporan = Array.isArray(d.laporan) ? d.laporan : [];
-        state.agenda = Array.isArray(d.agenda) ? d.agenda : [];
-        state.umkm = Array.isArray(d.umkm) ? d.umkm : [];
-        state.inventaris = Array.isArray(d.inventaris) ? d.inventaris : [];
-        state.lastSync = d.lastSync || null;
+        state.riwayat = d.riwayat || [];
+        state.pengeluaran = d.pengeluaran || [];
+        state.warga = d.warga || [];
+        state.pengumuman = d.pengumuman || [];
+        state.ronda = d.ronda || [];
+        state.laporan = d.laporan || [];
+        state.agenda = d.agenda || [];
+        state.umkm = d.umkm || [];
+        state.inventaris = d.inventaris || [];
       } catch (e) {}
     }
 
     function saveKasCache() {
-      try { localStorage.setItem(CONFIG.CACHE_KAS, JSON.stringify({ ...state, savedAt: Date.now() })); } catch (e) {}
+      try { localStorage.setItem(CONFIG.CACHE_KAS, JSON.stringify(state)); } catch (e) {}
     }
 
-    function saveAnnouncementsCache() {
-      try { localStorage.setItem(CONFIG.CACHE_PENGUMUMAN, JSON.stringify(state.pengumuman)); } catch (e) {}
-    }
-
-    function loadAnnouncementsCache() {
-      try {
-        const d = JSON.parse(localStorage.getItem(CONFIG.CACHE_PENGUMUMAN) || '[]');
-        return Array.isArray(d) ? d : defaultAnnouncements;
-      } catch (e) {
-        return defaultAnnouncements;
-      }
-    }
-
-    function formatRp(v) { return 'Rp ' + formatNumber(safeAmount(v)); }
-    function formatNumber(v) { return Number(v || 0).toLocaleString('id-ID'); }
+    function formatRp(v) { return 'Rp ' + Number(v || 0).toLocaleString('id-ID'); }
     function safeAmount(v) {
-      if (typeof v === 'number') return Number.isFinite(v) ? v : 0;
       const n = Number(String(v ?? '').replace(/[^\d,-]/g, '').replace(/\./g, '').replace(',', '.'));
       return Number.isFinite(n) ? n : 0;
     }
     function parseRupiah(v) { return Number(String(v || '').replace(/[^\d]/g, '')) || 0; }
-    function normalizeName(v) { return String(v || '').trim().replace(/\s+/g, ' ').toLocaleLowerCase('id-ID'); }
+    function normalizeName(v) { return String(v || '').trim().toLowerCase(); }
     function normalizeDate(v) {
       if (!v) return '';
       const s = String(v).trim();
       if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
-      const m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);
-      if (m) return `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`;
       return '';
     }
     function formatDate(v) {
@@ -1519,24 +1280,16 @@
       return `${day}/${m}/${y}`;
     }
     function escapeHtml(str) {
-      return String(str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      return String(str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
     function appendCell(tr, text) {
       const td = document.createElement('td');
+      td.className = 'py-3';
       td.textContent = String(text ?? '-');
       tr.append(td);
     }
-    function csvEscape(v) {
-      const s = String(v ?? '');
-      return '"' + s.replace(/"/g, '""') + '"';
-    }
-    function downloadBlob(content, name, type) {
-      const blob = new Blob([content], { type }), url = URL.createObjectURL(blob), a = document.createElement('a');
-      a.href = url; a.download = name; document.body.append(a); a.click(); a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }
     let toastTimer;
-    function showToast(message, icon = '✓') {
+    function showToast(message, icon = '✨') {
       const t = $('toast');
       if (!t) return;
       $('toast-msg').textContent = message;
@@ -1545,12 +1298,9 @@
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
     }
-    function showLoader(show, message = '⏳ Memproses...') {
+    function showLoader(show, message = 'Memproses...') {
       const l = $('loader');
-      if (l) {
-        $('loader-text').textContent = message;
-        l.classList.toggle('hidden', !show);
-      }
+      if (l) l.classList.toggle('hidden', !show);
     }
   </script>
 </body>
