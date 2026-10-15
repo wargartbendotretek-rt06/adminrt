@@ -127,7 +127,7 @@
 
     .section-tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
     .section-tabs::-webkit-scrollbar { display: none; }
-    .section-tab { flex: 0 0 auto; min-height: 42px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); color: var(--muted); font-size: 0.7rem; font-weight: 800; white-space: nowrap; padding: 0 14px; transition: all 0.2s; }
+    .section-tab { flex: 0 0 auto; min-height: 40px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); color: var(--muted); font-size: 0.68rem; font-weight: 800; white-space: nowrap; padding: 0 12px; transition: all 0.2s; }
     .section-tab.active { color: #fff; background: #03ac0e; border-color: #03ac0e; box-shadow: 0 4px 12px rgba(3,172,14,0.2); }
 
     .info-card-item { padding: 14px; border: 1px solid var(--border); border-radius: 14px; background: var(--soft); margin-bottom: 10px; }
@@ -243,7 +243,7 @@
         </div>
       </header>
 
-      <!-- JMO/TOPED STYLE WALLET HERO CARD -->
+      <!-- WALLET HERO CARD -->
       <section class="jmo-hero rounded-2xl p-5 text-white shadow-lg space-y-4 relative overflow-hidden mb-4">
         <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
         <div class="flex justify-between items-center">
@@ -268,17 +268,17 @@
         <div class="sync-note text-[10px] text-blue-100/80" id="last-sync">Menunggu data...</div>
       </section>
 
-      <!-- QUICK MENU GRID (4 COLUMNS) -->
+      <!-- QUICK MENU GRID -->
       <div class="app-card p-4">
         <h3 class="font-bold text-xs uppercase tracking-wider text-slate-500 mb-3">Menu Layanan Warga</h3>
         <div class="grid grid-cols-4 gap-3 text-center">
-          <button onclick="switchNav('masuk')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-emerald-100"><i class="fa-solid fa-wallet"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Kas RT</span>
+          <button onclick="switchNav('info')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-emerald-100"><i class="fa-solid fa-bullhorn"></i></div>
+            <span class="text-[11px] font-bold text-slate-700 leading-tight">Pengumuman</span>
           </button>
-          <button onclick="switchNav('warga')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
-            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-blue-100"><i class="fa-solid fa-users"></i></div>
-            <span class="text-[11px] font-bold text-slate-700 leading-tight">Warga</span>
+          <button onclick="switchNav('masuk')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
+            <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-green-100"><i class="fa-solid fa-wallet"></i></div>
+            <span class="text-[11px] font-bold text-slate-700 leading-tight">Kas RT</span>
           </button>
           <button onclick="switchNav('ronda')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition">
             <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-amber-100"><i class="fa-solid fa-shield-cat"></i></div>
@@ -304,17 +304,29 @@
             <div class="w-12 h-12 bg-cyan-50 text-cyan-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-cyan-100"><i class="fa-solid fa-file-signature"></i></div>
             <span class="text-[11px] font-bold text-slate-700 leading-tight">Surat</span>
           </button>
+          <button onclick="switchNav('warga')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition role-editor-only hidden">
+            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-blue-100"><i class="fa-solid fa-users"></i></div>
+            <span class="text-[11px] font-bold text-slate-700 leading-tight">Warga</span>
+          </button>
+          <button onclick="switchNav('kk')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition role-editor-only hidden">
+            <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-orange-100"><i class="fa-solid fa-house-chimney"></i></div>
+            <span class="text-[11px] font-bold text-slate-700 leading-tight">Status KK</span>
+          </button>
+          <button onclick="switchNav('keluar')" class="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition role-editor-only hidden">
+            <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-rose-100"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <span class="text-[11px] font-bold text-slate-700 leading-tight">Kas Keluar</span>
+          </button>
         </div>
       </div>
 
       <!-- SECTION TABS -->
       <div class="section-tabs" role="tablist" aria-label="Menu portal">
-        <button id="tab-button-info" class="section-tab active" type="button" onclick="switchNav('info')">📢 Informasi</button>
+        <button id="tab-button-info" class="section-tab active" type="button" onclick="switchNav('info')">📢 Pengumuman</button>
+        <button id="tab-button-agenda" class="section-tab" type="button" onclick="switchNav('agenda')">📅 Agenda Kegiatan</button>
         <button id="tab-button-surat" class="section-tab" type="button" onclick="switchNav('surat')">📄 E-Surat</button>
         <button id="tab-button-masuk" class="section-tab" type="button" onclick="switchNav('masuk')">📥 Kas Masuk</button>
-        <button id="tab-button-keluar" class="section-tab" type="button" onclick="switchNav('keluar')">📤 Kas Keluar</button>
+        <button id="tab-button-keluar" class="section-tab role-editor-only hidden" type="button" onclick="switchNav('keluar')">📤 Kas Keluar</button>
         <button id="tab-button-ronda" class="section-tab" type="button" onclick="switchNav('ronda')">🛡️ Ronda</button>
-        <button id="tab-button-agenda" class="section-tab" type="button" onclick="switchNav('agenda')">📅 Agenda</button>
         <button id="tab-button-inventaris" class="section-tab" type="button" onclick="switchNav('inventaris')">📦 Inventaris</button>
         <button id="tab-button-laporan" class="section-tab" type="button" onclick="switchNav('laporan')">💬 Aspirasi</button>
         <button id="tab-button-umkm" class="section-tab" type="button" onclick="switchNav('umkm')">🏪 UMKM</button>
@@ -327,8 +339,8 @@
         <div class="app-card role-editor-only hidden" id="box-pengumuman-form">
           <div class="card-header flex justify-between items-center mb-3">
             <div>
-              <div class="card-title text-sm font-bold">Buat Pengumuman</div>
-              <div class="card-subtitle text-xs text-muted">Pengumuman disimpan ke server agar dapat dibaca semua warga.</div>
+              <div class="card-title text-sm font-bold">Buat Pengumuman Warga</div>
+              <div class="card-subtitle text-xs text-muted">Pengumuman penting lingkungan RT 06.</div>
             </div>
           </div>
           <form id="form-pengumuman" class="space-y-3">
@@ -341,15 +353,15 @@
               <option>Informasi Umum</option>
             </select>
             <textarea id="in-info-isi" class="input-control" rows="3" placeholder="Isi pengumuman..." maxlength="2000" required></textarea>
-            <button class="btn btn-primary" type="submit">📢 Publikasikan</button>
+            <button class="btn btn-primary" type="submit">📢 Publikasikan Pengumuman</button>
           </form>
         </div>
         
         <div class="app-card">
           <div class="flex justify-between items-center mb-3">
             <div>
-              <div class="card-title text-sm font-bold">📌 Pengumuman & Agenda RT 06</div>
-              <div class="card-subtitle text-xs text-muted">Informasi terbaru untuk warga.</div>
+              <div class="card-title text-sm font-bold">📌 Papan Pengumuman RT 06</div>
+              <div class="card-subtitle text-xs text-muted">Informasi dan berita terbaru untuk warga.</div>
             </div>
             <div class="flex gap-2">
               <button class="btn btn-success btn-sm" type="button" onclick="shareAnnouncementsToWA()"><i class="fa-brands fa-whatsapp"></i> Bagikan</button>
@@ -449,6 +461,16 @@
 
       <!-- TAB AGENDA -->
       <section id="tab-agenda" class="tab-content hidden">
+        <div class="app-card role-editor-only hidden mb-4" id="box-agenda-form">
+          <div class="card-title text-sm font-bold mb-3">Tambah Agenda Baru</div>
+          <form id="form-agenda" class="space-y-3" onsubmit="handleAddAgenda(event)">
+            <input id="ag-kegiatan" class="input-control" type="text" placeholder="Nama kegiatan" required>
+            <input id="ag-tanggal" class="input-control" type="date" required>
+            <input id="ag-waktu" class="input-control" type="text" placeholder="Waktu (Cth: 19:00 WIB)" required>
+            <input id="ag-lokasi" class="input-control" type="text" placeholder="Lokasi kegiatan" required>
+            <button class="btn btn-primary" type="submit">＋ Simpan Agenda</button>
+          </form>
+        </div>
         <div class="app-card">
           <div class="card-title text-sm font-bold mb-3">📅 Agenda Kegiatan Warga</div>
           <div id="list-agenda" class="space-y-3"></div>
@@ -589,10 +611,10 @@
     const CONFIG = {
       API_URL: "https://script.google.com/macros/s/AKfycbyhA5-Ke7UFKzRKAZZ0eQvAly4oQiTGnZXlKz9EJbkcCAyYy04pUW9kmCWI6HIIvFGd7g/exec",
       WA_RT: "6281234567890",
-      CACHE_KAS: "rt06_kas_cache_v10",
-      CACHE_PENGUMUMAN: "rt06_pengumuman_v10",
-      SESSION: "rt06_user_session_v10",
-      THEME: "rt06_theme_v10",
+      CACHE_KAS: "rt06_kas_cache_v13",
+      CACHE_PENGUMUMAN: "rt06_pengumuman_v13",
+      SESSION: "rt06_user_session_v13",
+      THEME: "rt06_theme_v13",
       CACHE_TTL: 7 * 24 * 60 * 60 * 1000
     };
 
@@ -724,10 +746,6 @@
 
     function updateRoleUI() {
       document.querySelectorAll('.role-editor-only').forEach(el => el.classList.toggle('hidden', !isEditor()));
-      ['tab-button-kk', 'tab-button-warga'].forEach(id => {
-        const el = $(id);
-        if (el) el.classList.toggle('hidden', !isEditor());
-      });
       $('user-role-text').textContent = currentUser ? `${currentUser.name} (${isEditor() ? 'Pengurus' : 'Warga'})` : 'Pusat Informasi & Kas Warga';
     }
 
@@ -737,7 +755,7 @@
 
     function switchNav(tab) {
       if (!['info', 'surat', 'masuk', 'keluar', 'kk', 'warga', 'ronda', 'agenda', 'inventaris', 'laporan', 'umkm'].includes(tab)) return;
-      if (['warga', 'kk'].includes(tab) && !isEditor()) { showToast('Menu ini khusus pengurus.', '🔒'); return; }
+      if (['warga', 'kk', 'keluar'].includes(tab) && !isEditor()) { showToast('Menu ini khusus pengurus.', '🔒'); return; }
       state.currentTab = tab;
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       const activeContent = $('tab-' + tab);
@@ -1115,6 +1133,25 @@
         showToast(r.message || 'Pengumuman berhasil dipublikasikan.', '✓');
       } catch (e) {
         showToast(e.message || 'Pengumuman gagal disimpan.', '❌');
+      } finally {
+        showLoader(false);
+      }
+    }
+
+    async function handleAddAgenda(e) {
+      e.preventDefault();
+      if (!isEditor()) return showToast('Hanya pengurus yang dapat menambah agenda.', '🔒');
+      const kegiatan = $('ag-kegiatan').value.trim(), tanggal =$('ag-tanggal').value, waktu = $('ag-waktu').value.trim(), lokasi =$('ag-lokasi').value.trim();
+      if (!kegiatan || !tanggal || !waktu || !lokasi) return showToast('Semua kolom agenda wajib diisi.', '⚠️');
+      try {
+        showLoader(true, 'Menyimpan agenda...');
+        const r = await postApi({ action: 'addagenda', kegiatan, tanggal, waktu, lokasi, keterangan: kegiatan });
+        if (!r.success) throw new Error(r.message || 'Gagal menyimpan agenda');
+        $('form-agenda').reset();
+        await fetchCloudData();
+        showToast('Agenda berhasil disimpan.', '✓');
+      } catch (e) {
+        showToast(e.message || 'Gagal menyimpan agenda.', '❌');
       } finally {
         showLoader(false);
       }
