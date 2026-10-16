@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#6366f1">
-  <title>Portal Warga RT 06 Bendotretek</title>
+  <meta name="theme-color" content="#4f46e5">
+  <title>Portal Warga RT 06 - Elementalist</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -15,1290 +15,715 @@
   <script>
     tailwind.config = {
       darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
-          }
-        }
-      }
+      theme: { extend: { fontFamily: { sans: ['Outfit', 'sans-serif'] } } }
     }
   </script>
   <style>
+    /* Elementalist Theme Variables */
     :root {
-      --bg: #f8fafc;
-      --card: rgba(255, 255, 255, 0.9);
-      --border: rgba(226, 232, 240, 0.8);
-      --text: #0f172a;
-      --muted: #64748b;
-      --shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.06);
-      --glow: 0 0 25px rgba(99, 102, 241, 0.12);
+      --bg-color: #f0f4f8;
+      --bg-image: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                  radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
+                  radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.15) 0px, transparent 50%);
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --card-border: rgba(255, 255, 255, 0.5);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
     }
     body.dark {
-      --bg: #030712;
-      --card: rgba(17, 24, 39, 0.85);
-      --border: rgba(31, 41, 55, 0.8);
-      --text: #f9fafb;
-      --muted: #9ca3af;
-      --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-      --glow: 0 0 25px rgba(99, 102, 241, 0.2);
-    }
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      -webkit-tap-highlight-color: transparent;
-      padding-bottom: 40px;
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }
-    body.logged-in {
-      padding-bottom: 120px;
+      --bg-color: #0f172a;
+      --bg-image: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.25) 0px, transparent 50%),
+                  radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.2) 0px, transparent 50%),
+                  radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
+      --card-bg: rgba(15, 23, 42, 0.6);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     }
     
-    .container-fluid {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 16px;
+    body {
+      background-color: var(--bg-color);
+      background-image: var(--bg-image);
+      background-attachment: fixed;
+      color: var(--text-main);
+      -webkit-tap-highlight-color: transparent;
+      min-height: 100vh;
+      transition: background-color 0.5s ease;
+      padding-bottom: 30px;
     }
-
-    .glass-card {
-      background: var(--card);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      border-radius: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .hero-gradient {
-      background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-      box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.4);
-    }
-
-    .view-screen {
-      display: none;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-    .view-screen.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Floating Bottom Nav Dock */
-    .floating-dock {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 32px);
-      max-width: 650px;
-      background: var(--card);
+    
+    /* Ultimate Glassmorphism */
+    .glass {
+      background: var(--card-bg);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.12);
-      border-radius: 2rem;
-      padding: 8px 14px;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-    .dock-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 0.65rem;
-      font-weight: 700;
-      padding: 8px 12px;
-      border-radius: 1.25rem;
-      transition: all 0.25s ease;
-    }
-    .dock-item i {
-      font-size: 1.15rem;
-      transition: transform 0.25s;
-    }
-    .dock-item.active {
-      color: #6366f1;
-      background: rgba(99, 102, 241, 0.1);
-    }
-    .dock-item.active i {
-      transform: scale(1.1);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: 1.5rem;
     }
 
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+    .hero-magical {
+      background: linear-gradient(135deg, #4f46e5 0%, #d946ef 100%);
+      box-shadow: 0 15px 35px -5px rgba(217, 70, 239, 0.4);
+      position: relative;
+      overflow: hidden;
     }
-    @media (min-width: 768px) {
-      .menu-grid { grid-template-columns: repeat(8, 1fr); }
-    }
-    .menu-tile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      padding: 16px 8px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 1.25rem;
-      transition: all 0.25s ease;
-      box-shadow: var(--shadow);
-    }
-    .menu-tile:active { transform: scale(0.95); }
-    .menu-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
+    .hero-magical::after {
+      content: ''; position: absolute; top: -50%; right: -20%;
+      width: 300px; height: 300px; background: rgba(255,255,255,0.15);
+      filter: blur(40px); border-radius: 50%; pointer-events: none;
     }
 
-    .input-control {
-      width: 100%;
-      min-height: 48px;
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      outline: none;
-      background: var(--card);
-      color: var(--text);
-      font-size: 0.85rem;
-      transition: all 0.25s;
-    }
-    .input-control:focus {
-      border-color: #6366f1;
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-    }
+    /* Transition Screens */
+    .screen { display: none; opacity: 0; transform: translateY(15px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .screen.active { display: block; opacity: 1; transform: translateY(0); }
+    
+    .tab-content { display: none; animation: fadeIn 0.4s ease forwards; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .btn {
-      border: 0;
-      min-height: 46px;
-      padding: 10px 20px;
-      border-radius: 1rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      transition: all 0.2s;
+    /* Interactive Menu Grid */
+    .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media (min-width: 768px) { .menu-grid { grid-template-columns: repeat(8, 1fr); gap: 16px; } }
+    
+    .menu-item {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 16px 8px; border-radius: 1.25rem; transition: all 0.3s ease;
+      cursor: pointer; position: relative; overflow: hidden;
     }
-    .btn:active { transform: scale(0.97); }
-    .btn-primary {
-      background: linear-gradient(135deg, #6366f1, #4f46e5);
-      color: white;
-      box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.4);
+    .menu-item:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.2); background: rgba(255,255,255,0.05); }
+    .menu-item:active { transform: scale(0.94); }
+    .menu-icon { width: 50px; height: 50px; border-radius: 1.1rem; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: inset 0 2px 4px rgba(255,255,255,0.3); }
+
+    .input-glass {
+      width: 100%; padding: 14px 16px; border-radius: 1rem; border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.05); color: var(--text-main); font-size: 0.9rem; transition: all 0.3s;
     }
+    body.dark .input-glass { background: rgba(0,0,0,0.2); }
+    .input-glass:focus { outline: none; border-color: #8b5cf6; box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15); }
+
+    .btn-magical {
+      background: linear-gradient(135deg, #6366f1, #a855f7); color: white; border: none;
+      padding: 12px 24px; border-radius: 1rem; font-weight: 700; font-size: 0.9rem;
+      transition: all 0.3s; cursor: pointer; box-shadow: 0 8px 20px -4px rgba(168, 85, 247, 0.4);
+    }
+    .btn-magical:hover { box-shadow: 0 12px 25px -4px rgba(168, 85, 247, 0.6); transform: translateY(-1px); }
+    .btn-magical:active { transform: scale(0.96); }
 
     #toast {
-      position: fixed;
-      z-index: 5000;
-      top: 24px;
-      left: 50%;
-      transform: translate(-50%, -20px);
-      opacity: 0;
-      visibility: hidden;
-      padding: 12px 24px;
-      border-radius: 3rem;
-      background: var(--card);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-      font-size: 0.8rem;
-      font-weight: 700;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      position: fixed; top: 20px; left: 50%; transform: translate(-50%, -20px);
+      z-index: 9999; padding: 12px 24px; border-radius: 2rem; display: flex; align-items: center; gap: 10px;
+      font-weight: 600; font-size: 0.85rem; opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    #toast.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, 0);
-    }
-
-    .loader-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 4000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(3, 7, 18, 0.6);
-      backdrop-filter: blur(8px);
-    }
+    #toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
   </style>
 </head>
-<body>
+<body class="p-4 sm:p-6 lg:p-8 flex flex-col items-center">
 
-  <div id="loader" class="loader-overlay hidden" aria-live="polite">
-    <div class="glass-card p-6 text-xs font-bold text-center">✨ Sedang memproses...</div>
+  <!-- Loader -->
+  <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden">
+    <div class="glass p-6 text-sm font-bold flex flex-col items-center gap-3">
+      <i class="fa-solid fa-circle-notch fa-spin text-3xl text-indigo-500"></i>
+      <span>Memproses Aura...</span>
+    </div>
   </div>
 
-  <div id="toast" role="status" aria-live="polite">
-    <span id="toast-icon">✨</span> <span id="toast-msg">Notifikasi</span>
-  </div>
+  <!-- Toast Notif -->
+  <div id="toast" class="glass"><span id="toast-icon">✨</span><span id="toast-msg">Notifikasi</span></div>
 
-  <div class="container-fluid">
-    
-    <!-- SCREEN LOGIN -->
-    <main id="screen-login" class="view-screen active">
-      <div class="min-h-[85vh] flex items-center justify-center py-6">
-        <div class="glass-card w-full max-w-md p-8 text-center space-y-6">
-          <div class="w-20 h-20 hero-gradient rounded-3xl flex items-center justify-center mx-auto text-white shadow-xl text-3xl">
-            <i class="fa-solid fa-house-chimney-user"></i>
-          </div>
-          <div>
-            <h1 class="text-xl font-extrabold tracking-tight">RT 06 Bendotretek</h1>
-            <p class="text-xs text-muted mt-1">Portal Eksklusif Warga & Transparansi Lingkungan</p>
+  <div class="w-full max-w-4xl space-y-6 relative">
+
+    <!-- 1. LOGIN SCREEN -->
+    <main id="screen-login" class="screen active">
+      <div class="flex items-center justify-center min-h-[80vh]">
+        <div class="glass w-full max-w-sm p-8 space-y-7 relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/20 blur-3xl rounded-full"></div>
+          <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/20 blur-3xl rounded-full"></div>
+          
+          <div class="text-center relative z-10">
+            <div class="w-20 h-20 hero-magical rounded-3xl flex items-center justify-center mx-auto text-white text-3xl mb-4">
+              <i class="fa-solid fa-leaf"></i>
+            </div>
+            <h1 class="text-2xl font-extrabold tracking-tight">RT 06 Bendotretek</h1>
+            <p class="text-xs mt-1" style="color: var(--text-muted)">Portal Warga Elegan & Estetik</p>
           </div>
           
-          <div class="grid grid-cols-2 gap-2 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700">
-            <button id="role-btn-viewer" class="py-2.5 rounded-xl text-xs font-bold transition text-muted active bg-white dark:bg-slate-900 shadow-sm" type="button" onclick="switchLoginRole('viewer')">👤 Warga</button>
-            <button id="role-btn-admin" class="py-2.5 rounded-xl text-xs font-bold transition text-muted" type="button" onclick="switchLoginRole('admin')">🔑 Pengurus</button>
+          <div class="grid grid-cols-2 gap-2 p-1.5 rounded-2xl glass relative z-10">
+            <button id="role-warga" class="py-2.5 rounded-xl text-xs font-bold text-indigo-600 bg-white dark:bg-slate-800 shadow-sm transition" onclick="setRole('viewer')">👤 Warga</button>
+            <button id="role-admin" class="py-2.5 rounded-xl text-xs font-bold transition opacity-60 hover:opacity-100" style="color: var(--text-main)" onclick="setRole('admin')">🔑 Pengurus</button>
           </div>
 
-          <form id="login-form" class="space-y-4 text-left">
-            <div>
-              <label class="block text-xs font-bold text-muted mb-1.5" id="label-user" for="login-user">Username Warga</label>
-              <input id="login-user" class="input-control" type="text" autocomplete="username" placeholder="Masukkan username" required>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-muted mb-1.5" for="login-pass">Password</label>
-              <input id="login-pass" class="input-control" type="password" autocomplete="current-password" placeholder="Masukkan password" required>
-            </div>
-            <button id="login-button" class="btn btn-primary w-full mt-2" type="submit">Masuk Portal</button>
+          <form id="form-login" class="space-y-4 relative z-10">
+            <input id="login-user" class="input-glass" type="text" placeholder="Username Warga" required>
+            <input id="login-pass" class="input-glass" type="password" placeholder="Password" required>
+            <button class="btn-magical w-full mt-2 text-sm" type="submit">Masuk Portal ✨</button>
           </form>
         </div>
       </div>
     </main>
 
-    <!-- SCREEN PORTAL -->
-    <main id="screen-portal" class="view-screen space-y-5">
+    <!-- 2. DASHBOARD SCREEN (MENU UTAMA) -->
+    <main id="screen-dashboard" class="screen space-y-6">
       
       <!-- HEADER -->
-      <header class="glass-card p-4 flex items-center justify-between">
-        <div class="flex items-center space-x-3 min-w-0">
-          <div class="w-11 h-11 hero-gradient rounded-2xl flex items-center justify-center text-white shrink-0 shadow-md">
-            <i class="fa-solid fa-house"></i>
-          </div>
-          <div class="min-w-0">
-            <h2 class="font-extrabold text-sm sm:text-base tracking-tight truncate">RT 06 Bendotretek</h2>
-            <p id="user-role-text" class="text-[11px] text-muted font-medium truncate">Pusat Informasi Warga</p>
+      <header class="glass p-4 sm:p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 hero-magical rounded-2xl flex items-center justify-center text-white shadow-lg"><i class="fa-solid fa-leaf text-xl"></i></div>
+          <div>
+            <h2 class="font-extrabold text-base sm:text-lg">RT 06 Bendotretek</h2>
+            <p id="user-role-text" class="text-xs font-medium" style="color: var(--text-muted)">Memuat...</p>
           </div>
         </div>
-        <div class="flex items-center space-x-2 shrink-0">
-          <button class="btn btn-primary btn-sm px-3 py-1.5 text-xs" type="button" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
-          <button class="btn bg-rose-50 text-rose-600 dark:bg-rose-950/50 dark:text-rose-400 btn-sm px-3 py-1.5 text-xs" type="button" onclick="handleLogout()" title="Keluar"><i class="fa-solid fa-right-from-bracket"></i></button>
+        <div class="flex gap-2">
+          <button class="glass w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/10 transition" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
+          <button class="glass w-10 h-10 flex items-center justify-center rounded-xl text-rose-500 hover:bg-rose-500 hover:text-white transition" onclick="logout()"><i class="fa-solid fa-power-off"></i></button>
         </div>
       </header>
 
-      <!-- WALLET HERO CARD -->
-      <section class="hero-gradient rounded-3xl p-6 text-white shadow-xl space-y-4 relative overflow-hidden">
+      <!-- WALLET HERO -->
+      <section class="hero-magical rounded-3xl p-6 sm:p-8 text-white relative overflow-hidden">
         <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="flex justify-between items-center relative z-10">
+        <div class="flex justify-between items-start relative z-10">
           <div>
-            <span class="text-[11px] text-indigo-100 uppercase tracking-widest font-extrabold">SALDO KAS BERSIH</span>
-            <h2 id="stat-saldo" class="text-3xl sm:text-4xl font-black mt-1 tracking-tight">Rp 0</h2>
+            <p class="text-xs font-bold uppercase tracking-widest opacity-80">Saldo Kas Lingkungan</p>
+            <h2 id="stat-saldo" class="text-4xl sm:text-5xl font-black mt-2 tracking-tighter">Rp 0</h2>
           </div>
-          <button onclick="fetchCloudData()" class="bg-white/20 hover:bg-white/30 backdrop-blur-md p-3 rounded-2xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
-            <i class="fa-solid fa-rotate-right"></i>
-          </button>
+          <button onclick="fetchData()" class="bg-white/20 hover:bg-white/30 backdrop-blur-md w-10 h-10 rounded-xl flex items-center justify-center transition shadow-lg"><i class="fa-solid fa-rotate-right"></i></button>
         </div>
-        <div class="grid grid-cols-2 gap-4 pt-3 border-t border-white/20 relative z-10">
-          <div class="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/10">
-            <span class="text-[10px] text-indigo-100 font-bold block">PEMASUKAN</span>
-            <span id="stat-masuk" class="text-sm sm:text-base font-black text-emerald-300">Rp 0</span>
+        <div class="grid grid-cols-2 gap-4 mt-6 relative z-10">
+          <div class="bg-black/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+            <span class="text-[10px] font-bold opacity-70 block">TOTAL MASUK</span>
+            <span id="stat-masuk" class="text-base sm:text-lg font-extrabold text-emerald-300">Rp 0</span>
           </div>
-          <div class="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/10">
-            <span class="text-[10px] text-indigo-100 font-bold block">PENGELUARAN</span>
-            <span id="stat-keluar" class="text-sm sm:text-base font-black text-rose-300">Rp 0</span>
+          <div class="bg-black/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
+            <span class="text-[10px] font-bold opacity-70 block">TOTAL KELUAR</span>
+            <span id="stat-keluar" class="text-base sm:text-lg font-extrabold text-rose-300">Rp 0</span>
           </div>
         </div>
-        <div class="text-[10px] text-indigo-100/80 relative z-10" id="last-sync">Sinkronisasi data siap...</div>
+        <div class="text-[10px] opacity-70 mt-4 relative z-10" id="last-sync">Sinkronisasi data siap...</div>
       </section>
 
-      <!-- QUICK MENU GRID -->
-      <section class="glass-card p-4 sm:p-5 space-y-3">
-        <h3 class="text-xs font-extrabold uppercase tracking-wider text-muted px-1">Menu Layanan Warga</h3>
+      <!-- GRID MENU INTERAKTIF -->
+      <section class="glass p-5 sm:p-6">
+        <h3 class="text-xs font-extrabold uppercase tracking-widest mb-4" style="color: var(--text-muted)">Layanan Warga</h3>
         <div class="menu-grid">
-          <button onclick="switchNav('info')" class="menu-tile">
-            <div class="menu-icon bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50"><i class="fa-solid fa-bullhorn"></i></div>
+          <div class="menu-item glass" onclick="openPage('info')">
+            <div class="menu-icon bg-emerald-500/10 text-emerald-500"><i class="fa-solid fa-bullhorn"></i></div>
             <span class="text-[11px] font-bold">Info</span>
-          </button>
-          <button onclick="switchNav('masuk')" class="menu-tile">
-            <div class="menu-icon bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50"><i class="fa-solid fa-wallet"></i></div>
+          </div>
+          <div class="menu-item glass" onclick="openPage('kas')">
+            <div class="menu-icon bg-indigo-500/10 text-indigo-500"><i class="fa-solid fa-wallet"></i></div>
             <span class="text-[11px] font-bold">Kas RT</span>
-          </button>
-          <button onclick="switchNav('ronda')" class="menu-tile">
-            <div class="menu-icon bg-amber-50 text-amber-600 dark:bg-amber-950/50"><i class="fa-solid fa-shield-cat"></i></div>
+          </div>
+          <div class="menu-item glass" onclick="openPage('ronda')">
+            <div class="menu-icon bg-amber-500/10 text-amber-500"><i class="fa-solid fa-shield-halved"></i></div>
             <span class="text-[11px] font-bold">Ronda</span>
-          </button>
-          <button onclick="switchNav('agenda')" class="menu-tile">
-            <div class="menu-icon bg-purple-50 text-purple-600 dark:bg-purple-950/50"><i class="fa-solid fa-calendar-days"></i></div>
+          </div>
+          <div class="menu-item glass" onclick="openPage('agenda')">
+            <div class="menu-icon bg-purple-500/10 text-purple-500"><i class="fa-solid fa-calendar-star"></i></div>
             <span class="text-[11px] font-bold">Agenda</span>
-          </button>
-          <button onclick="switchNav('inventaris')" class="menu-tile">
-            <div class="menu-icon bg-rose-50 text-rose-600 dark:bg-rose-950/50"><i class="fa-solid fa-boxes-packing"></i></div>
+          </div>
+          <div class="menu-item glass" onclick="openPage('inventaris')">
+            <div class="menu-icon bg-rose-500/10 text-rose-500"><i class="fa-solid fa-boxes-packing"></i></div>
             <span class="text-[11px] font-bold">Aset</span>
-          </button>
-          <button onclick="switchNav('laporan')" class="menu-tile">
-            <div class="menu-icon bg-sky-50 text-sky-600 dark:bg-sky-950/50"><i class="fa-solid fa-comment-dots"></i></div>
+          </div>
+          <div class="menu-item glass" onclick="openPage('laporan')">
+            <div class="menu-icon bg-sky-500/10 text-sky-500"><i class="fa-solid fa-comment-dots"></i></div>
             <span class="text-[11px] font-bold">Aspirasi</span>
-          </button>
-          <button onclick="switchNav('umkm')" class="menu-tile">
-            <div class="menu-icon bg-teal-50 text-teal-600 dark:bg-teal-950/50"><i class="fa-solid fa-store"></i></div>
+          </div>
+          <div class="menu-item glass" onclick="openPage('umkm')">
+            <div class="menu-icon bg-teal-500/10 text-teal-500"><i class="fa-solid fa-store"></i></div>
             <span class="text-[11px] font-bold">UMKM</span>
-          </button>
-          <button onclick="switchNav('surat')" class="menu-tile">
-            <div class="menu-icon bg-cyan-50 text-cyan-600 dark:bg-cyan-950/50"><i class="fa-solid fa-file-signature"></i></div>
+          </div>
+          <div class="menu-item glass" onclick="openPage('surat')">
+            <div class="menu-icon bg-cyan-500/10 text-cyan-500"><i class="fa-solid fa-file-signature"></i></div>
             <span class="text-[11px] font-bold">Surat</span>
-          </button>
+          </div>
+          <div class="menu-item glass role-editor hidden" onclick="openPage('kk')">
+            <div class="menu-icon bg-orange-500/10 text-orange-500"><i class="fa-solid fa-house-user"></i></div>
+            <span class="text-[11px] font-bold">Status KK</span>
+          </div>
+          <div class="menu-item glass role-editor hidden" onclick="openPage('warga')">
+            <div class="menu-icon bg-violet-500/10 text-violet-500"><i class="fa-solid fa-users"></i></div>
+            <span class="text-[11px] font-bold">Warga</span>
+          </div>
         </div>
       </section>
+    </main>
 
-      <!-- TAB CONTENT PANELS -->
-      <div id="tab-content-container">
+    <!-- 3. DETAIL PAGE SCREEN (Tempat Semua Konten & Fitur Berada) -->
+    <main id="screen-page" class="screen space-y-6">
+      
+      <!-- TOP NAVIGATION BAR -->
+      <nav class="glass p-3 flex items-center justify-between sticky top-4 z-40">
+        <button class="glass border-none !bg-transparent hover:!bg-white/10 !py-2 !px-4 !rounded-xl text-xs font-bold flex items-center gap-2 transition" onclick="goHome()">
+          <i class="fa-solid fa-arrow-left"></i> Dashboard
+        </button>
+        <h3 id="page-title" class="font-extrabold text-sm mr-4 tracking-wide uppercase text-indigo-500">Nama Halaman</h3>
+      </nav>
+
+      <!-- KONTEN HALAMAN DINAMIS -->
+      <div id="page-content" class="min-h-[60vh]">
         
-        <!-- PENGUMUMAN -->
+        <!-- ================= PENGUMUMAN ================= -->
         <section id="tab-info" class="tab-content space-y-4">
-          <div class="glass-card role-editor-only hidden p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">Buat Pengumuman Baru</h3>
-            <form id="form-pengumuman" class="space-y-3">
-              <input id="in-info-judul" class="input-control" type="text" placeholder="Judul pengumuman" required>
-              <select id="in-info-kat" class="input-control font-bold">
-                <option>Kerja Bakti</option>
-                <option>Posyandu & Kesehatan</option>
-                <option>Rapat Warga</option>
-                <option>Berita Duka</option>
-                <option>Informasi Umum</option>
-              </select>
-              <textarea id="in-info-isi" class="input-control" rows="3" placeholder="Tulis isi pengumuman..." required></textarea>
-              <button class="btn btn-primary w-full" type="submit">Publikasikan</button>
+          <div class="glass p-5 space-y-4 role-editor hidden">
+            <h4 class="font-extrabold text-sm">✨ Buat Pengumuman</h4>
+            <form id="form-info" class="space-y-3">
+              <input id="i-judul" class="input-glass" placeholder="Judul" required>
+              <select id="i-kat" class="input-glass font-semibold"><option>Umum</option><option>Penting</option><option>Kerja Bakti</option><option>Berita Duka</option></select>
+              <textarea id="i-isi" class="input-glass" rows="3" placeholder="Isi pesan..." required></textarea>
+              <button class="btn-magical w-full" type="submit">Publikasikan</button>
             </form>
           </div>
-          <div class="glass-card p-5 space-y-3">
-            <div class="flex justify-between items-center">
-              <h3 class="text-sm font-extrabold">📌 Papan Informasi RT 06</h3>
-              <button class="btn btn-primary btn-sm text-xs" type="button" onclick="shareAnnouncementsToWA()"><i class="fa-brands fa-whatsapp"></i> Bagikan</button>
+          <div class="glass p-5">
+            <div class="flex justify-between items-center mb-4">
+              <h4 class="font-extrabold text-sm">📌 Papan Informasi</h4>
+              <button class="btn-magical !py-1.5 !px-3 !text-[10px] !rounded-lg" onclick="shareWA('info')"><i class="fa-brands fa-whatsapp"></i> WA</button>
             </div>
-            <div id="pengumuman-list-container" class="space-y-3"></div>
+            <div id="list-info" class="space-y-3"></div>
           </div>
         </section>
 
-        <!-- SURAT PENGANTAR -->
-        <section id="tab-surat" class="tab-content hidden space-y-4">
-          <div class="glass-card p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">📄 Pengajuan Surat Pengantar RT</h3>
+        <!-- ================= KAS RT (LENGKAP DENGAN FILTER, TABEL, CHART, EXPORT) ================= -->
+        <section id="tab-kas" class="tab-content space-y-5">
+          <!-- Form Input Kas (Hanya Admin) -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 role-editor hidden">
+            <div class="glass p-5 space-y-4">
+              <h4 class="font-extrabold text-sm text-emerald-500">📥 Catat Masuk</h4>
+              <form id="form-masuk" class="space-y-3">
+                <input id="k-nama" class="input-glass" list="warga-list" placeholder="Nama Warga" required>
+                <datalist id="warga-list"></datalist>
+                <select id="k-kat" class="input-glass font-semibold"><option>Iuran Wajib</option><option>Sumbangan</option><option>Lainnya</option></select>
+                <input id="k-jumlah" class="input-glass" type="number" placeholder="Nominal Rp" required>
+                <button class="btn-magical w-full !from-emerald-500 !to-teal-500" type="submit">Simpan Pemasukan</button>
+              </form>
+            </div>
+            <div class="glass p-5 space-y-4">
+              <h4 class="font-extrabold text-sm text-rose-500">📤 Catat Keluar</h4>
+              <form id="form-keluar" class="space-y-3">
+                <input id="k-ket" class="input-glass" placeholder="Keperluan" required>
+                <select id="k-kat2" class="input-glass font-semibold"><option>Operasional</option><option>Sosial</option><option>Keamanan</option><option>Kebersihan</option></select>
+                <input id="k-jumlah2" class="input-glass" type="number" placeholder="Nominal Rp" required>
+                <button class="btn-magical w-full !from-rose-500 !to-pink-500" type="submit">Simpan Pengeluaran</button>
+              </form>
+            </div>
+          </div>
+          
+          <!-- Tabel Transaksi & Filter -->
+          <div class="glass p-5 space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between gap-3 items-start sm:items-center">
+              <div>
+                <h4 class="font-extrabold text-sm">📜 Riwayat Transaksi</h4>
+                <p id="tx-count" class="text-[10px] opacity-60">0 transaksi</p>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="shareWA('kas')" class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold"><i class="fa-brands fa-whatsapp"></i> WA</button>
+                <button onclick="downloadPDF()" class="bg-rose-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                <button onclick="downloadCSV()" class="bg-slate-700 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold"><i class="fa-solid fa-file-csv"></i> CSV</button>
+              </div>
+            </div>
+            
+            <!-- Filter Section -->
+            <div class="space-y-2">
+              <input id="filter-search" class="input-glass !py-2 !text-xs" placeholder="🔍 Cari transaksi...">
+              <div class="flex gap-2">
+                <input id="filter-start" class="input-glass !py-2 !text-xs" type="date">
+                <input id="filter-end" class="input-glass !py-2 !text-xs" type="date">
+                <button onclick="resetFilters()" class="glass !py-2 !px-3 rounded-xl text-xs font-bold">Reset</button>
+              </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs text-left">
+                <thead class="border-b border-white/20 uppercase opacity-70">
+                  <tr>
+                    <th class="pb-2 font-bold">Tanggal</th>
+                    <th class="pb-2 font-bold">Keterangan</th>
+                    <th class="pb-2 font-bold text-right">Jumlah</th>
+                    <th class="pb-2 font-bold text-center">Status</th>
+                    <th class="pb-2 font-bold text-center role-editor hidden">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="list-kas"></tbody>
+              </table>
+              <div id="table-empty" class="text-center py-6 opacity-60 text-xs hidden">Tidak ada transaksi ditemukan.</div>
+            </div>
+          </div>
+
+          <!-- Chart Section -->
+          <div class="glass p-5 space-y-3">
+            <h4 class="font-extrabold text-sm">📊 Alokasi Pengeluaran</h4>
+            <div class="h-64 relative"><canvas id="expenseChart"></canvas></div>
+            <div id="chart-empty" class="text-center py-4 opacity-60 text-xs hidden">Belum ada data grafik.</div>
+          </div>
+        </section>
+
+        <!-- ================= SURAT PENGANTAR ================= -->
+        <section id="tab-surat" class="tab-content space-y-4">
+          <div class="glass p-5 space-y-4">
+            <h4 class="font-extrabold text-sm">📄 Ajukan Surat Pengantar</h4>
             <form id="form-surat" class="space-y-3">
-              <input id="surat-nama" class="input-control" type="text" placeholder="Nama lengkap" required>
-              <input id="surat-nik" class="input-control" type="text" inputmode="numeric" maxlength="16" placeholder="16 digit NIK" required>
-              <select id="surat-jenis" class="input-control font-bold">
-                <option>Pengantar KTP / KK Baru</option>
-                <option>Surat Keterangan Domisili</option>
-                <option>Surat Keterangan Tidak Mampu (SKTM)</option>
-              </select>
-              <textarea id="surat-keperluan" class="input-control" rows="2" placeholder="Keperluan surat..." required></textarea>
-              <button class="btn btn-primary w-full" type="submit">Kirim Permohonan</button>
+              <input id="s-nama" class="input-glass" placeholder="Nama Lengkap" required>
+              <input id="s-nik" class="input-glass" type="number" placeholder="16 Digit NIK" required>
+              <select id="s-jenis" class="input-glass font-semibold"><option>Domisili</option><option>Pengantar KTP/KK</option><option>SKTM</option></select>
+              <input id="s-kep" class="input-glass" placeholder="Keperluan surat..." required>
+              <button class="btn-magical w-full" type="submit">Kirim Permohonan</button>
             </form>
           </div>
-          <div id="admin-surat-box" class="glass-card role-editor-only hidden p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">📋 Kelola Permohonan Surat</h3>
-            <div id="admin-surat-list"></div>
+          <div class="glass p-5">
+            <h4 class="font-extrabold text-sm mb-4">📋 Daftar Permohonan</h4>
+            <div id="list-surat" class="space-y-3"></div>
           </div>
         </section>
 
-        <!-- KAS MASUK -->
-        <section id="tab-masuk" class="tab-content hidden space-y-4">
-          <div id="box-masuk" class="glass-card role-editor-only hidden p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">📥 Catat Pemasukan Kas</h3>
-            <form id="form-masuk" class="space-y-3">
-              <input id="in-nama" class="input-control" type="text" list="warga-list" placeholder="Nama warga" required>
-              <datalist id="warga-list"></datalist>
-              <select id="in-kat-masuk" class="input-control font-bold">
-                <option>Iuran Kas Bulanan</option>
-                <option>Iuran Kebersihan</option>
-                <option>Sumbangan</option>
-                <option>Lainnya</option>
-              </select>
-              <input id="in-jumlah-masuk" class="input-control" type="text" inputmode="numeric" placeholder="Nominal (Rp)" required>
-              <button class="btn btn-primary w-full" type="submit">Simpan Pemasukan</button>
+        <!-- ================= ASPIRASI / LAPORAN ================= -->
+        <section id="tab-laporan" class="tab-content space-y-4">
+           <div class="glass p-5 space-y-4">
+            <h4 class="font-extrabold text-sm">💬 Kirim Aspirasi & Aduan</h4>
+            <form id="form-laporan" class="space-y-3">
+              <input id="l-nama" class="input-glass" placeholder="Nama Pelapor" required>
+              <input id="l-kat" class="input-glass" placeholder="Kategori (Mis: Infrastruktur/Lampu)" required>
+              <input id="l-lokasi" class="input-glass" placeholder="Lokasi Spesifik" required>
+              <textarea id="l-detail" class="input-glass" rows="2" placeholder="Tuliskan detail aspirasi..." required></textarea>
+              <button class="btn-magical w-full" type="submit">Kirim Aspirasi</button>
             </form>
+          </div>
+          <div class="glass p-5">
+            <h4 class="font-extrabold text-sm mb-4">Daftar Aspirasi Warga</h4>
+            <div id="list-laporan" class="space-y-3"></div>
+          </div>
+        </section>
+        
+        <!-- ================= UMKM ================= -->
+        <section id="tab-umkm" class="tab-content space-y-4">
+           <div class="glass p-5 space-y-4">
+            <h4 class="font-extrabold text-sm">🏪 Daftarkan Lapak Usaha</h4>
+            <form id="form-umkm" class="space-y-3">
+              <input id="u-usaha" class="input-glass" placeholder="Nama Usaha / Produk" required>
+              <input id="u-nama" class="input-glass" placeholder="Nama Pemilik" required>
+              <input id="u-kat" class="input-glass" placeholder="Kategori (Cth: Makanan/Jasa)" required>
+              <input id="u-wa" class="input-glass" type="number" placeholder="No WhatsApp (Cth: 0812...)" required>
+              <textarea id="u-desc" class="input-glass" rows="2" placeholder="Deskripsi produk..." required></textarea>
+              <button class="btn-magical w-full" type="submit">Daftarkan Lapak</button>
+            </form>
+          </div>
+          <div class="glass p-5">
+            <h4 class="font-extrabold text-sm mb-4">Lapak & Usaha Warga</h4>
+            <div id="list-umkm" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
           </div>
         </section>
 
-        <!-- KAS KELUAR -->
-        <section id="tab-keluar" class="tab-content hidden space-y-4">
-          <div id="box-keluar" class="glass-card role-editor-only hidden p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">📤 Catat Pengeluaran Kas</h3>
-            <form id="form-keluar" class="space-y-3">
-              <input id="in-ket" class="input-control" type="text" placeholder="Keterangan pengeluaran" required>
-              <select id="in-kat-keluar" class="input-control font-bold">
-                <option>Kebersihan</option>
-                <option>Keamanan</option>
-                <option>Operasional RT</option>
-                <option>Sosial</option>
-                <option>Lainnya</option>
-              </select>
-              <input id="in-jumlah-keluar" class="input-control" type="text" inputmode="numeric" placeholder="Nominal (Rp)" required>
-              <button class="btn btn-primary w-full bg-gradient-to-r from-rose-500 to-pink-600" type="submit">Simpan Pengeluaran</button>
+        <!-- ================= AGENDA ================= -->
+        <section id="tab-agenda" class="tab-content space-y-4">
+          <div class="glass p-5 space-y-4 role-editor hidden">
+            <h4 class="font-extrabold text-sm">Tambah Agenda</h4>
+            <form id="form-agenda" class="space-y-3">
+              <input id="a-keg" class="input-glass" placeholder="Nama Kegiatan" required>
+              <input id="a-tgl" class="input-glass" type="date" required>
+              <input id="a-waktu" class="input-glass" placeholder="Waktu (Cth: 19:30 WIB)" required>
+              <input id="a-lok" class="input-glass" placeholder="Lokasi" required>
+              <button class="btn-magical w-full" type="submit">Simpan Agenda</button>
             </form>
+          </div>
+          <div class="glass p-5">
+            <h4 class="font-extrabold text-sm mb-4">📅 Agenda Warga</h4>
+            <div id="list-agenda" class="space-y-3"></div>
           </div>
         </section>
 
-        <!-- RONDA -->
-        <section id="tab-ronda" class="tab-content hidden space-y-4">
-          <div class="glass-card p-5 space-y-3">
-            <div class="flex justify-between items-center">
-              <h3 class="text-sm font-extrabold">🛡️ Jadwal Siskamling / Ronda</h3>
-              <button class="btn btn-primary btn-sm text-xs" type="button" onclick="shareRondaToWA()"><i class="fa-brands fa-whatsapp"></i> WA</button>
+        <!-- ================= RONDA ================= -->
+        <section id="tab-ronda" class="tab-content space-y-4">
+          <div class="glass p-5">
+            <div class="flex justify-between items-center mb-4">
+              <h4 class="font-extrabold text-sm">🛡️ Jadwal Ronda</h4>
+              <button class="btn-magical !py-1.5 !px-3 !text-[10px] !rounded-lg" onclick="shareWA('ronda')"><i class="fa-brands fa-whatsapp"></i> WA</button>
             </div>
             <div id="list-ronda" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
           </div>
         </section>
 
-        <!-- AGENDA -->
-        <section id="tab-agenda" class="tab-content hidden space-y-4">
-          <div class="glass-card role-editor-only hidden p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">Tambah Agenda Kegiatan</h3>
-            <form id="form-agenda" class="space-y-3" onsubmit="handleAddAgenda(event)">
-              <input id="ag-kegiatan" class="input-control" type="text" placeholder="Nama kegiatan" required>
-              <input id="ag-tanggal" class="input-control" type="date" required>
-              <input id="ag-waktu" class="input-control" type="text" placeholder="Waktu (Cth: 19:00 WIB)" required>
-              <input id="ag-lokasi" class="input-control" type="text" placeholder="Lokasi kegiatan" required>
-              <button class="btn btn-primary w-full" type="submit">Simpan Agenda</button>
-            </form>
-          </div>
-          <div class="glass-card p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">📅 Agenda Warga RT 06</h3>
-            <div id="list-agenda" class="space-y-3"></div>
-          </div>
-        </section>
-
-        <!-- INVENTARIS -->
-        <section id="tab-inventaris" class="tab-content hidden space-y-4">
-          <div class="glass-card p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">📦 Stok & Aset Inventaris RT</h3>
+        <!-- ================= INVENTARIS ================= -->
+        <section id="tab-inventaris" class="tab-content space-y-4">
+          <div class="glass p-5">
+            <h4 class="font-extrabold text-sm mb-4">📦 Aset & Inventaris RT</h4>
             <div id="list-inventaris" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
           </div>
         </section>
 
-        <!-- ASPIRASI -->
-        <section id="tab-laporan" class="tab-content hidden space-y-4">
-          <div class="glass-card p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">💬 Kirim Aspirasi / Pengaduan</h3>
-            <form onsubmit="handleAddLaporan(event)" class="space-y-3">
-              <input type="text" id="lap-nama" placeholder="Nama Anda" required class="input-control">
-              <input type="text" id="lap-kategori" placeholder="Kategori (Mis: Jalan / Lampu)" required class="input-control">
-              <input type="text" id="lap-lokasi" placeholder="Lokasi Spesifik" required class="input-control">
-              <textarea id="lap-detail" rows="3" placeholder="Tuliskan detail laporan..." required class="input-control"></textarea>
-              <button type="submit" class="btn btn-primary w-full">Kirim Aspirasi</button>
-            </form>
-          </div>
-          <div class="glass-card p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">Daftar Aspirasi Warga</h3>
-            <div id="list-laporan" class="space-y-3"></div>
-          </div>
-        </section>
-
-        <!-- UMKM -->
-        <section id="tab-umkm" class="tab-content hidden space-y-4">
-          <div class="glass-card p-5 space-y-3">
-            <div class="flex justify-between items-center">
-              <h3 class="text-sm font-extrabold">🏪 Lapak UMKM Warga</h3>
-              <button onclick="toggleUmkmModal()" class="btn btn-primary btn-sm text-xs">+ Usaha Saya</button>
-            </div>
-            <div id="list-umkm" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
-          </div>
-        </section>
-
-        <!-- STATUS KK -->
-        <section id="tab-kk" class="tab-content hidden space-y-4">
-          <div class="glass-card p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">🏠 Status Iuran Kepala Keluarga</h3>
-            <input id="kk-month" type="month" class="input-control">
+        <!-- ================= STATUS KK (KHUSUS ADMIN) ================= -->
+        <section id="tab-kk" class="tab-content space-y-4">
+          <div class="glass p-5 space-y-4">
+            <h4 class="font-extrabold text-sm">🏠 Status Iuran Kepala Keluarga</h4>
+            <input id="kk-month" type="month" class="input-glass font-bold text-center">
             <div id="kk-summary" class="flex gap-2 flex-wrap text-xs font-bold py-1"></div>
-            <div id="kk-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2"></div>
+            <div id="list-kk" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2"></div>
           </div>
         </section>
 
-        <!-- WARGA -->
-        <section id="tab-warga" class="tab-content hidden space-y-4">
-          <div class="glass-card role-editor-only hidden p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">Tambah Kepala Keluarga</h3>
-            <form id="form-warga" class="space-y-3">
-              <input id="in-warga-nama" class="input-control" type="text" placeholder="Nama kepala keluarga" required>
-              <button class="btn btn-primary w-full" type="submit">Simpan Warga</button>
+        <!-- ================= WARGA (KHUSUS ADMIN) ================= -->
+        <section id="tab-warga" class="tab-content space-y-4">
+          <div class="glass p-5 space-y-4">
+            <h4 class="font-extrabold text-sm">Tambah Kepala Keluarga</h4>
+            <form id="form-warga" class="flex gap-2">
+              <input id="w-nama" class="input-glass" placeholder="Nama Warga" required>
+              <button class="btn-magical whitespace-nowrap" type="submit">Simpan</button>
             </form>
           </div>
-          <div class="glass-card p-5 space-y-3">
-            <h3 class="text-sm font-extrabold">Daftar Warga RT 06</h3>
-            <div id="warga-list-container" class="space-y-2"></div>
+          <div class="glass p-5">
+            <h4 class="font-extrabold text-sm mb-4">👥 Daftar Warga</h4>
+            <div id="list-warga" class="space-y-2"></div>
           </div>
         </section>
 
       </div>
-
-      <!-- TRANSACTION TABLE & EXPORT -->
-      <section id="section-table" class="glass-card hidden p-5 space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h3 class="text-sm font-extrabold" id="transaction-title">Riwayat Transaksi</h3>
-            <p class="text-xs text-muted" id="transaction-count">0 transaksi</p>
-          </div>
-          <div class="flex gap-2 flex-wrap">
-            <button class="btn btn-primary btn-sm text-xs bg-emerald-600" type="button" onclick="shareKasToWA()"><i class="fa-brands fa-whatsapp"></i> WA</button>
-            <button class="btn btn-primary btn-sm text-xs bg-amber-600" type="button" onclick="downloadLaporanPDF()">PDF</button>
-            <button class="btn btn-primary btn-sm text-xs bg-slate-700" type="button" onclick="downloadLaporanCSV()">CSV</button>
-          </div>
-        </div>
-        <div class="space-y-2">
-          <input id="search-input" class="input-control" type="search" placeholder="🔍 Cari transaksi...">
-          <div class="flex gap-2">
-            <input id="filter-from" class="input-control text-xs" type="date">
-            <input id="filter-to" class="input-control text-xs" type="date">
-            <button class="btn btn-primary btn-sm text-xs shrink-0" type="button" onclick="clearFilters()">Reset</button>
-          </div>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-xs">
-            <thead>
-              <tr class="text-muted border-b border-slate-200 dark:border-slate-800">
-                <th class="py-2.5 text-left">Tanggal</th>
-                <th class="py-2.5 text-left">Transaksi</th>
-                <th class="py-2.5 text-right">Jumlah</th>
-                <th class="py-2.5 text-center">Status</th>
-                <th class="py-2.5 text-center">Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-          </table>
-        </div>
-        <div id="table-empty" class="text-center py-6 text-muted text-xs hidden">Belum ada transaksi.</div>
-      </section>
-
-      <!-- EXPENSE CHART -->
-      <section id="section-chart" class="glass-card hidden p-5 space-y-3">
-        <h3 class="text-sm font-extrabold">📊 Alokasi Pengeluaran</h3>
-        <div class="h-64 relative"><canvas id="expenseChart"></canvas></div>
-        <div id="chart-empty" class="text-center py-4 text-muted text-xs hidden">Belum ada data grafik.</div>
-      </section>
-
     </main>
-  </div>
 
-  <!-- FLOATING BOTTOM NAVIGATION DOCK (DISEMBUNYIKAN DI HALAMAN LOGIN) -->
-  <nav id="floating-nav-dock" class="floating-dock hidden">
-    <button onclick="switchNav('info')" id="dock-btn-info" class="dock-item active">
-      <i class="fa-solid fa-bullhorn"></i>
-      <span>Info</span>
-    </button>
-    <button onclick="switchNav('masuk')" id="dock-btn-masuk" class="dock-item">
-      <i class="fa-solid fa-wallet"></i>
-      <span>Kas RT</span>
-    </button>
-    <button onclick="switchNav('agenda')" id="dock-btn-agenda" class="dock-item">
-      <i class="fa-solid fa-calendar-days"></i>
-      <span>Agenda</span>
-    </button>
-    <button onclick="switchNav('ronda')" id="dock-btn-ronda" class="dock-item">
-      <i class="fa-solid fa-shield-cat"></i>
-      <span>Ronda</span>
-    </button>
-    <button onclick="switchNav('surat')" id="dock-btn-surat" class="dock-item">
-      <i class="fa-solid fa-file-signature"></i>
-      <span>Surat</span>
-    </button>
-  </nav>
-
-  <!-- MODAL UMKM -->
-  <div id="modal-umkm" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="glass-card max-w-md w-full p-6 space-y-4 bg-white dark:bg-slate-900">
-      <h3 class="font-extrabold text-sm">Daftarkan Lapak UMKM Warga</h3>
-      <form onsubmit="handleAddUmkm(event)" class="space-y-3">
-        <input type="text" id="u-namaUsaha" placeholder="Nama Usaha / Produk" required class="input-control">
-        <input type="text" id="u-pemilik" placeholder="Nama Pemilik" required class="input-control">
-        <input type="text" id="u-kategori" placeholder="Kategori Produk" required class="input-control">
-        <input type="text" id="u-wa" placeholder="Nomor WhatsApp (Cth: 0812...)" required class="input-control">
-        <textarea id="u-deskripsi" rows="3" placeholder="Deskripsi produk..." required class="input-control"></textarea>
-        <div class="flex gap-2 pt-2">
-          <button type="button" onclick="toggleUmkmModal()" class="btn bg-slate-200 dark:bg-slate-800 w-1/2">Batal</button>
-          <button type="submit" class="btn btn-primary w-1/2">Simpan</button>
-        </div>
-      </form>
-    </div>
   </div>
 
   <script>
-    'use strict';
     const CONFIG = {
-      API_URL: "https://script.google.com/macros/s/AKfycbyhA5-Ke7UFKzRKAZZ0eQvAly4oQiTGnZXlKz9EJbkcCAyYy04pUW9kmCWI6HIIvFGd7g/exec",
-      CACHE_KAS: "rt06_kas_cache_v16",
-      CACHE_PENGUMUMAN: "rt06_pengumuman_v16",
-      SESSION: "rt06_user_session_v16",
-      THEME: "rt06_theme_v16",
-      CACHE_TTL: 7 * 24 * 60 * 60 * 1000
+      API_URL: "MASUKKAN_URL_DEPLOY_APPS_SCRIPT_ANDA_DI_SINI", 
+      SESSION: "rt06_ultimate_session"
     };
 
-    let currentUser = null, currentLoginRole = "viewer", expenseChart = null;
-    const state = { currentTab: "info", riwayat: [], pengeluaran: [], warga: [], pengumuman: [], surat: [], ronda: [], laporan: [], agenda: [], umkm: [], inventaris: [], lastSync: null };
+    let user = null, roleLogin = 'viewer', expenseChart = null;
+    const state = { riwayat: [], pengeluaran: [], warga: [], pengumuman: [], surat: [], ronda: [], laporan: [], agenda: [], umkm: [], inventaris: [] };
     const $ = id => document.getElementById(id);
-    const defaultAnnouncements = [{ id: "p1", judul: "Selamat Datang di Portal RT 06", kategori: "Informasi Umum", tanggal: new Date().toLocaleDateString("id-ID"), isi: "Portal informasi dan transparansi kas warga RT 06 Bendotretek." }];
 
-    window.addEventListener("DOMContentLoaded", init);
+    window.onload = () => { applyTheme(); checkSession(); bindEvents(); setDefaultMonth(); };
 
-    function init() {
-      applySavedTheme();
-      setDefaultMonth();
-      bindForms();
-      bindFilters();
-      renderAnnouncements();
-      checkSession();
-    }
-
-    function triggerHaptic() {
-      if (navigator.vibrate) navigator.vibrate(15);
-    }
-
-    function bindForms() {
-      $('login-form').addEventListener('submit', e => { e.preventDefault(); handleLogin(); });
-      $('form-pengumuman').addEventListener('submit', e => { e.preventDefault(); tambahPengumuman(); });
-      $('form-surat').addEventListener('submit', e => { e.preventDefault(); kirimPermohonanSurat(); });
-      $('form-masuk').addEventListener('submit', e => { e.preventDefault(); tambahPemasukan(); });
-      $('form-keluar').addEventListener('submit', e => { e.preventDefault(); tambahPengeluaran(); });
-      $('form-warga').addEventListener('submit', e => { e.preventDefault(); tambahWarga(); });
+    function bindEvents() {
+      $('form-login').onsubmit = (e) => { e.preventDefault(); login(); };
+      $('form-info').onsubmit = (e) => { e.preventDefault(); addData('addpengumuman', {judul: $('i-judul').value, kategori: $('i-kat').value, isi: $('i-isi').value}); };
+      $('form-masuk').onsubmit = (e) => { e.preventDefault(); addData('addmasuk', {nama: $('k-nama').value, kategori: $('k-kat').value, jumlah: parseInt($('k-jumlah').value), tanggal: new Date().toISOString().slice(0,10)}); };
+      $('form-keluar').onsubmit = (e) => { e.preventDefault(); addData('addkeluar', {keterangan: $('k-ket').value, kategori: $('k-kat2').value, jumlah: parseInt($('k-jumlah2').value), tanggal: new Date().toISOString().slice(0,10)}); };
+      $('form-surat').onsubmit = (e) => { e.preventDefault(); addData('addsurat', {nama: $('s-nama').value, nik: $('s-nik').value, jenis: $('s-jenis').value, keperluan: $('s-kep').value}); };
+      $('form-laporan').onsubmit = (e) => { e.preventDefault(); addData('addlaporan', {nama: $('l-nama').value, kategori: $('l-kat').value, lokasi: $('l-lokasi').value, detail: $('l-detail').value}); };
+      $('form-umkm').onsubmit = (e) => { e.preventDefault(); addData('addumkm', {namaUsaha: $('u-usaha').value, pemilik: $('u-nama').value, kategori: $('u-kat').value, kontakWA: $('u-wa').value, deskripsi: $('u-desc').value}); };
+      $('form-agenda').onsubmit = (e) => { e.preventDefault(); addData('addagenda', {kegiatan: $('a-keg').value, tanggal: $('a-tgl').value, waktu: $('a-waktu').value, lokasi: $('a-lok').value}); };
+      $('form-warga').onsubmit = (e) => { e.preventDefault(); addData('addwarga', {nama: $('w-nama').value}); };
+      
+      // Filters Kas
+      ['filter-search', 'filter-start', 'filter-end'].forEach(id => $(id).addEventListener('input', renderKasAndChart));
       $('kk-month').addEventListener('change', renderKKStatus);
     }
 
-    function bindFilters() {
-      ['search-input', 'filter-from', 'filter-to'].forEach(id => {
-        const el = $(id);
-        if (el) el.addEventListener('input', renderData);
-      });
+    function setDefaultMonth() { $('kk-month').value = new Date().toISOString().slice(0, 7); }
+
+    function setRole(r) {
+      trigger(); roleLogin = r;
+      $('role-warga').className = `py-2.5 rounded-xl text-xs font-bold transition ${r==='viewer' ? 'text-indigo-600 bg-white dark:bg-slate-800 shadow-sm' : 'opacity-60 hover:opacity-100 text-[var(--text-main)]'}`;
+      $('role-admin').className = `py-2.5 rounded-xl text-xs font-bold transition ${r==='admin' ? 'text-indigo-600 bg-white dark:bg-slate-800 shadow-sm' : 'opacity-60 hover:opacity-100 text-[var(--text-main)]'}`;
+      $('login-user').placeholder = r === 'admin' ? 'Username Admin' : 'Username Warga';
     }
 
-    function switchLoginRole(role) {
-      triggerHaptic();
-      currentLoginRole = role;
-      $('role-btn-viewer').classList.toggle('active', role === 'viewer');
-      $('role-btn-admin').classList.toggle('active', role === 'admin');
-      $('label-user').textContent = role === 'admin' ? 'Username Pengurus' : 'Username Warga';
-      $('login-user').placeholder = role === 'admin' ? 'Masukkan username admin' : 'Masukkan username warga';
-    }
-
-    async function handleLogin() {
-      triggerHaptic();
-      const username = $('login-user').value.trim(), password = $('login-pass').value;
-      if (!username || !password) return showToast('Username dan password wajib diisi.', '⚠️');
-      showLoader(true, 'Memverifikasi akun...');
+    async function login() {
+      trigger(); const u = $('login-user').value, p =$('login-pass').value;
+      showLoader(true);
       try {
-        const res = await fetch(CONFIG.API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'login', username, password, role: currentLoginRole })
-        });
-        const data = await res.json();
-        if (data && data.success && data.user && data.user.role) {
-          currentUser = {
-            name: String(data.user.name || username),
-            username: String(data.user.username || username),
-            role: String(data.user.role).toLowerCase(),
-            sessionToken: String(data.sessionToken || '')
-          };
-          completeLogin();
-          return;
-        }
-        showToast(data?.message || 'Username atau password tidak sesuai.', '❌');
-      } catch (err) {
-        showToast('Server tidak dapat dihubungi.', '📡');
-      } finally {
-        showLoader(false);
-      }
-    }
-
-    function completeLogin() {
-      if (!currentUser) return;
-      try { localStorage.setItem(CONFIG.SESSION, JSON.stringify(currentUser)); } catch (e) {}
-      updateRoleUI();
-      showScreen('screen-portal');
-      loadCachedData();
-      renderAll();
-      fetchCloudData();
-      showToast('Selamat datang, ' + currentUser.name, '✨');
+        const res = await (await fetch(CONFIG.API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', username: u, password: p }) })).json();
+        if (res.success) {
+          user = res.user; localStorage.setItem(CONFIG.SESSION, JSON.stringify(user));
+          setupUI(); showScreen('screen-dashboard'); fetchData(); toast('Berhasil masuk ✨');
+        } else toast('Gagal: ' + res.message);
+      } catch(e) { toast('Error koneksi.'); } finally { showLoader(false); }
     }
 
     function checkSession() {
-      try {
-        const raw = localStorage.getItem(CONFIG.SESSION);
-        if (raw) {
-          const u = JSON.parse(raw);
-          if (u && u.sessionToken) {
-            currentUser = u;
-            updateRoleUI();
-            showScreen('screen-portal');
-            loadCachedData();
-            renderAll();
-            fetchCloudData();
-            return;
-          }
-        }
-      } catch (e) {}
-      showScreen('screen-login');
+      const s = localStorage.getItem(CONFIG.SESSION);
+      if (s) { user = JSON.parse(s); setupUI(); showScreen('screen-dashboard'); fetchData(); }
+      else showScreen('screen-login');
     }
+    
+    function logout() { trigger(); localStorage.removeItem(CONFIG.SESSION); user = null; showScreen('screen-login'); toast('Keluar portal.'); }
 
-    function handleLogout() {
-      triggerHaptic();
-      try { localStorage.removeItem(CONFIG.SESSION); } catch (e) {}
-      currentUser = null;
-      showScreen('screen-login');
-      $('login-pass').value = '';
-      showToast('Anda telah keluar.', '👋');
-    }
-
-    function isEditor() {
-      return !!currentUser && ['admin', 'editor', 'pengurus'].includes(String(currentUser.role || '').toLowerCase());
-    }
-
-    function updateRoleUI() {
-      document.querySelectorAll('.role-editor-only').forEach(el => el.classList.toggle('hidden', !isEditor()));
-      $('user-role-text').textContent = currentUser ? `${currentUser.name} (${isEditor() ? 'Pengurus' : 'Warga'})` : 'Pusat Informasi Warga';
+    function setupUI() {
+      const isEd = user && user.role === 'admin';
+      document.querySelectorAll('.role-editor').forEach(el => el.classList.toggle('hidden', !isEd));
+      $('user-role-text').textContent = `${user.name} • ${isEd ? 'Pengurus' : 'Warga'}`;
     }
 
     function showScreen(id) {
-      document.querySelectorAll('.view-screen').forEach(s => s.classList.toggle('active', s.id === id));
-      const isPortal = id === 'screen-portal';
-      document.body.classList.toggle('logged-in', isPortal);
-      $('floating-nav-dock').classList.toggle('hidden', !isPortal);
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      $(id).classList.add('active');
     }
 
-    function switchNav(tab) {
-      triggerHaptic();
-      if (['warga', 'kk', 'keluar'].includes(tab) && !isEditor()) { showToast('Menu khusus pengurus.', '🔒'); return; }
-      state.currentTab = tab;
+    function goHome() { trigger(); showScreen('screen-dashboard'); }
+
+    function openPage(tab) {
+      trigger();
+      const titles = { info: 'Informasi', kas: 'Buku Kas RT', ronda: 'Jadwal Ronda', agenda: 'Agenda', surat: 'Layanan Surat', laporan: 'Aspirasi Warga', umkm: 'UMKM Warga', warga: 'Data Warga', kk: 'Status Iuran KK', inventaris: 'Inventaris RT' };
+      $('page-title').textContent = titles[tab];
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      $('tab-'+tab).classList.add('active');
+      showScreen('screen-page'); window.scrollTo(0,0);
       
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      const activeContent = $('tab-' + tab);
-      if (activeContent) activeContent.classList.remove('hidden');
-
-      document.querySelectorAll('.dock-item').forEach(el => el.classList.remove('active'));
-      const dockBtn = $('dock-btn-' + tab);
-      if (dockBtn) dockBtn.classList.add('active');
-
-      const isKas = ['masuk', 'keluar'].includes(tab);
-      $('section-table').classList.toggle('hidden', !isKas);$('section-chart').classList.toggle('hidden', tab !== 'keluar');
-      if (tab === 'warga') renderWarga();
-      if (isKas) renderData();
+      if(tab === 'kas') renderKasAndChart();
+      if(tab === 'kk') renderKKStatus();
     }
 
-    async function postApi(payload) {
-      if (!currentUser || !currentUser.sessionToken) throw new Error('Sesi tidak valid.');
-      const res = await fetch(CONFIG.API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ ...payload, sessionToken: currentUser.sessionToken })
-      });
-      return await res.json();
-    }
-
-    async function fetchCloudData() {
-      if (!currentUser || !currentUser.sessionToken || !navigator.onLine) return;
+    async function fetchData() {
+      if(!user) return;
       try {
-        const res = await fetch(CONFIG.API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'getdata', sessionToken: currentUser.sessionToken })
-        });
-        const data = await res.json();
-        if (data.success === false && data.code === 'SESSION_INVALID') { handleExpiredSession(); return; }
-        state.riwayat = Array.isArray(data.riwayat) ? data.riwayat : [];
-        state.pengeluaran = Array.isArray(data.pengeluaran) ? data.pengeluaran : [];
-        state.warga = Array.isArray(data.warga) ? data.warga : [];
-        state.pengumuman = Array.isArray(data.pengumuman) ? data.pengumuman : [];
-        state.surat = Array.isArray(data.surat) ? data.surat : [];
-        state.ronda = Array.isArray(data.ronda) ? data.ronda : [];
-        state.laporan = Array.isArray(data.laporan) ? data.laporan : [];
-        state.agenda = Array.isArray(data.agenda) ? data.agenda : [];
-        state.umkm = Array.isArray(data.umkm) ? data.umkm : [];
-        state.inventaris = Array.isArray(data.inventaris) ? data.inventaris : [];
-        state.lastSync = new Date().toISOString();
-        saveKasCache();
-        renderAll();
-      } catch (err) {}
+        const res = await (await fetch(CONFIG.API_URL, { method: 'POST', body: JSON.stringify({ action: 'getdata' }) })).json();
+        if(res.success) { Object.assign(state, res); renderAll(); $('last-sync').textContent = 'Sinkron: ' + new Date().toLocaleTimeString('id-ID'); }
+      } catch(e) {}
+    }
+
+    async function addData(action, payload) {
+      trigger(); showLoader(true);
+      try {
+        const res = await (await fetch(CONFIG.API_URL, { method: 'POST', body: JSON.stringify({ action, ...payload }) })).json();
+        toast(res.message); document.querySelectorAll('form').forEach(f => f.reset()); fetchData();
+      } catch(e) { toast('Gagal menyimpan.'); } finally { showLoader(false); }
+    }
+
+    async function deleteItem(sheet, id) {
+      if(!confirm('Hapus data ini?')) return;
+      trigger(); showLoader(true);
+      try { await fetch(CONFIG.API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteitem', sheet, id }) }); toast('Dihapus.'); fetchData(); } 
+      catch(e){} finally { showLoader(false); }
+    }
+
+    async function updateStatus(sheet, id, status, colIndex) {
+      trigger(); showLoader(true);
+      try { await fetch(CONFIG.API_URL, { method: 'POST', body: JSON.stringify({ action: 'updatestatus', sheet, id, status, colIndex }) }); toast('Status diubah.'); fetchData(); } 
+      catch(e){} finally { showLoader(false); }
     }
 
     function renderAll() {
-      renderData();
-      renderKKStatus();
-      renderWarga();
-      renderAnnouncements();
-      renderChart();
-      renderSuratAdmin();
-      renderExtraModules();
-      $('last-sync').textContent = state.lastSync ? 'Sinkron: ' + new Date(state.lastSync).toLocaleTimeString('id-ID') : 'Mode offline';
-    }
-
-    function renderExtraModules() {
-      const rondaC = $('list-ronda');
-      if (rondaC) {
-        rondaC.innerHTML = state.ronda.map(r => `
-          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-1">
-            <span class="text-[10px] font-extrabold uppercase text-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-0.5 rounded-md">${escapeHtml(r.hari)}</span>
-            <h4 class="font-bold text-xs pt-1">${escapeHtml(r.namaPetugas)}</h4>
-            <p class="text-[10px] text-muted">${escapeHtml(r.pos)}</p>
-          </div>
-        `).join('') || '<p class="text-xs text-muted">Jadwal ronda belum tersedia.</p>';
-      }
-
-      const agendaC = $('list-agenda');
-      if (agendaC) {
-        agendaC.innerHTML = state.agenda.map(a => `
-          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl flex justify-between items-center text-xs">
-            <div>
-              <span class="text-[10px] text-indigo-600 font-bold">${escapeHtml(a.tanggal)} • ${escapeHtml(a.waktu)}</span>
-              <h4 class="font-extrabold mt-0.5">${escapeHtml(a.kegiatan)}</h4>
-              <p class="text-[10px] text-muted">${escapeHtml(a.lokasi)}</p>
-            </div>
-          </div>
-        `).join('') || '<p class="text-xs text-muted">Tidak ada agenda saat ini.</p>';
-      }
-
-      const invC = $('list-inventaris');
-      if (invC) {
-        invC.innerHTML = state.inventaris.map(i => `
-          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs space-y-1">
-            <div class="flex justify-between items-start font-bold">
-              <span>${escapeHtml(i.namaBarang)}</span>
-              <span class="text-[10px] bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 px-2 py-0.5 rounded-md">${escapeHtml(i.kondisi)}</span>
-            </div>
-            <p class="text-muted text-[11px]">Stok: <b class="text-text">${i.jumlahTotal} unit</b></p>
-          </div>
-        `).join('') || '<p class="text-xs text-muted">Belum ada inventaris.</p>';
-      }
-
-      const lapC = $('list-laporan');
-      if (lapC) {
-        lapC.innerHTML = state.laporan.map(l => `
-          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs space-y-1">
-            <div class="flex justify-between font-bold">
-              <span>${escapeHtml(l.kategori)} • ${escapeHtml(l.lokasi)}</span>
-              <span class="bg-amber-50 text-amber-700 dark:bg-amber-950/50 text-[9px] px-2 py-0.5 rounded-md">${escapeHtml(l.status)}</span>
-            </div>
-            <p class="text-muted">${escapeHtml(l.detail)}</p>
-          </div>
-        `).join('') || '<p class="text-xs text-muted">Belum ada aspirasi.</p>';
-      }
-
-      const umkmC = $('list-umkm');
-      if (umkmC) {
-        umkmC.innerHTML = state.umkm.map(u => `
-          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-2">
-            <span class="text-[9px] bg-teal-50 text-teal-700 dark:bg-teal-950/50 font-bold px-2 py-0.5 rounded-md uppercase">${escapeHtml(u.kategori)}</span>
-            <h4 class="font-extrabold text-sm">${escapeHtml(u.namaUsaha)}</h4>
-            <p class="text-xs text-muted">${escapeHtml(u.deskripsi)}</p>
-            <div class="pt-2 flex justify-between items-center border-t border-slate-200 dark:border-slate-700 text-xs">
-              <span class="text-muted text-[11px]">${escapeHtml(u.pemilik)}</span>
-              <a href="https://wa.me/${escapeHtml(u.kontakWA)}" target="_blank" class="btn btn-primary btn-sm py-1 px-3 text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i> Hubungi</a>
-            </div>
-          </div>
-        `).join('') || '<p class="text-xs text-muted">Belum ada UMKM terdaftar.</p>';
-      }
-    }
-
-    function renderData() {
-      const totalMasuk = state.riwayat.reduce((s, i) => s + safeAmount(i.jumlah), 0);
-      const totalKeluar = state.pengeluaran.reduce((s, i) => s + safeAmount(i.jumlah), 0);
-      $('stat-masuk').textContent = formatRp(totalMasuk);
-      $('stat-keluar').textContent = formatRp(totalKeluar);$('stat-saldo').textContent = formatRp(totalMasuk - totalKeluar);
-
-      const isMasuk = state.currentTab === 'masuk';
-      const source = isMasuk ? state.riwayat : state.pengeluaran;
-      const q = $('search-input') ?$('search-input').value.trim().toLowerCase() : '';
-      const from = $('filter-from') ?$('filter-from').value : '';
-      const to = $('filter-to') ?$('filter-to').value : '';
-
-      const dataset = source.filter(i => {
-        const text = [i.tanggal, i.nama, i.keterangan, i.kategori, i.status].map(v => String(v ?? '')).join(' ').toLowerCase();
-        const iso = normalizeDate(i.tanggal);
-        return (!q || text.includes(q)) && (!from || !iso || iso >= from) && (!to || !iso || iso <= to);
-      });
-
-      if ($('transaction-title'))$('transaction-title').textContent = isMasuk ? 'Riwayat Pemasukan' : 'Riwayat Pengeluaran';
-      if ($('transaction-count'))$('transaction-count').textContent = `${dataset.length} transaksi`;
+      // Datalist Warga
+      $('warga-list').innerHTML = state.warga.map(w => `<option value="${w.nama}">`).join('');
       
-      const tbody = $('table-body');
-      if (!tbody) return;
-      tbody.replaceChildren();
+      // Saldo Hero
+      const tMasuk = state.riwayat.reduce((s, i) => s + Number(i.jumlah||0), 0);
+      const tKeluar = state.pengeluaran.reduce((s, i) => s + Number(i.jumlah||0), 0);
+      $('stat-masuk').textContent = rp(tMasuk); $('stat-keluar').textContent = rp(tKeluar);$('stat-saldo').textContent = rp(tMasuk - tKeluar);
 
-      dataset.slice().reverse().forEach(i => {
-        const tr = document.createElement('tr');
-        tr.className = 'border-b border-slate-100 dark:border-slate-800/60';
-        appendCell(tr, formatDate(i.tanggal));
-        
-        const td = document.createElement('td');
-        td.className = 'py-3';
-        td.innerHTML = `<div class="font-extrabold">${escapeHtml(i.nama || i.keterangan)}</div><div class="text-[10px] text-muted">${escapeHtml(i.kategori)}</div>`;
-        tr.append(td);
-        
-        const amt = document.createElement('td');
-        amt.className = `py-3 text-right font-extrabold ${isMasuk ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`;
-        amt.textContent = formatRp(safeAmount(i.jumlah));
-        tr.append(amt);
-        
-        const st = document.createElement('td');
-        st.className = 'py-3 text-center';
-        st.innerHTML = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isMasuk ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50' : 'bg-rose-50 text-rose-700 dark:bg-rose-950/50'}">${escapeHtml(i.status || (isMasuk ? 'Masuk' : 'Keluar'))}</span>`;
-        tr.append(st);
+      renderKasAndChart();
+      renderKKStatus();
 
-        const act = document.createElement('td');
-        act.className = 'py-3 text-center';
-        if (isEditor()) {
-          const del = document.createElement('button');
-          del.className = 'text-rose-500 hover:text-rose-700 p-1';
-          del.innerHTML = '<i class="fa-solid fa-trash-can text-xs"></i>';
-          del.onclick = () => deleteTransaction(i.id, isMasuk ? 'masuk' : 'keluar');
-          act.append(del);
-        } else {
-          act.textContent = '—';
-        }
-        tr.append(act);
-        tbody.append(tr);
-      });
-      if ($('table-empty'))$('table-empty').classList.toggle('hidden', dataset.length > 0);
-      renderChart();
+      // Pengumuman
+      $('list-info').innerHTML = state.pengumuman.slice().reverse().map(i => `<div class="p-4 bg-black/5 rounded-2xl border border-white/10"><div class="flex justify-between text-[10px] mb-1"><span class="font-bold text-indigo-500">${i.kategori}</span><span class="opacity-60">${i.tanggal}</span></div><h5 class="font-extrabold text-sm">${i.judul}</h5><p class="text-xs mt-1 opacity-80">${i.isi}</p>${user?.role==='admin'?`<button onclick="deleteItem('Pengumuman', ${i.id})" class="text-[10px] text-rose-500 mt-2 font-bold"><i class="fa-solid fa-trash"></i> Hapus</button>`:''}</div>`).join('');
+
+      // Surat
+      $('list-surat').innerHTML = state.surat.slice().reverse().map(i => `<div class="p-3 bg-black/5 rounded-2xl border border-white/10 flex justify-between items-center"><div><h5 class="font-bold text-xs">${i.nama}</h5><p class="text-[10px] opacity-60">${i.jenis} - ${i.keperluan}</p></div><div><span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-black/20 ${i.status==='Selesai'?'text-emerald-400':'text-amber-400'}">${i.status}</span>${user?.role==='admin' && i.status!=='Selesai' ? `<button onclick="updateStatus('Surat', ${i.id}, 'Selesai', 6)" class="ml-2 text-xs text-indigo-500"><i class="fa-solid fa-check"></i></button>`:''}</div></div>`).join('');
+
+      // Laporan
+      $('list-laporan').innerHTML = state.laporan.slice().reverse().map(i => `<div class="p-4 bg-black/5 rounded-2xl border border-white/10"><div class="flex justify-between items-start mb-1"><h5 class="font-extrabold text-sm">${i.kategori} <span class="text-[10px] font-normal opacity-60">• ${i.lokasi}</span></h5><span class="text-[9px] px-2 py-0.5 rounded bg-black/20">${i.status}</span></div><p class="text-xs opacity-80">${i.detail}</p><p class="text-[10px] mt-2 opacity-60">Pelapor: ${i.nama} • ${i.tanggal}</p>${user?.role==='admin' && i.status==='Menunggu' ? `<button onclick="updateStatus('Laporan', ${i.id}, 'Diproses', 6)" class="text-[10px] text-emerald-500 mt-2 font-bold">Proses Aspirasi</button>`:''}</div>`).join('');
+
+      // UMKM
+      $('list-umkm').innerHTML = state.umkm.map(i => `<div class="p-4 bg-black/5 rounded-2xl border border-white/10"><span class="text-[9px] font-bold text-orange-500 uppercase tracking-wider">${i.kategori}</span><h5 class="font-extrabold text-sm mt-1">${i.namaUsaha}</h5><p class="text-xs opacity-70 mb-3">${i.deskripsi}</p><div class="flex justify-between items-center border-t border-white/10 pt-2"><span class="text-[10px] opacity-60">${i.pemilik}</span><a href="https://wa.me/${i.kontakWA}" target="_blank" class="bg-emerald-500 text-white py-1 px-3 text-[10px] rounded-lg font-bold"><i class="fa-brands fa-whatsapp"></i> Chat</a></div></div>`).join('');
+
+      // Warga, Ronda, Agenda, Inventaris
+      $('list-warga').innerHTML = state.warga.map(w => `<div class="p-3 font-bold text-xs bg-black/5 rounded-xl border border-white/10 flex justify-between"><span>${w.nama}</span> ${user?.role==='admin'?`<button onclick="deleteItem('Warga', ${w.id})" class="text-rose-500"><i class="fa-solid fa-trash"></i></button>`:''}</div>`).join('');
+      
+      $('list-ronda').innerHTML = state.ronda.map(r => `<div class="p-3 bg-black/5 rounded-xl border border-white/10 text-xs"><div class="font-extrabold text-indigo-500">${r.hari}</div><div class="font-bold">${r.namaPetugas}</div><div class="opacity-60 text-[10px]">${r.pos}</div></div>`).join('');
+      
+      $('list-agenda').innerHTML = state.agenda.map(a => `<div class="p-3 bg-black/5 rounded-xl border border-white/10 flex justify-between items-center text-xs"><div><div class="font-bold text-indigo-400">${a.tanggal} • ${a.waktu}</div><div class="font-extrabold">${a.kegiatan}</div><div class="opacity-60 text-[10px]">${a.lokasi}</div></div></div>`).join('');
+      
+      $('list-inventaris').innerHTML = state.inventaris.map(i => `<div class="p-4 bg-black/5 rounded-2xl border border-white/10 text-xs space-y-1"><div class="flex justify-between items-start font-bold"><span>${i.namaBarang}</span><span class="text-[10px] bg-emerald-500/20 text-emerald-500 px-2 py-0.5 rounded-md">${i.kondisi}</span></div><p class="opacity-70 text-[11px]">Stok: <b>${i.jumlahTotal} unit</b></p></div>`).join('');
+    }
+
+    function renderKasAndChart() {
+      const q = $('filter-search').value.toLowerCase();
+      const fs = $('filter-start').value;
+      const fe = $('filter-end').value;
+
+      const allKas = [...state.riwayat.map(x=>({...x, type:'M'})), ...state.pengeluaran.map(x=>({...x, type:'K'}))]
+        .sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal))
+        .filter(i => {
+          const txt = `${i.tanggal} ${i.nama||i.keterangan} ${i.kategori}`.toLowerCase();
+          const d = i.tanggal.slice(0,10); // format yyyy-mm-dd (asumsi standar)
+          return (!q || txt.includes(q)) && (!fs || d >= fs) && (!fe || d <= fe);
+        });
+
+      $('tx-count').textContent = `${allKas.length} transaksi`;
+      $('list-kas').innerHTML = allKas.map(i => {
+        const isM = i.type === 'M';
+        return `<tr class="border-b border-white/10 hover:bg-white/5 transition"><td class="py-3">${i.tanggal}</td><td class="py-3 font-bold">${i.nama||i.keterangan}<div class="text-[9px] opacity-60 font-normal">${i.kategori}</div></td><td class="py-3 text-right font-extrabold ${isM?'text-emerald-400':'text-rose-400'}">${rp(i.jumlah)}</td><td class="py-3 text-center"><span class="px-2 py-0.5 rounded-md text-[9px] bg-black/20">${isM?'Masuk':'Keluar'}</span></td><td class="py-3 text-center role-editor ${user?.role==='admin'?'':'hidden'}"><button onclick="deleteItem('${isM?'KasMasuk':'KasKeluar'}', ${i.id})" class="text-rose-500 hover:text-rose-400"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+      }).join('');
+      $('table-empty').classList.toggle('hidden', allKas.length > 0);
+
+      // Render Chart (Hanya Pengeluaran)
+      const totals = {};
+      state.pengeluaran.forEach(i => { const k = i.kategori || 'Lainnya'; totals[k] = (totals[k]||0) + Number(i.jumlah||0); });
+      const labels = Object.keys(totals), values = Object.values(totals);
+      $('chart-empty').classList.toggle('hidden', values.some(v => v > 0));
+      
+      if(expenseChart) expenseChart.destroy();
+      if(labels.length && values.some(v => v > 0) && window.Chart) {
+        expenseChart = new Chart($('expenseChart'), {
+          type: 'doughnut',
+          data: { labels, datasets: [{ data: values, borderWidth: 0, backgroundColor: ['#6366f1', '#d946ef', '#ec4899', '#3b82f6', '#10b981'] }] },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: document.body.classList.contains('dark') ? '#f8fafc' : '#0f172a', font: {family: 'Outfit', size: 11} } } } }
+        });
+      }
     }
 
     function renderKKStatus() {
-      const c = $('kk-container');
-      if (!c) return;
-      c.replaceChildren();
-      const month = $('kk-month').value;
-      const payments = new Set();
-      state.riwayat.forEach(i => {
-        const d = normalizeDate(i.tanggal);
-        if (d && d.slice(0, 7) === month && i.nama) payments.add(normalizeName(i.nama));
-      });
-      let paid = 0, unknown = 0;
-      state.warga.forEach(w => {
-        const name = typeof w === 'string' ? w : (w.nama || w.name || '');
-        if (!name) return;
-        const isPaid = payments.has(normalizeName(name));
-        if (isPaid) paid++; else unknown++;
-        const card = document.createElement('div');
-        card.className = 'p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl flex justify-between items-center text-xs';
-        card.innerHTML = `<span class="font-extrabold">${escapeHtml(name)}</span><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${isPaid ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50' : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300'}">${isPaid ? 'TERCATAT' : 'BELUM'}</span>`;
-        c.append(card);
-      });
-      $('kk-summary').innerHTML = `<span class="bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 px-3 py-1 rounded-xl">Lunas: ${paid}</span><span class="bg-slate-100 text-slate-600 dark:bg-slate-800 px-3 py-1 rounded-xl">Belum: ${unknown}</span>`;
+      const month = $('kk-month').value; // yyyy-mm
+      if(!month) return;
+      const paySet = new Set(state.riwayat.filter(i => i.tanggal && i.tanggal.slice(0,7) === month && i.nama).map(i => i.nama.toLowerCase().trim()));
+      
+      let p = 0, np = 0;
+      $('list-kk').innerHTML = state.warga.map(w => {
+        const isPaid = paySet.has(w.nama.toLowerCase().trim());
+        isPaid ? p++ : np++;
+        return `<div class="p-3 bg-black/5 rounded-xl border border-white/10 flex justify-between items-center text-xs"><span class="font-extrabold">${w.nama}</span><span class="px-2 py-1 rounded-lg text-[9px] font-bold ${isPaid?'bg-emerald-500/20 text-emerald-500':'bg-rose-500/20 text-rose-500'}">${isPaid?'LUNAS':'BELUM'}</span></div>`;
+      }).join('');
+      $('kk-summary').innerHTML = `<span class="bg-emerald-500/20 text-emerald-500 px-3 py-1 rounded-xl">Lunas: ${p}</span><span class="bg-rose-500/20 text-rose-500 px-3 py-1 rounded-xl">Belum: ${np}</span>`;
     }
 
-    function renderWarga() {
-      const c = $('warga-list-container');
-      if (!c) return;
-      c.replaceChildren();
-      state.warga.forEach(w => {
-        const name = typeof w === 'string' ? w : (w.nama || w.name || 'Warga');
-        const row = document.createElement('div');
-        row.className = 'p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold';
-        row.textContent = name;
-        c.append(row);
-      });
+    function resetFilters() { $('filter-search').value=''; $('filter-start').value='';$('filter-end').value=''; renderKasAndChart(); }
+
+    function downloadCSV() {
+      const allKas = [...state.riwayat.map(x=>({...x, status:'Masuk'})), ...state.pengeluaran.map(x=>({...x, status:'Keluar'}))].sort((a,b) => new Date(a.tanggal) - new Date(b.tanggal));
+      const csv = '\uFEFFTanggal,Nama/Keterangan,Kategori,Jumlah,Status\n' + allKas.map(i => `${i.tanggal},"${i.nama||i.keterangan}",${i.kategori},${i.jumlah},${i.status}`).join('\n');
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'})); a.download = 'Laporan-Kas.csv'; a.click();
     }
 
-    function renderAnnouncements() {
-      const c = $('pengumuman-list-container');
-      if (!c) return;
-      c.replaceChildren();
-      const items = state.pengumuman.length ? state.pengumuman : defaultAnnouncements;
-      items.slice().reverse().forEach(i => {
-        const box = document.createElement('article');
-        box.className = 'p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-1.5';
-        box.innerHTML = `<div class="flex justify-between items-center"><span class="text-[9px] bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 font-extrabold px-2 py-0.5 rounded-md">${escapeHtml(i.kategori)}</span><span class="text-[10px] text-muted">${escapeHtml(i.tanggal)}</span></div><h4 class="font-extrabold text-sm">${escapeHtml(i.judul)}</h4><p class="text-xs text-muted leading-relaxed">${escapeHtml(i.isi)}</p>`;
-        c.append(box);
-      });
+    function downloadPDF() {
+      if (!window.jspdf?.jsPDF) return toast('Modul PDF belum siap.');
+      const doc = new window.jspdf.jsPDF();
+      doc.setFont("helvetica", "bold"); doc.text('Laporan Kas RT 06 Bendotretek', 14, 20);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(10);
+      const tMasuk = state.riwayat.reduce((s, i) => s + Number(i.jumlah||0), 0);
+      const tKeluar = state.pengeluaran.reduce((s, i) => s + Number(i.jumlah||0), 0);
+      doc.text(`Total Pemasukan: ${rp(tMasuk)}`, 14, 30);
+      doc.text(`Total Pengeluaran: ${rp(tKeluar)}`, 14, 35);
+      doc.text(`Saldo Akhir: ${rp(tMasuk - tKeluar)}`, 14, 40);
+      doc.text(`Dicetak pada: ${new Date().toLocaleString('id-ID')}`, 14, 45);
+      doc.save('Laporan-Kas-RT06.pdf'); toast('PDF Diunduh.');
     }
 
-    function renderChart() {
-      const canvas = $('expenseChart');
-      if (!canvas || !window.Chart) return;
-      const totals = {};
-      state.pengeluaran.forEach(i => {
-        const k = String(i.kategori || 'Lainnya');
-        totals[k] = (totals[k] || 0) + safeAmount(i.jumlah);
-      });
-      const labels = Object.keys(totals), values = Object.values(totals);
-      if ($('chart-empty'))$('chart-empty').classList.toggle('hidden', values.some(v => v > 0));
-      if (expenseChart) { expenseChart.destroy(); expenseChart = null; }
-      if (!labels.length || !values.some(v => v > 0)) return;
-      expenseChart = new Chart(canvas, {
-        type: 'doughnut',
-        data: { labels, datasets: [{ data: values, borderWidth: 0, backgroundColor: ['#6366f1', '#a855f7', '#ec4899', '#3b82f6', '#10b981'] }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
-      });
-    }
-
-    async function tambahPengumuman() {
-      if (!isEditor()) return showToast('Khusus pengurus.', '🔒');
-      const judul = $('in-info-judul').value.trim(), isi = $('in-info-isi').value.trim(), kategori =$('in-info-kat').value;
-      try {
-        showLoader(true, 'Menyimpan...');
-        const r = await postApi({ action: 'addpengumuman', judul, isi, kategori });
-        showToast(r.message || 'Berhasil dipublikasikan.');
-        $('form-pengumuman').reset();
-        fetchCloudData();
-      } catch (e) { showToast('Gagal menyimpan.', '❌'); } finally { showLoader(false); }
-    }
-
-    async function handleAddAgenda(e) {
-      e.preventDefault();
-      const kegiatan = $('ag-kegiatan').value.trim(), tanggal =$('ag-tanggal').value, waktu = $('ag-waktu').value.trim(), lokasi =$('ag-lokasi').value.trim();
-      try {
-        showLoader(true, 'Menyimpan...');
-        const r = await postApi({ action: 'addagenda', kegiatan, tanggal, waktu, lokasi, keterangan: kegiatan });
-        showToast(r.message || 'Agenda disimpan.');
-        $('form-agenda').reset();
-        fetchCloudData();
-      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
-    }
-
-    async function tambahPemasukan() {
-      const nama = $('in-nama').value.trim(), kategori = $('in-kat-masuk').value, jumlah = parseRupiah($('in-jumlah-masuk').value);
-      try {
-        showLoader(true, 'Menyimpan...');
-        const r = await postApi({ action: 'addmasuk', nama, kategori, jumlah, tanggal: new Date().toISOString().slice(0, 10) });
-        showToast('Kas masuk disimpan.');
-        $('form-masuk').reset();
-        fetchCloudData();
-      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
-    }
-
-    async function tambahPengeluaran() {
-      const keterangan = $('in-ket').value.trim(), kategori = $('in-kat-keluar').value, jumlah = parseRupiah($('in-jumlah-keluar').value);
-      try {
-        showLoader(true, 'Menyimpan...');
-        const r = await postApi({ action: 'addkeluar', keterangan, kategori, jumlah, tanggal: new Date().toISOString().slice(0, 10) });
-        showToast('Kas keluar disimpan.');
-        $('form-keluar').reset();
-        fetchCloudData();
-      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
-    }
-
-    async function tambahWarga() {
-      const nama = $('in-warga-nama').value.trim();
-      try {
-        showLoader(true, 'Menyimpan...');
-        const r = await postApi({ action: 'addwarga', nama });
-        showToast(r.message || 'Warga ditambah.');
-        $('form-warga').reset();
-        fetchCloudData();
-      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
-    }
-
-    async function kirimPermohonanSurat() {
-      const nama = $('surat-nama').value.trim(), nik =$('surat-nik').value.trim(), jenis = $('surat-jenis').value, keperluan =$('surat-keperluan').value.trim();
-      try {
-        showLoader(true, 'Mengirim...');
-        const r = await postApi({ action: 'addsurat', nama, nik, jenis, keperluan });
-        showToast(r.message || 'Surat dikirim.');
-        $('form-surat').reset();
-      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
-    }
-
-    async function handleAddLaporan(e) {
-      e.preventDefault();
-      const nama = $('lap-nama').value, kategori =$('lap-kategori').value, lokasi = $('lap-lokasi').value, detail =$('lap-detail').value;
-      try {
-        showLoader(true, 'Mengirim...');
-        const r = await postApi({ action: 'addlaporan', nama, kategori, lokasi, detail });
-        showToast(r.message || 'Aspirasi terkirim.');
-        e.target.reset();
-        fetchCloudData();
-      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
-    }
-
-    async function handleAddUmkm(e) {
-      e.preventDefault();
-      const namaUsaha = $('u-namaUsaha').value, pemilik = $('u-pemilik').value, kategori =$('u-kategori').value, kontakWA = $('u-wa').value, deskripsi =$('u-deskripsi').value;
-      try {
-        showLoader(true, 'Menyimpan...');
-        const r = await postApi({ action: 'addumkm', namaUsaha, pemilik, kategori, kontakWA, deskripsi });
-        showToast(r.message || 'UMKM terdaftar.');
-        toggleUmkmModal();
-        e.target.reset();
-        fetchCloudData();
-      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
-    }
-
-    function toggleUmkmModal() {
-      $('modal-umkm')?.classList.toggle('hidden');
-    }
-
-    async function deleteTransaction(id, type) {
-      if (!confirm('Yakin hapus transaksi ini?')) return;
-      try {
-        showLoader(true, 'Menghapus...');
-        await postApi({ action: 'deletetransaction', id, type });
-        showToast('Berhasil dihapus.');
-        fetchCloudData();
-      } catch (e) { showToast('Gagal.', '❌'); } finally { showLoader(false); }
-    }
-
-    function renderSuratAdmin() {
-      const box = $('admin-surat-list');
-      if (!box) return;
-      box.replaceChildren();
-      if (!isEditor() || !state.surat.length) return;
-      state.surat.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs flex justify-between items-center';
-        div.innerHTML = `<div><b>${escapeHtml(item.nama)}</b> • ${escapeHtml(item.jenis)}</div><span class="font-bold text-indigo-600">${escapeHtml(item.status)}</span>`;
-        box.append(div);
-      });
-    }
-
-    function shareAnnouncementsToWA() {
-      const items = state.pengumuman.length ? state.pengumuman : defaultAnnouncements;
-      const latest = items[items.length - 1];
-      const text = `📢 *PENGUMUMAN RT 06*\n\n*${latest.judul}*\n${latest.isi}`;
+    function shareWA(type) {
+      let text = '';
+      if(type === 'info') {
+        const latest = state.pengumuman[state.pengumuman.length - 1];
+        if(!latest) return toast('Belum ada pengumuman');
+        text = `📢 *PENGUMUMAN RT 06*\n\n*${latest.judul}*\n${latest.isi}`;
+      } else if (type === 'kas') {
+        const tMasuk = state.riwayat.reduce((s, i) => s + Number(i.jumlah||0), 0);
+        const tKeluar = state.pengeluaran.reduce((s, i) => s + Number(i.jumlah||0), 0);
+        text = `💰 *INFO KAS RT 06 BENDOTRETEK*\nMasuk: ${rp(tMasuk)}\nKeluar: ${rp(tKeluar)}\nSaldo Akhir: *${rp(tMasuk - tKeluar)}*`;
+      } else if (type === 'ronda') {
+        text = `🛡️ *JADWAL RONDA RT 06*\n\n` + state.ronda.map(r => `• ${r.hari} (${r.pos}): ${r.namaPetugas}`).join('\n');
+      }
       window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
 
-    function shareKasToWA() {
-      const totalMasuk = state.riwayat.reduce((s, i) => s + safeAmount(i.jumlah), 0);
-      const totalKeluar = state.pengeluaran.reduce((s, i) => s + safeAmount(i.jumlah), 0);
-      const text = `💰 *KAS RT 06 BENDOTRETEK*\nMasuk: ${formatRp(totalMasuk)}\nKeluar: ${formatRp(totalKeluar)}\nSaldo: ${formatRp(totalMasuk - totalKeluar)}`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    }
-
-    function shareRondaToWA() {
-      let text = `🛡️ *JADWAL RONDA RT 06*\n\n`;
-      state.ronda.forEach(r => { text += `• ${r.hari} (${r.pos}): ${r.namaPetugas}\n`; });
-      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    }
-
-    function downloadLaporanCSV() {
-      const data = state.currentTab === 'masuk' ? state.riwayat : state.pengeluaran;
-      const csv = '\uFEFFTanggal,Keterangan,Jumlah\n' + data.map(i => `${i.tanggal},"${i.nama || i.keterangan}",${i.jumlah}`).join('\n');
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'laporan-kas.csv'; a.click();
-    }
-
-    function downloadLaporanPDF() {
-      if (!window.jspdf?.jsPDF) return;
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.text('Laporan Kas RT 06 Bendotretek', 14, 20);
-      doc.save('laporan-kas.pdf');
-    }
-
-    function clearFilters() {
-      if ($('search-input'))$('search-input').value = '';
-      if ($('filter-from'))$('filter-from').value = '';
-      if ($('filter-to'))$('filter-to').value = '';
-      renderData();
-    }
-
-    function applySavedTheme() {
-      let theme = 'light';
-      try { theme = localStorage.getItem(CONFIG.THEME) || 'light'; } catch (e) {}
-      document.body.classList.toggle('dark', theme === 'dark');
-    }
-
-    function toggleTheme() {
-      triggerHaptic();
-      const dark = !document.body.classList.contains('dark');
-      document.body.classList.toggle('dark', dark);
-      try { localStorage.setItem(CONFIG.THEME, dark ? 'dark' : 'light'); } catch (e) {}
-      renderChart();
-    }
-
-    function handleExpiredSession() {
-      try { localStorage.removeItem(CONFIG.SESSION); } catch (e) {}
-      currentUser = null;
-      showScreen('screen-login');
-      showToast('Sesi berakhir.', '🔒');
-    }
-
-    function setDefaultMonth() {
-      if ($('kk-month'))$('kk-month').value = new Date().toISOString().slice(0, 7);
-    }
-
-    function loadCachedData() {
-      try {
-        const raw = localStorage.getItem(CONFIG.CACHE_KAS);
-        if (!raw) return;
-        const d = JSON.parse(raw);
-        state.riwayat = d.riwayat || [];
-        state.pengeluaran = d.pengeluaran || [];
-        state.warga = d.warga || [];
-        state.pengumuman = d.pengumuman || [];
-        state.ronda = d.ronda || [];
-        state.laporan = d.laporan || [];
-        state.agenda = d.agenda || [];
-        state.umkm = d.umkm || [];
-        state.inventaris = d.inventaris || [];
-      } catch (e) {}
-    }
-
-    function saveKasCache() {
-      try { localStorage.setItem(CONFIG.CACHE_KAS, JSON.stringify(state)); } catch (e) {}
-    }
-
-    function formatRp(v) { return 'Rp ' + Number(v || 0).toLocaleString('id-ID'); }
-    function safeAmount(v) {
-      const n = Number(String(v ?? '').replace(/[^\d,-]/g, '').replace(/\./g, '').replace(',', '.'));
-      return Number.isFinite(n) ? n : 0;
-    }
-    function parseRupiah(v) { return Number(String(v || '').replace(/[^\d]/g, '')) || 0; }
-    function normalizeName(v) { return String(v || '').trim().toLowerCase(); }
-    function normalizeDate(v) {
-      if (!v) return '';
-      const s = String(v).trim();
-      if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
-      return '';
-    }
-    function formatDate(v) {
-      const d = normalizeDate(v);
-      if (!d) return String(v || '-');
-      const [y, m, day] = d.split('-');
-      return `${day}/${m}/${y}`;
-    }
-    function escapeHtml(str) {
-      return String(str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
-    function appendCell(tr, text) {
-      const td = document.createElement('td');
-      td.className = 'py-3';
-      td.textContent = String(text ?? '-');
-      tr.append(td);
-    }
-    let toastTimer;
-    function showToast(message, icon = '✨') {
-      const t = $('toast');
-      if (!t) return;
-      $('toast-msg').textContent = message;
-      $('toast-icon').textContent = icon;
-      t.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
-    }
-    function showLoader(show, message = 'Memproses...') {
-      const l = $('loader');
-      if (l) l.classList.toggle('hidden', !show);
-    }
+    let tTimer; function toast(msg) { $('toast-msg').textContent = msg; $('toast').classList.add('show'); clearTimeout(tTimer); tTimer = setTimeout(()=>$('toast').classList.remove('show'),3000); }
+    function showLoader(show) { $('loader').classList.toggle('hidden', !show); }
+    function trigger() { if(navigator.vibrate) navigator.vibrate(10); }
+    function rp(v) { return 'Rp ' + Number(v||0).toLocaleString('id-ID'); }
+    
+    function applyTheme() { document.body.classList.toggle('dark', localStorage.getItem('rt06_theme') === 'dark'); }
+    function toggleTheme() { trigger(); const isD = document.body.classList.toggle('dark'); localStorage.setItem('rt06_theme', isD ? 'dark' : 'light'); if(expenseChart) renderKasAndChart(); }
   </script>
 </body>
 </html>
