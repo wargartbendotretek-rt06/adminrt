@@ -27,45 +27,49 @@
   <style>
     :root {
       --bg: #f8fafc;
-      --card: rgba(255, 255, 255, 0.85);
+      --card: rgba(255, 255, 255, 0.9);
       --border: rgba(226, 232, 240, 0.8);
       --text: #0f172a;
       --muted: #64748b;
-      --shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.08);
-      --glow: 0 0 25px rgba(99, 102, 241, 0.15);
+      --shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.06);
+      --glow: 0 0 25px rgba(99, 102, 241, 0.12);
     }
     body.dark {
       --bg: #030712;
-      --card: rgba(17, 24, 39, 0.8);
+      --card: rgba(17, 24, 39, 0.85);
       --border: rgba(31, 41, 55, 0.8);
       --text: #f9fafb;
       --muted: #9ca3af;
       --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-      --glow: 0 0 25px rgba(99, 102, 241, 0.25);
+      --glow: 0 0 25px rgba(99, 102, 241, 0.2);
     }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg);
       color: var(--text);
       -webkit-tap-highlight-color: transparent;
-      padding-bottom: 110px;
+      padding-bottom: 40px;
       transition: background-color 0.4s ease, color 0.4s ease;
     }
-    html { scroll-behavior: smooth; }
+    body.logged-in {
+      padding-bottom: 120px;
+    }
     
-    /* Aesthetic Glassmorphism & Gradients */
+    .container-fluid {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
     .glass-card {
       background: var(--card);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border);
       box-shadow: var(--shadow);
-      border-radius: 1.75rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .glass-card:hover {
-      box-shadow: var(--glow);
-      transform: translateY(-2px);
+      border-radius: 1.5rem;
+      transition: all 0.3s ease;
     }
 
     .hero-gradient {
@@ -73,12 +77,11 @@
       box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.4);
     }
 
-    /* Smooth Slide & Fade Transition */
     .view-screen {
       display: none;
       opacity: 0;
-      transform: translateY(15px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     .view-screen.active {
       display: block;
@@ -92,15 +95,15 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      width: calc(100% - 28px);
-      max-width: 600px;
+      width: calc(100% - 32px);
+      max-width: 650px;
       background: var(--card);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.12);
       border-radius: 2rem;
-      padding: 8px 12px;
+      padding: 8px 14px;
       z-index: 1000;
       display: flex;
       justify-content: space-around;
@@ -116,9 +119,9 @@
       color: var(--muted);
       font-size: 0.65rem;
       font-weight: 700;
-      padding: 8px 10px;
+      padding: 8px 12px;
       border-radius: 1.25rem;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.25s ease;
     }
     .dock-item i {
       font-size: 1.15rem;
@@ -129,39 +132,38 @@
       background: rgba(99, 102, 241, 0.1);
     }
     .dock-item.active i {
-      transform: scale(1.15);
+      transform: scale(1.1);
     }
 
-    /* Menu Grid Styling */
     .menu-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
+    }
+    @media (min-width: 768px) {
+      .menu-grid { grid-template-columns: repeat(8, 1fr); }
     }
     .menu-tile {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      padding: 14px 6px;
+      padding: 16px 8px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 1.25rem;
       transition: all 0.25s ease;
       box-shadow: var(--shadow);
     }
-    .menu-tile:active {
-      transform: scale(0.94);
-    }
+    .menu-tile:active { transform: scale(0.95); }
     .menu-icon {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.4);
+      font-size: 1.2rem;
     }
 
     .input-control {
@@ -173,7 +175,7 @@
       outline: none;
       background: var(--card);
       color: var(--text);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       transition: all 0.25s;
     }
     .input-control:focus {
@@ -184,13 +186,13 @@
     .btn {
       border: 0;
       min-height: 46px;
-      padding: 10px 18px;
+      padding: 10px 20px;
       border-radius: 1rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 700;
       transition: all 0.2s;
     }
@@ -209,13 +211,13 @@
       transform: translate(-50%, -20px);
       opacity: 0;
       visibility: hidden;
-      padding: 12px 22px;
+      padding: 12px 24px;
       border-radius: 3rem;
       background: var(--card);
       backdrop-filter: blur(16px);
       border: 1px solid var(--border);
       box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: 700;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
@@ -238,31 +240,24 @@
       background: rgba(3, 7, 18, 0.6);
       backdrop-filter: blur(8px);
     }
-
-    @media(max-width: 480px) {
-      .menu-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
-      .menu-tile { padding: 10px 4px; }
-      .menu-icon { width: 40px; height: 40px; font-size: 1rem; }
-      .menu-tile span { font-size: 0.6rem; }
-    }
   </style>
 </head>
 <body>
 
   <div id="loader" class="loader-overlay hidden" aria-live="polite">
-    <div class="glass-card p-5 text-xs font-bold text-center">✨ Sedang memproses...</div>
+    <div class="glass-card p-6 text-xs font-bold text-center">✨ Sedang memproses...</div>
   </div>
 
   <div id="toast" role="status" aria-live="polite">
     <span id="toast-icon">✨</span> <span id="toast-msg">Notifikasi</span>
   </div>
 
-  <div class="container max-w-lg mx-auto p-4">
+  <div class="container-fluid">
     
     <!-- SCREEN LOGIN -->
     <main id="screen-login" class="view-screen active">
       <div class="min-h-[85vh] flex items-center justify-center py-6">
-        <div class="glass-card w-full p-8 text-center space-y-6">
+        <div class="glass-card w-full max-w-md p-8 text-center space-y-6">
           <div class="w-20 h-20 hero-gradient rounded-3xl flex items-center justify-center mx-auto text-white shadow-xl text-3xl">
             <i class="fa-solid fa-house-chimney-user"></i>
           </div>
@@ -271,7 +266,7 @@
             <p class="text-xs text-muted mt-1">Portal Eksklusif Warga & Transparansi Lingkungan</p>
           </div>
           
-          <div class="role-selector grid grid-cols-2 gap-2 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700">
+          <div class="grid grid-cols-2 gap-2 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700">
             <button id="role-btn-viewer" class="py-2.5 rounded-xl text-xs font-bold transition text-muted active bg-white dark:bg-slate-900 shadow-sm" type="button" onclick="switchLoginRole('viewer')">👤 Warga</button>
             <button id="role-btn-admin" class="py-2.5 rounded-xl text-xs font-bold transition text-muted" type="button" onclick="switchLoginRole('admin')">🔑 Pengurus</button>
           </div>
@@ -292,7 +287,7 @@
     </main>
 
     <!-- SCREEN PORTAL -->
-    <main id="screen-portal" class="view-screen space-y-4">
+    <main id="screen-portal" class="view-screen space-y-5">
       
       <!-- HEADER -->
       <header class="glass-card p-4 flex items-center justify-between">
@@ -301,7 +296,7 @@
             <i class="fa-solid fa-house"></i>
           </div>
           <div class="min-w-0">
-            <h2 class="font-extrabold text-sm tracking-tight truncate">RT 06 Bendotretek</h2>
+            <h2 class="font-extrabold text-sm sm:text-base tracking-tight truncate">RT 06 Bendotretek</h2>
             <p id="user-role-text" class="text-[11px] text-muted font-medium truncate">Pusat Informasi Warga</p>
           </div>
         </div>
@@ -317,27 +312,27 @@
         <div class="flex justify-between items-center relative z-10">
           <div>
             <span class="text-[11px] text-indigo-100 uppercase tracking-widest font-extrabold">SALDO KAS BERSIH</span>
-            <h2 id="stat-saldo" class="text-3xl font-black mt-1 tracking-tight">Rp 0</h2>
+            <h2 id="stat-saldo" class="text-3xl sm:text-4xl font-black mt-1 tracking-tight">Rp 0</h2>
           </div>
           <button onclick="fetchCloudData()" class="bg-white/20 hover:bg-white/30 backdrop-blur-md p-3 rounded-2xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-rotate-right"></i>
           </button>
         </div>
-        <div class="grid grid-cols-2 gap-3 pt-3 border-t border-white/20 relative z-10">
-          <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10">
+        <div class="grid grid-cols-2 gap-4 pt-3 border-t border-white/20 relative z-10">
+          <div class="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/10">
             <span class="text-[10px] text-indigo-100 font-bold block">PEMASUKAN</span>
-            <span id="stat-masuk" class="text-sm font-black text-emerald-300">Rp 0</span>
+            <span id="stat-masuk" class="text-sm sm:text-base font-black text-emerald-300">Rp 0</span>
           </div>
-          <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10">
+          <div class="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/10">
             <span class="text-[10px] text-indigo-100 font-bold block">PENGELUARAN</span>
-            <span id="stat-keluar" class="text-sm font-black text-rose-300">Rp 0</span>
+            <span id="stat-keluar" class="text-sm sm:text-base font-black text-rose-300">Rp 0</span>
           </div>
         </div>
         <div class="text-[10px] text-indigo-100/80 relative z-10" id="last-sync">Sinkronisasi data siap...</div>
       </section>
 
-      <!-- QUICK MENU GRID (Estetik & Bersih) -->
-      <section class="glass-card p-4 space-y-3">
+      <!-- QUICK MENU GRID -->
+      <section class="glass-card p-4 sm:p-5 space-y-3">
         <h3 class="text-xs font-extrabold uppercase tracking-wider text-muted px-1">Menu Layanan Warga</h3>
         <div class="menu-grid">
           <button onclick="switchNav('info')" class="menu-tile">
@@ -598,15 +593,15 @@
       <!-- EXPENSE CHART -->
       <section id="section-chart" class="glass-card hidden p-5 space-y-3">
         <h3 class="text-sm font-extrabold">📊 Alokasi Pengeluaran</h3>
-        <div class="h-56 relative"><canvas id="expenseChart"></canvas></div>
+        <div class="h-64 relative"><canvas id="expenseChart"></canvas></div>
         <div id="chart-empty" class="text-center py-4 text-muted text-xs hidden">Belum ada data grafik.</div>
       </section>
 
     </main>
   </div>
 
-  <!-- FLOATING BOTTOM NAVIGATION DOCK -->
-  <nav class="floating-dock role-user-nav">
+  <!-- FLOATING BOTTOM NAVIGATION DOCK (DISEMBUNYIKAN DI HALAMAN LOGIN) -->
+  <nav id="floating-nav-dock" class="floating-dock hidden">
     <button onclick="switchNav('info')" id="dock-btn-info" class="dock-item active">
       <i class="fa-solid fa-bullhorn"></i>
       <span>Info</span>
@@ -651,10 +646,10 @@
     'use strict';
     const CONFIG = {
       API_URL: "https://script.google.com/macros/s/AKfycbyhA5-Ke7UFKzRKAZZ0eQvAly4oQiTGnZXlKz9EJbkcCAyYy04pUW9kmCWI6HIIvFGd7g/exec",
-      CACHE_KAS: "rt06_kas_cache_v14",
-      CACHE_PENGUMUMAN: "rt06_pengumuman_v14",
-      SESSION: "rt06_user_session_v14",
-      THEME: "rt06_theme_v14",
+      CACHE_KAS: "rt06_kas_cache_v16",
+      CACHE_PENGUMUMAN: "rt06_pengumuman_v16",
+      SESSION: "rt06_user_session_v16",
+      THEME: "rt06_theme_v16",
       CACHE_TTL: 7 * 24 * 60 * 60 * 1000
     };
 
@@ -784,6 +779,9 @@
 
     function showScreen(id) {
       document.querySelectorAll('.view-screen').forEach(s => s.classList.toggle('active', s.id === id));
+      const isPortal = id === 'screen-portal';
+      document.body.classList.toggle('logged-in', isPortal);
+      $('floating-nav-dock').classList.toggle('hidden', !isPortal);
     }
 
     function switchNav(tab) {
@@ -803,7 +801,6 @@
       $('section-table').classList.toggle('hidden', !isKas);$('section-chart').classList.toggle('hidden', tab !== 'keluar');
       if (tab === 'warga') renderWarga();
       if (isKas) renderData();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     async function postApi(payload) {
@@ -857,7 +854,7 @@
       const rondaC = $('list-ronda');
       if (rondaC) {
         rondaC.innerHTML = state.ronda.map(r => `
-          <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-1">
+          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-1">
             <span class="text-[10px] font-extrabold uppercase text-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-0.5 rounded-md">${escapeHtml(r.hari)}</span>
             <h4 class="font-bold text-xs pt-1">${escapeHtml(r.namaPetugas)}</h4>
             <p class="text-[10px] text-muted">${escapeHtml(r.pos)}</p>
@@ -881,7 +878,7 @@
       const invC = $('list-inventaris');
       if (invC) {
         invC.innerHTML = state.inventaris.map(i => `
-          <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs space-y-1">
+          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs space-y-1">
             <div class="flex justify-between items-start font-bold">
               <span>${escapeHtml(i.namaBarang)}</span>
               <span class="text-[10px] bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 px-2 py-0.5 rounded-md">${escapeHtml(i.kondisi)}</span>
@@ -894,7 +891,7 @@
       const lapC = $('list-laporan');
       if (lapC) {
         lapC.innerHTML = state.laporan.map(l => `
-          <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs space-y-1">
+          <div class="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs space-y-1">
             <div class="flex justify-between font-bold">
               <span>${escapeHtml(l.kategori)} • ${escapeHtml(l.lokasi)}</span>
               <span class="bg-amber-50 text-amber-700 dark:bg-amber-950/50 text-[9px] px-2 py-0.5 rounded-md">${escapeHtml(l.status)}</span>
