@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Portal Warga RT 06 Bendotretek - Pro App v24</title>
+<title>Portal Warga RT 06 Bendotretek - Pro App v25</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -257,10 +257,11 @@ function renderAllData(){
   const wargaCount=(globalPortalData.warga||[]).length;
   const suratCount=(globalPortalData.surat||[]).length;
   const lapCount=(globalPortalData.laporan||[]).length;
-  $('total-warga-count').textContent=wargaCount;
-  $('dash-warga').textContent=wargaCount+' Jiwa';
-  $('dash-surat').textContent=suratCount+' Pengajuan';
-  $('dash-laporan').textContent=lapCount+' Laporan';
+  
+  // Perbaikan sinkronisasi ID elemen statistik dashboard
+  if($('dash-warga')) $('dash-warga').textContent=wargaCount+' Jiwa';
+  if($('dash-surat')) $('dash-surat').textContent=suratCount+' Pengajuan';
+  if($('dash-laporan')) $('dash-laporan').textContent=lapCount+' Laporan';
 
   renderWargaTable(filteredWarga());
   renderRonda();renderAgenda();renderInventaris();renderPinjam();renderLaporan();renderPengumuman();renderSurat();
