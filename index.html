@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Portal Warga RT 06 Bendotretek - Enterprise Edition</title>
+<title>Portal Warga RT 06 Bendotretek - Enterprise Edition v21</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -64,24 +64,16 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 <!-- Tab Warga -->
 <div id="tab-warga" class="tab-content hidden"><div class="desa-card p-6 space-y-5"><div class="flex flex-wrap justify-between gap-3"><h2 class="font-bold">Direktori Data Warga</h2><div class="flex gap-2"><input id="search-warga" oninput="filterWarga()" class="field" placeholder="Cari nama / blok"><button onclick="exportWargaCSV()" class="bg-gray-800 text-white px-3 rounded-xl text-xs">CSV</button></div></div><div class="overflow-x-auto rounded-xl border"><table class="w-full text-left text-xs"><thead><tr><th class="p-3">No</th><th class="p-3">Nama Warga</th><th class="p-3">Blok / Gang</th><th class="p-3">Gol. Darah</th><th class="p-3">Status</th><th id="warga-action-head" class="p-3 hidden">Aksi</th></tr></thead><tbody id="tbl-warga-list"></tbody></table></div></div></div>
 
-<!-- Tab Agenda & Ronda (Dilengkapi Tombol Share WA) -->
+<!-- Tab Agenda & Ronda -->
 <div id="tab-agenda" class="tab-content hidden space-y-5">
-  <div class="desa-card p-5">
-    <h2 class="font-bold text-sm mb-4"><i class="fa-solid fa-shield-cat text-blue-500"></i> Jadwal Siskamling Malam</h2>
-    <div id="list-ronda" class="auto-size-grid"></div>
-  </div>
-  <div class="desa-card p-5">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="font-bold text-sm"><i class="fa-solid fa-calendar-check text-emerald-500"></i> Daftar Agenda RT</h2>
-    </div>
-    <div id="list-agenda" class="space-y-3"></div>
-  </div>
+  <div class="desa-card p-5"><h2 class="font-bold text-sm mb-4"><i class="fa-solid fa-shield-cat text-blue-500"></i> Jadwal Siskamling Malam</h2><div id="list-ronda" class="auto-size-grid"></div></div>
+  <div class="desa-card p-5"><div class="flex justify-between items-center mb-4"><h2 class="font-bold text-sm"><i class="fa-solid fa-calendar-check text-emerald-500"></i> Daftar Agenda RT</h2></div><div id="list-agenda" class="space-y-3"></div></div>
 </div>
 
 <!-- Tab Inventaris -->
 <div id="tab-inventaris" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-5"><div class="desa-card p-6 h-fit"><h3 class="font-bold text-sm mb-4">Form Pinjam Alat RT</h3><form onsubmit="handleAddPinjam(event)" class="space-y-3"><input id="pj-nama" class="field" placeholder="Nama Peminjam" required><input id="pj-barang" class="field" placeholder="Nama Barang" required><input id="pj-jumlah" class="field" type="number" min="1" placeholder="Jumlah" required><input id="pj-kembali" class="field" type="date" required><button class="w-full bg-emerald-600 text-white text-xs py-3 rounded-xl font-bold">Ajukan Pinjaman</button></form><div class="mt-5"><h4 class="font-bold text-xs mb-2">Pengajuan Peminjaman</h4><div id="list-pinjam" class="space-y-2"></div></div></div><div class="lg:col-span-2 desa-card p-6"><h3 class="font-bold text-sm mb-4">Stok Inventaris Aset</h3><div id="list-inventaris" class="auto-size-grid"></div></div></div>
 
-<!-- Tab Laporan / Aspirasi (Dilengkapi Tombol Share WA) -->
+<!-- Tab Laporan / Aspirasi (Dilengkapi Upload Foto dengan Kompresi Otomatis) -->
 <div id="tab-laporan" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-5">
   <div class="desa-card p-6 h-fit">
     <h2 class="font-bold text-sm mb-4">Sampaikan Aspirasi / Laporan</h2>
@@ -90,6 +82,10 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
       <input id="lap-kategori" class="field" placeholder="Kategori laporan" required>
       <input id="lap-lokasi" class="field" placeholder="Lokasi spesifik" required>
       <textarea id="lap-detail" rows="3" class="field" placeholder="Detail laporan" required></textarea>
+      <div>
+        <label class="block text-xs font-bold mb-1 text-gray-500">Lampiran Foto (Opsional, Kompresi Otomatis)</label>
+        <input type="file" id="lap-foto" accept="image/*" class="field text-[11px] file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+      </div>
       <button class="w-full bg-emerald-600 text-white text-xs py-3 rounded-xl font-bold">Kirim Laporan</button>
     </form>
   </div>
@@ -102,10 +98,8 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 <!-- Tab UMKM -->
 <div id="tab-umkm" class="tab-content hidden space-y-5"><div class="desa-card p-6"><div class="flex justify-between items-center mb-4"><h2 class="font-bold">Lapak UMKM Warga</h2><button onclick="toggleUmkmModal()" class="bg-blue-600 text-white text-xs px-4 py-2 rounded-xl font-bold">+ Tambah Usaha</button></div><div id="list-umkm" class="auto-size-grid"></div></div></div>
 
-<!-- Tab Pengumuman (Dilengkapi Tombol Share WA) -->
-<div id="tab-pengumuman" class="tab-content hidden space-y-4">
-  <div id="list-pengumuman" class="space-y-4"></div>
-</div>
+<!-- Tab Pengumuman -->
+<div id="tab-pengumuman" class="tab-content hidden space-y-4"><div id="list-pengumuman" class="space-y-4"></div></div>
 
 <!-- Tab Surat -->
 <div id="tab-surat" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-5"><div class="desa-card p-6 h-fit"><h2 class="font-bold text-sm mb-4">Pengajuan Surat Pengantar</h2><form onsubmit="handleAddSurat(event)" class="space-y-3"><input id="s-nama" class="field" placeholder="Nama Lengkap" required><input id="s-nik" class="field" inputmode="numeric" maxlength="16" pattern="[0-9]{16}" placeholder="NIK (16 digit)" required><input id="s-jenis" class="field" placeholder="Jenis Surat (Domisili/SKTM)" required><textarea id="s-keperluan" rows="3" class="field" placeholder="Keperluan" required></textarea><button class="w-full bg-emerald-600 text-white text-xs py-3 rounded-xl font-bold">Kirim Permohonan</button></form></div><div class="lg:col-span-2 desa-card p-6"><h2 class="font-bold text-sm mb-4">Status Permohonan Surat</h2><div class="overflow-x-auto rounded-xl border"><table class="w-full text-left text-xs"><thead><tr><th class="p-3">Tanggal</th><th class="p-3">Nama</th><th class="p-3">Jenis Surat</th><th class="p-3">Status / Cetak</th><th id="surat-action-head" class="p-3 hidden">Aksi</th></tr></thead><tbody id="tbl-surat-status"></tbody></table></div></div></div>
@@ -121,20 +115,11 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
       <h3 class="font-bold text-sm text-gray-900">Pemilihan Waktu Kerja Bakti Pembersihan Saluran Air RT 06</h3>
       <p class="text-xs text-gray-500">Silakan masukkan nama lengkap Anda dan pilih jadwal yang paling sesuai:</p>
       <form onsubmit="handleVoting(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold mb-1.5 text-gray-700">Nama Warga (Sesuai Data RT)</label>
-          <input id="vote-nama" class="field" placeholder="Ketik nama lengkap Anda" required>
-        </div>
+        <div><label class="block text-xs font-bold mb-1.5 text-gray-700">Nama Warga (Sesuai Data RT)</label><input id="vote-nama" class="field" placeholder="Ketik nama lengkap Anda" required></div>
         <div class="space-y-2">
           <label class="block text-xs font-bold mb-1.5 text-gray-700">Pilihan Jadwal</label>
-          <label class="flex items-center gap-3 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 text-xs font-semibold">
-            <input type="radio" name="pilihan_vote" value="Minggu Pagi (Pukul 07:00 WIB)" required class="text-emerald-600"> 
-            <span>Minggu Pagi (Pukul 07:00 WIB)</span>
-          </label>
-          <label class="flex items-center gap-3 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 text-xs font-semibold">
-            <input type="radio" name="pilihan_vote" value="Sabtu Sore (Pukul 15:30 WIB)" required class="text-emerald-600"> 
-            <span>Sabtu Sore (Pukul 15:30 WIB)</span>
-          </label>
+          <label class="flex items-center gap-3 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 text-xs font-semibold"><input type="radio" name="pilihan_vote" value="Minggu Pagi (Pukul 07:00 WIB)" required class="text-emerald-600"> <span>Minggu Pagi (Pukul 07:00 WIB)</span></label>
+          <label class="flex items-center gap-3 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 text-xs font-semibold"><input type="radio" name="pilihan_vote" value="Sabtu Sore (Pukul 15:30 WIB)" required class="text-emerald-600"> <span>Sabtu Sore (Pukul 15:30 WIB)</span></label>
         </div>
         <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-3 rounded-xl font-bold transition">Kirim Pilihan Saya</button>
       </form>
@@ -150,7 +135,7 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 <div id="tab-donasi" class="tab-content hidden space-y-5">
   <div class="desa-card p-6 space-y-4">
     <div class="flex justify-between items-center"><h2 class="font-bold text-sm"><i class="fa-solid fa-hand-holding-heart text-rose-600 mr-2"></i> Penggalangan Dana Sosial RT 06</h2></div>
-    <div class="auto-size-grid">
+    <div id="list-donasi" class="auto-size-grid">
       <div class="border rounded-2xl p-5 bg-white space-y-3">
         <span class="text-[10px] font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded">Bantuan Kemanusiaan</span>
         <h3 class="font-bold text-sm">Donasi Perbaikan Musholla & Lampu Penerangan Gang 2</h3>
@@ -165,10 +150,12 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
   </div>
 </div>
 
-<!-- Panel Admin / Pengurus (Dilindungi Pengecekan Hak Akses) -->
+<!-- Panel Admin / Pengurus (Dilengkapi Form Buat Polling & Donasi) -->
 <div id="tab-admin" class="tab-content hidden space-y-5">
 <div class="desa-card p-6 border-t-4 border-emerald-500"><h3 class="font-bold text-sm mb-4">Catat Transaksi Kas</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><form onsubmit="handleAddKas(event,'addmasuk')" class="space-y-3"><h4 class="text-xs font-extrabold text-emerald-700">Pemasukan</h4><input id="km-tanggal" type="date" class="field" required><input id="km-nama" class="field" placeholder="Nama / sumber pemasukan" required><input id="km-kategori" class="field" placeholder="Kategori" value="Iuran Warga" required><input id="km-jumlah" type="number" min="1" class="field" placeholder="Nominal rupiah" required><button class="bg-emerald-600 text-white text-xs px-4 py-3 rounded-xl font-bold">Simpan Pemasukan</button></form><form onsubmit="handleAddKas(event,'addkeluar')" class="space-y-3"><h4 class="text-xs font-extrabold text-red-700">Pengeluaran</h4><input id="kk-tanggal" type="date" class="field" required><input id="kk-keterangan" class="field" placeholder="Keterangan pengeluaran" required><input id="kk-kategori" class="field" placeholder="Kategori" required><input id="kk-jumlah" type="number" min="1" class="field" placeholder="Nominal rupiah" required><button class="bg-red-600 text-white text-xs px-4 py-3 rounded-xl font-bold">Simpan Pengeluaran</button></form></div></div>
 <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Registrasi Data Warga Baru</h3><form onsubmit="handleAddWarga(event)" class="space-y-3"><div class="grid grid-cols-1 sm:grid-cols-3 gap-3"><input id="w-nama" class="field" placeholder="Nama Lengkap" required><input id="w-blok" class="field" placeholder="Blok / Gang" required><select id="w-goldarah" class="field"><option value="-">Gol. Darah (-)</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div><button class="bg-emerald-600 text-white text-xs px-5 py-3 rounded-xl font-bold">Simpan Warga Baru</button></form></div>
+<div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Buat Polling / E-Voting Baru</h3><form onsubmit="handleAddPoll(event)" class="space-y-3"><input id="po-judul" class="field" placeholder="Judul / Pertanyaan Polling" required><input id="po-pilihan" class="field" placeholder="Opsi Pilihan (Pisahkan dengan koma)" required><button class="bg-purple-600 text-white text-xs px-5 py-3 rounded-xl font-bold">Terbitkan Polling</button></form></div>
+<div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Buka Donasi Sosial Baru</h3><form onsubmit="handleAddDonasi(event)" class="space-y-3"><input id="do-judul" class="field" placeholder="Judul / Nama Kegiatan Donasi" required><input id="do-target" type="number" min="1000" class="field" placeholder="Target Nominal (Rp)" required><textarea id="do-ket" class="field" rows="2" placeholder="Keterangan / Deskripsi Donasi" required></textarea><button class="bg-rose-600 text-white text-xs px-5 py-3 rounded-xl font-bold">Buka Donasi</button></form></div>
 <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Buat Pengumuman</h3><form onsubmit="handleAddPengumuman(event)" class="space-y-3"><input id="pg-judul" class="field" placeholder="Judul pengumuman" required><input id="pg-kategori" class="field" placeholder="Kategori" required><textarea id="pg-isi" class="field" rows="3" placeholder="Isi pengumuman" required></textarea><button class="bg-emerald-600 text-white text-xs px-5 py-3 rounded-xl font-bold">Terbitkan Pengumuman</button></form></div>
 <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Tambah Agenda RT</h3><form onsubmit="handleAddAgenda(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="ag-tanggal" type="date" class="field" required><input id="ag-kegiatan" class="field" placeholder="Nama kegiatan" required><input id="ag-lokasi" class="field" placeholder="Lokasi"><input id="ag-waktu" class="field" placeholder="Waktu"><input id="ag-keterangan" class="field sm:col-span-2" placeholder="Keterangan"><button class="bg-emerald-600 text-white text-xs px-5 py-3 rounded-xl font-bold sm:col-span-2">Simpan Agenda</button></form></div>
 <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Tambah Inventaris RT</h3><form onsubmit="handleAddInventaris(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="iv-nama" class="field" placeholder="Nama barang" required><input id="iv-jumlah" type="number" min="1" class="field" placeholder="Jumlah total" required><input id="iv-kondisi" class="field" placeholder="Kondisi" value="Baik"><input id="iv-lokasi" class="field" placeholder="Lokasi penyimpanan"><button class="bg-emerald-600 text-white text-xs px-5 py-3 rounded-xl font-bold sm:col-span-2">Tambah Inventaris</button></form></div>
@@ -177,7 +164,7 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 
 <footer class="text-center text-white/90 text-[10px] font-bold py-5">Portal Layanan Terpadu Warga RT 06 RW 01 · Desa Bendotretek</footer>
 
-<!-- Modal Edit & Modal Lainnya -->
+<!-- Modal & Dialog -->
 <div id="modal-edit-generic" class="hidden fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"><div class="desa-card max-w-md w-full p-6 space-y-4 bg-white"><h3 id="modal-edit-title" class="font-bold text-sm border-b pb-3">Edit Data</h3><form id="form-edit-generic" onsubmit="handleSaveEdit(event)" class="space-y-4"><input type="hidden" id="edit-item-id"><input type="hidden" id="edit-target-type"><div id="modal-edit-fields" class="space-y-3"></div><div class="flex gap-3"><button type="button" onclick="closeEditModal()" class="w-1/2 bg-gray-100 py-3 rounded-xl text-xs font-bold">Batal</button><button type="submit" class="w-1/2 bg-emerald-600 text-white py-3 rounded-xl text-xs font-bold">Simpan</button></div></form></div></div>
 <div id="modal-sos" class="hidden fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"><div class="desa-card max-w-sm w-full p-6 text-center space-y-5"><div class="w-14 h-14 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-triangle-exclamation"></i></div><h3 class="font-bold text-base">KONTAK DARURAT</h3><div class="space-y-3 text-left text-xs"><a href="tel:08123456789" class="p-3.5 bg-gray-50 border rounded-xl flex justify-between font-bold"><span>Pak RT 06</span><span>0812-xxxx</span></a><a href="tel:110" class="p-3.5 bg-gray-50 border rounded-xl flex justify-between font-bold"><span>Polisi / Darurat</span><span>110</span></a></div><button onclick="toggleSOSModal()" class="w-full bg-gray-100 py-3 rounded-xl text-xs font-bold">Tutup</button></div></div>
 <div id="modal-umkm" class="hidden fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"><div class="desa-card max-w-md w-full p-6 space-y-4"><h3 class="font-bold text-sm border-b pb-3">Daftarkan Produk UMKM</h3><form onsubmit="handleAddUmkm(event)" class="space-y-3"><input id="u-namaUsaha" class="field" placeholder="Nama Usaha" required><input id="u-pemilik" class="field" placeholder="Nama Pemilik" required><input id="u-kategori" class="field" placeholder="Kategori Produk" required><input id="u-wa" class="field" inputmode="tel" placeholder="No WhatsApp (62812...)" required><textarea id="u-deskripsi" class="field" rows="3" placeholder="Deskripsi" required></textarea><div class="flex gap-3"><button type="button" onclick="toggleUmkmModal()" class="w-1/2 bg-gray-100 py-3 rounded-xl text-xs font-bold">Batal</button><button type="submit" class="w-1/2 bg-emerald-600 text-white py-3 rounded-xl text-xs font-bold">Simpan</button></div></form></div></div>
@@ -186,20 +173,18 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 'use strict';
 const API_URL='https://script.google.com/macros/s/AKfycbyrfYb-dcwjKMhVzRIiWWowZmQUqXiotZ8A0RTRPm2mzJbQs2cffXGFbXYPWYNCstmk/exec';
 let currentUser=null, sessionToken=localStorage.getItem('sessionToken')||'', kasChartInstance=null;
-let globalPortalData={success:true,riwayat:[],pengeluaran:[],warga:[],pengumuman:[],surat:[],ronda:[],laporan:[],agenda:[],umkm:[],inventaris:[],pinjam:[],voting:[]};
+let globalPortalData=JSON.parse(localStorage.getItem('rt06_cache_data'))||{success:true,riwayat:[],pengeluaran:[],warga:[],pengumuman:[],surat:[],ronda:[],laporan:[],agenda:[],umkm:[],inventaris:[],pinjam:[],voting:[],donasi:[]};
+
 const $=id=>document.getElementById(id);
 const isAdmin=()=>!!currentUser&&['admin','editor','pengurus'].includes(String(currentUser.role||'').toLowerCase());
 
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function safeDate(v){if(!v)return null;let d=v instanceof Date?v:new Date(v);if(!isNaN(d.getTime()))return d;const m=String(v).match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);if(m){d=new Date(+m[3],+m[2]-1,+m[1]);return isNaN(d)?null:d;}return null;}
-function dateISO(v){const d=safeDate(v);if(!d)return '';return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function dateText(v){const d=safeDate(v);return d?d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):escapeHtml(v||'-');}
 function rupiah(v){return 'Rp '+Number(v||0).toLocaleString('id-ID');}
 function showLoader(t='Memproses...'){$('loader-text').textContent=t;$('global-loader').classList.remove('hidden');}
 function hideLoader(){$('global-loader').classList.add('hidden');}
 function showToast(msg,isError=false){const c=$('toast-container'),el=document.createElement('div');el.className='toast-item '+(isError?'toast-error':'toast-success');const ico=document.createElement('i');ico.className='fa-solid '+(isError?'fa-circle-exclamation':'fa-circle-check');const txt=document.createElement('span');txt.className='flex-1';txt.textContent=String(msg||'');el.append(ico,txt);c.append(el);setTimeout(()=>{el.classList.add('fade-out');setTimeout(()=>el.remove(),220)},3500);}
-function vibrate(ms=10){if(navigator.vibrate)navigator.vibrate(ms);}
-function emptyMsg(msg){return `<p class="text-center text-xs text-gray-400 py-6 font-medium">${escapeHtml(msg)}</p>`;}
 
 async function apiRequest(action,data={},quiet=false){
   if(!quiet)showLoader();
@@ -230,16 +215,34 @@ function showDashboard(){
   $('user-info-bar').classList.add('flex');
   $('user-name-display').textContent=currentUser.name||currentUser.username||'';
   $('user-role-badge').textContent=isAdmin()?'Pengurus / Admin':'Warga';
-  
-  // Proteksi UI Akses Admin
-  const adminAllowed = isAdmin();
-  $('btn-tab-admin').classList.toggle('hidden', !adminAllowed);
-  $('warga-action-head').classList.toggle('hidden', !adminAllowed);
-  $('surat-action-head').classList.toggle('hidden', !adminAllowed);
+  const adminAllowed=isAdmin();
+  $('btn-tab-admin').classList.toggle('hidden',!adminAllowed);
+  $('warga-action-head').classList.toggle('hidden',!adminAllowed);
+  $('surat-action-head').classList.toggle('hidden',!adminAllowed);
 }
 
-async function loadPublicData(){try{showLoader('Memuat data portal...');const r=await fetch(API_URL+'?action=data',{cache:'no-store'});const d=await r.json();if(!d.success)throw new Error(d.message||'Data tidak dapat dimuat.');globalPortalData={...globalPortalData,...d};renderAllData();}catch(e){console.error(e);showToast('Data belum berhasil dimuat.',true)}finally{hideLoader();}}
-function renderAllData(){applyKasFilter();$('total-warga-count').textContent=(globalPortalData.warga||[]).length;renderWargaTable(filteredWarga());renderRonda();renderAgenda();renderInventaris();renderPinjam();renderLaporan();renderUmkm();renderPengumuman();renderSurat();renderVoting(globalPortalData.voting);}
+// CLIENT-SIDE CACHING (LOCAL STORAGE) + INSTANT RENDER
+async function loadPublicData(){
+  try{
+    const r=await fetch(API_URL+'?action=data',{cache:'no-store'});
+    const d=await r.json();
+    if(!d.success)throw new Error(d.message||'Data tidak dapat dimuat.');
+    globalPortalData={...globalPortalData,...d};
+    localStorage.setItem('rt06_cache_data', JSON.stringify(globalPortalData)); // Simpan ke local cache
+    renderAllData();
+  }catch(e){
+    console.error(e);
+    showToast('Menggunakan data offline tersimpan.', true);
+    renderAllData(); // Render dari cache lokal jika offline/gagal
+  }
+}
+
+function renderAllData(){
+  applyKasFilter();
+  $('total-warga-count').textContent=(globalPortalData.warga||[]).length;
+  renderWargaTable(filteredWarga());
+  renderRonda();renderAgenda();renderInventaris();renderPinjam();renderLaporan();renderUmkm();renderPengumuman();renderSurat();renderVoting(globalPortalData.voting);renderDonasi(globalPortalData.donasi);
+}
 
 function applyKasFilter(){const month=$('filter-bulan-kas').value,year=$('filter-tahun-kas').value;const filter=list=>(list||[]).filter(r=>{const d=safeDate(r.rawDate||r.tanggal);if(!d)return month==='ALL';return (month==='ALL'||String(d.getMonth()+1).padStart(2,'0')===month)&&(!year||String(d.getFullYear())===year)});renderKasTablesAndChart(filter(globalPortalData.riwayat),filter(globalPortalData.pengeluaran));}
 function renderKasTablesAndChart(masukList,keluarList){let masuk=0,keluar=0;$('tbl-masuk').innerHTML=masukList.map(r=>{masuk+=Number(r.jumlah||0);return `<tr><td class="p-3 text-gray-500">${dateText(r.tanggal)}</td><td class="p-3 font-bold">${escapeHtml(r.nama)}</td><td class="p-3 text-right text-emerald-600 font-black">+${rupiah(r.jumlah)}</td></tr>`}).join('')||'<tr><td colspan="3" class="p-4 text-center text-gray-500">Belum ada pemasukan.</td></tr>';$('tbl-keluar').innerHTML=keluarList.map(r=>{keluar+=Number(r.jumlah||0);return `<tr><td class="p-3 text-gray-500">${dateText(r.tanggal)}</td><td class="p-3 font-bold">${escapeHtml(r.keterangan)}</td><td class="p-3 text-right text-red-600 font-black">-${rupiah(r.jumlah)}</td></tr>`}).join('')||'<tr><td colspan="3" class="p-4 text-center text-gray-500">Belum ada pengeluaran.</td></tr>';$('total-masuk').textContent=rupiah(masuk);$('total-keluar').textContent=rupiah(keluar);$('total-saldo').textContent=rupiah(masuk-keluar);renderChart(masuk,keluar);}
@@ -247,17 +250,12 @@ function renderChart(masuk,keluar){const ctx=$('kasChart').getContext('2d');if(k
 
 function filteredWarga(){const q=($('search-warga')?.value||'').trim().toLowerCase();return(globalPortalData.warga||[]).filter(w=>`${w.nama||''} ${w.blok||''}`.toLowerCase().includes(q));}
 function filterWarga(){renderWargaTable(filteredWarga());}
-function renderWargaTable(list){
-  const admin=isAdmin();
-  $('tbl-warga-list').innerHTML=list.map((w,i)=>`<tr><td class="p-3">${i+1}</td><td class="p-3 font-bold">${escapeHtml(w.nama)}</td><td class="p-3">${escapeHtml(w.blok||'-')}</td><td class="p-3">${escapeHtml(w.golDarah||'-')}</td><td class="p-3"><span class="text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full text-[10px] font-bold">Aktif</span></td>${admin?`<td class="p-3"><button class="text-blue-600 font-bold" onclick="openEdit('warga','${escapeHtml(w.id)}')">Edit</button> <button class="text-red-600 font-bold ml-2" onclick="deleteRecord('Warga','${escapeHtml(w.id)}')">Hapus</button></td>`:''}</tr>`).join('')||`<tr><td colspan="${admin?6:5}" class="p-4 text-center text-gray-500">Tidak ada data warga.</td></tr>`;
-}
-
+function renderWargaTable(list){const admin=isAdmin();$('tbl-warga-list').innerHTML=list.map((w,i)=>`<tr><td class="p-3">${i+1}</td><td class="p-3 font-bold">${escapeHtml(w.nama)}</td><td class="p-3">${escapeHtml(w.blok||'-')}</td><td class="p-3">${escapeHtml(w.golDarah||'-')}</td><td class="p-3"><span class="text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full text-[10px] font-bold">Aktif</span></td>${admin?`<td class="p-3"><button class="text-blue-600 font-bold" onclick="openEdit('warga','${escapeHtml(w.id)}')">Edit</button> <button class="text-red-600 font-bold ml-2" onclick="deleteRecord('Warga','${escapeHtml(w.id)}')">Hapus</button></td>`:''}</tr>`).join('')||`<tr><td colspan="${admin?6:5}" class="p-4 text-center text-gray-500">Tidak ada data warga.</td></tr>`;}
 function renderRonda(){$('list-ronda').innerHTML=(globalPortalData.ronda||[]).map(r=>`<div class="border rounded-xl p-4 bg-white"><div class="text-xs font-extrabold text-blue-700">${escapeHtml(r.hari||'Jadwal ronda')}</div><div class="font-bold mt-1">${escapeHtml(r.namaPetugas||'-')}</div><div class="text-xs text-gray-500 mt-1">Pos: ${escapeHtml(r.pos||'-')}</div><span class="inline-block mt-2 text-[10px] bg-gray-100 rounded-full px-2 py-1">${escapeHtml(r.status||'Terjadwal')}</span></div>`).join('')||emptyMsg('Belum ada jadwal ronda.');}
 
-// RENDER AGENDA + FITUR SHARE WA
 function renderAgenda(){
   $('list-agenda').innerHTML=(globalPortalData.agenda||[]).map(a=>{
-    const shareText=encodeURIComponent(`*AGENDA RT 06 BENDOTRETEK*\n\n📅 *${escapeHtml(a.kegiatan)}*\n🗓 Tanggal: ${dateText(a.tanggal)}\n⏰ Waktu: ${escapeHtml(a.waktu||'-')}\n📍 Lokasi: ${escapeHtml(a.lokasi||'-')}\n📝 Keterangan: ${escapeHtml(a.keterangan||'-')}\n\nMari hadir dan berpartisipasi!`);
+    const shareText=encodeURIComponent(`*AGENDA RT 06 BENDOTRETEK*\n\n📅 *${escapeHtml(a.kegiatan)}*\n🗓 Tanggal: ${dateText(a.tanggal)}\n⏰ Waktu: ${escapeHtml(a.waktu||'-')}\n📍 Lokasi: ${escapeHtml(a.lokasi||'-')}\n📝 Keterangan: ${escapeHtml(a.keterangan||'-')}`);
     const admin=isAdmin();
     return `<div class="border rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white"><div><div class="font-bold text-sm">${escapeHtml(a.kegiatan||'-')}</div><div class="text-xs text-gray-500 mt-1">${dateText(a.tanggal)} · ${escapeHtml(a.waktu||'Waktu belum ditentukan')} · ${escapeHtml(a.lokasi||'-')}</div><div class="text-xs mt-2 text-gray-700">${escapeHtml(a.keterangan||'')}</div></div><div class="flex items-center gap-2 pt-2 sm:pt-0 border-t sm:border-t-0"><a href="https://wa.me/?text=${shareText}" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Share</a>${admin?`<button class="text-blue-600 text-xs font-bold px-2 py-1" onclick="openEdit('agenda','${escapeHtml(a.id)}')">Edit</button><button class="text-red-600 text-xs font-bold px-2 py-1" onclick="deleteRecord('Agenda','${escapeHtml(a.id)}')">Hapus</button>`:''}</div></div>`;
   }).join('')||emptyMsg('Belum ada agenda.');
@@ -266,20 +264,18 @@ function renderAgenda(){
 function renderInventaris(){$('list-inventaris').innerHTML=(globalPortalData.inventaris||[]).map(i=>{const admin=isAdmin();return `<div class="border rounded-xl p-4 bg-white flex flex-col justify-between"><div><div class="font-bold text-sm text-gray-900">${escapeHtml(i.namaBarang||'-')}</div><div class="text-xs text-gray-500 mt-1">Jumlah: <span class="font-bold text-gray-800">${escapeHtml(i.jumlah||0)}</span> · Kondisi: <span class="font-bold text-emerald-600">${escapeHtml(i.kondisi||'Baik')}</span></div><div class="text-xs text-gray-500 mt-1">Lokasi: ${escapeHtml(i.lokasi||'-')}</div></div>${admin?`<div class="mt-4 pt-3 border-t flex gap-3 text-xs"><button class="text-blue-600 font-bold" onclick="openEdit('inventaris','${escapeHtml(i.id)}')">Edit</button><button class="text-red-600 font-bold" onclick="deleteRecord('Inventaris','${escapeHtml(i.id)}')">Hapus</button></div>`:''}</div>`}).join('')||emptyMsg('Belum ada data inventaris.');}
 function renderPinjam(){$('list-pinjam').innerHTML=(globalPortalData.pinjam||[]).map(p=>`<div class="border rounded-xl p-3 bg-gray-50 text-xs"><div class="font-bold text-gray-800">${escapeHtml(p.namaPeminjam||'-')}</div><div class="text-gray-600 mt-0.5">Meminjam: <strong>${escapeHtml(p.namaBarang||'-')}</strong> (${escapeHtml(p.jumlah||1)})</div><div class="text-gray-400 text-[10px] mt-1"><i class="fa-regular fa-clock"></i> Kembali: ${dateText(p.tanggalKembali)}</div></div>`).join('')||'<div class="text-xs text-gray-400 py-2">Tidak ada peminjaman aktif.</div>';}
 
-// RENDER LAPORAN / ASPIRASI + FITUR SHARE WA
 function renderLaporan(){
   $('list-laporan').innerHTML=(globalPortalData.laporan||[]).map(l=>{
-    const shareText=encodeURIComponent(`*ASPIRASI & LAPORAN WARGA RT 06*\n\n📌 Kategori: ${escapeHtml(l.kategori)}\n👤 Pelapor: ${escapeHtml(l.nama)}\n📍 Lokasi: ${escapeHtml(l.lokasi)}\n📝 Detail: ${escapeHtml(l.detail)}\n\nStatus: ${escapeHtml(l.status)}`);
-    return `<div class="border rounded-xl p-4 bg-white space-y-3"><div class="flex justify-between items-start"><span class="text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded">${escapeHtml(l.kategori||'Aspirasi')}</span><span class="text-[10px] text-gray-400">${dateText(l.tanggal)}</span></div><div class="font-bold text-xs text-gray-900">${escapeHtml(l.nama||'-')} <span class="text-gray-500 font-normal">(${escapeHtml(l.lokasi||'-')})</span></div><p class="text-xs text-gray-600 leading-relaxed">${escapeHtml(l.detail||'')}</p><div class="pt-2 border-t flex justify-end"><a href="https://wa.me/?text=${shareText}" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Bagikan Laporan</a></div></div>`;
+    const shareText=encodeURIComponent(`*ASPIRASI & LAPORAN WARGA RT 06*\n\n📌 Kategori: ${escapeHtml(l.kategori)}\n👤 Pelapor: ${escapeHtml(l.nama)}\n📍 Lokasi: ${escapeHtml(l.lokasi)}\n📝 Detail: ${escapeHtml(l.detail)}\nStatus: ${escapeHtml(l.status)}`);
+    return `<div class="border rounded-xl p-4 bg-white space-y-3"><div class="flex justify-between items-start"><span class="text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded">${escapeHtml(l.kategori||'Aspirasi')}</span><span class="text-[10px] text-gray-400">${dateText(l.tanggal)}</span></div><div class="font-bold text-xs text-gray-900">${escapeHtml(l.nama||'-')} <span class="text-gray-500 font-normal">(${escapeHtml(l.lokasi||'-')})</span></div><p class="text-xs text-gray-600 leading-relaxed">${escapeHtml(l.detail||'')}</p>${l.lampiranFoto?`<div class="mt-2"><a href="${escapeHtml(l.lampiranFoto)}" target="_blank" class="text-xs text-blue-600 font-bold underline"><i class="fa-solid fa-image"></i> Lihat Lampiran Foto</a></div>`:''}<div class="pt-2 border-t flex justify-end"><a href="https://wa.me/?text=${shareText}" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Bagikan Laporan</a></div></div>`;
   }).join('')||emptyMsg('Belum ada laporan atau aspirasi.');
 }
 
 function renderUmkm(){$('list-umkm').innerHTML=(globalPortalData.umkm||[]).map(u=>`<div class="border rounded-xl p-4 bg-white flex flex-col justify-between"><div class="space-y-1.5"><div class="flex justify-between items-start"><span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">${escapeHtml(u.kategori||'UMKM')}</span></div><h3 class="font-bold text-sm text-gray-900">${escapeHtml(u.namaUsaha||'-')}</h3><p class="text-xs text-gray-500">Pemilik: <strong>${escapeHtml(u.pemilik||'-')}</strong></p><p class="text-xs text-gray-600 mt-2 leading-relaxed">${escapeHtml(u.deskripsi||'')}</p></div><div class="mt-4 pt-3 border-t"><a href="https://wa.me/${encodeURIComponent(u.whatsapp||u.wa||'')}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700"><i class="fa-brands fa-whatsapp text-sm"></i> Hubungi Penjual</a></div></div>`).join('')||emptyMsg('Belum ada data UMKM.');}
 
-// RENDER PENGUMUMAN + FITUR SHARE WA
 function renderPengumuman(){
   $('list-pengumuman').innerHTML=(globalPortalData.pengumuman||[]).map(p=>{
-    const shareText=encodeURIComponent(`📢 *PENGUMUMAN RT 06 BENDOTRETEK*\n\n*${escapeHtml(p.judul)}*\nKategori: ${escapeHtml(p.kategori)}\nTanggal: ${dateText(p.tanggal)}\n\n${escapeHtml(p.isi)}`);
+    const shareText=encodeURIComponent(`📢 *PENGUMUMAN RT 06 BENDOTRETEK*\n\n*${escapeHtml(p.judul)}*\nKategori: ${escapeHtml(p.kategori)}\n\n${escapeHtml(p.isi)}`);
     return `<div class="desa-card p-5 border-l-4 border-amber-500 space-y-3"><div class="flex justify-between items-center"><span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">${escapeHtml(p.kategori||'Pengumuman')}</span><span class="text-xs text-gray-400">${dateText(p.tanggal)}</span></div><h3 class="font-bold text-sm text-gray-900">${escapeHtml(p.judul||'-')}</h3><p class="text-xs text-gray-600 leading-relaxed">${escapeHtml(p.isi||'')}</p><div class="pt-2 border-t flex justify-end"><a href="https://wa.me/?text=${shareText}" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Bagikan Info</a></div></div>`;
   }).join('')||emptyMsg('Belum ada pengumuman.');
 }
@@ -304,35 +300,84 @@ function renderVoting(votingList) {
   $('list-hasil-voting').innerHTML = html || '<p class="text-xs text-gray-400">Belum ada suara yang masuk.</p>';
 }
 
+function renderDonasi(donasiList) {
+  const list = donasiList || [];
+  $('list-donasi').innerHTML = list.map(d => {
+    const terkumpul = Number(d.terkumpul || 0);
+    const target = Number(d.target || 1);
+    const percent = Math.min(100, Math.round((terkumpul / target) * 100));
+    const shareText = encodeURIComponent(`*DONASI SOSIAL RT 06*\n\n*${escapeHtml(d.judul)}*\nTarget: ${rupiah(target)}\nTerkumpul: ${rupiah(terkumpul)} (${percent}%)\n\n${escapeHtml(d.keterangan||'')}`);
+    return `<div class="border rounded-2xl p-5 bg-white space-y-3"><span class="text-[10px] font-bold bg-rose-100 text-rose-800 px-2 py-0.5 rounded">Bantuan Kemanusiaan</span><h3 class="font-bold text-sm">${escapeHtml(d.judul)}</h3><p class="text-xs text-gray-600 leading-relaxed">${escapeHtml(d.keterangan||'')}</p><div class="space-y-1"><div class="flex justify-between text-xs font-bold"><span>Terkumpul: ${rupiah(terkumpul)}</span><span>Target: ${rupiah(target)}</span></div><div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden"><div class="bg-emerald-600 h-full transition-all duration-500" style="width: ${percent}%"></div></div></div><div class="flex gap-2 pt-2"><a href="https://wa.me/?text=${shareText}" target="_blank" class="flex-1 text-center bg-emerald-600 text-white text-xs py-2.5 rounded-xl font-bold"><i class="fa-brands fa-whatsapp"></i> Konfirmasi Donasi</a></div></div>`;
+  }).join('') || emptyMsg('Belum ada program donasi aktif.');
+}
+
+// KOMPRESI GAMBAR OTOMATIS SEBELUM DIKIRIM KE BASE64
+async function compressImage(file, maxWidth = 800, quality = 0.7) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality)); // Hasil terkompresi format JPEG
+      };
+    };
+  });
+}
+
 async function handleVoting(e) {
   e.preventDefault();
   const namaWarga = $('vote-nama').value.trim();
   const selectedRadio = document.querySelector('input[name="pilihan_vote"]:checked');
   if (!selectedRadio) { showToast('Pilih salah satu opsi terlebih dahulu.', true); return; }
-  const pilihan = selectedRadio.value;
-  const res = await apiRequest('addvote', { namaWarga, pilihan });
+  const res = await apiRequest('addvote', { namaWarga, pilihan: selectedRadio.value });
   if (res.success) { showToast(res.message); e.target.reset(); await loadPublicData(); } else { showToast(res.message, true); }
 }
 
-function printSurat(nama, nik, jenis, keperluan){
-  const w = window.open('', '_blank');
-  w.document.write(`<html><head><title>Surat Pengantar RT 06</title><style>body{font-family:sans-serif;padding:40px;line-height:1.6}.header{text-align:center;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:20px}</style></head><body><div class="header"><h3>RUKUN TETANGGA 06 / RUKUN WARGA 01</h3><h4>DESA BENDOTRETEK, KECAMATAN PRAMBON, KABUPATEN SIDOARJO</h4></div><h2 style="text-align:center;text-decoration:underline">${jenis.toUpperCase()}</h2><p>Pengurus RT 06 / RW 01 Desa Bendotretek, Kecamatan Prambon, Kabupaten Sidoarjo, dengan ini menerangkan bahwa:</p><table><tr><td><b>Nama Lengkap</b></td><td>: ${nama}</td></tr><tr><td><b>NIK</b></td><td>: ${nik}</td></tr><tr><td><b>Keperluan</b></td><td>: ${keperluan}</td></tr></table><p style="margin-top:30px">Demikian surat pengantar ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p><div style="float:right;margin-top:50px;text-align:center">Bendotretek, ${new Date().toLocaleDateString('id-ID')}<br><b>Ketua RT 06</b><br><br><br>( ........................................ )</div></body></html>`);
-  w.document.close();
-  w.print();
+async function handleAddLaporan(e) {
+  e.preventDefault();
+  showLoader('Mengompresi foto & mengirim...');
+  let base64 = '';
+  const fileInput = $('lap-foto');
+  if (fileInput.files && fileInput.files[0]) {
+    base64 = await compressImage(fileInput.files[0], 800, 0.7); // Kompres otomatis max lebar 800px
+  }
+  const r = await apiRequest('addlaporan', { nama: $('lap-nama').value, kategori: $('lap-kategori').value, lokasi: $('lap-lokasi').value, detail: $('lap-detail').value, imagebase64: base64 }, true);
+  hideLoader();
+  if (r.success) { showToast('Laporan & foto terkirim!'); e.target.reset(); await loadPublicData(); } else { showToast(r.message || 'Gagal mengirim.', true); }
 }
 
-function switchTab(tabId,btn){document.querySelectorAll('.tab-content').forEach(el=>el.classList.add('hidden'));document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));$(tabId).classList.remove('hidden');btn.classList.add('active');}
-function toggleSOSModal(){$('modal-sos').classList.toggle('hidden');}
-function toggleUmkmModal(){$('modal-umkm').classList.toggle('hidden');}
-function closeEditModal(){$('modal-edit-generic').classList.add('hidden');}
+async function handleAddPoll(e){
+  e.preventDefault();
+  const r = await apiRequest('addpoll', { judul: $('po-judul').value, pilihan: $('po-pilihan').value });
+  if(r.success){ showToast(r.message); e.target.reset(); await loadPublicData(); } else { showToast(r.message, true); }
+}
 
+async function handleAddDonasi(e){
+  e.preventDefault();
+  const r = await apiRequest('adddonasi', { judul: $('do-judul').value, target: Number($('do-target').value), keterangan: $('do-ket').value });
+  if(r.success){ showToast(r.message); e.target.reset(); await loadPublicData(); } else { showToast(r.message, true); }
+}
+
+// Handler standar lainnya
 async function handleAddKas(e,action){e.preventDefault();const data=action==='addmasuk'?{tanggal:$('km-tanggal').value,nama:$('km-nama').value,kategori:$('km-kategori').value,jumlah:Number($('km-jumlah').value)}:{tanggal:$('kk-tanggal').value,keterangan:$('kk-keterangan').value,kategori:$('kk-kategori').value,jumlah:Number($('kk-jumlah').value)};const r=await apiRequest(action,data);if(r.success){showToast('Transaksi berhasil dicatat.');e.target.reset();await loadPublicData();}else{showToast(r.message||'Gagal mencatat.',true);}}
 async function handleAddWarga(e){e.preventDefault();const r=await apiRequest('addwarga',{nama:$('w-nama').value,blok:$('w-blok').value,golDarah:$('w-goldarah').value});if(r.success){showToast('Data warga disimpan.');e.target.reset();await loadPublicData();}else{showToast(r.message||'Gagal.',true);}}
 async function handleAddPengumuman(e){e.preventDefault();const r=await apiRequest('addpengumuman',{judul:$('pg-judul').value,kategori:$('pg-kategori').value,isi:$('pg-isi').value});if(r.success){showToast('Pengumuman diterbitkan.');e.target.reset();await loadPublicData();}else{showToast(r.message||'Gagal.',true);}}
 async function handleAddAgenda(e){e.preventDefault();const r=await apiRequest('addagenda',{tanggal:$('ag-tanggal').value,kegiatan:$('ag-kegiatan').value,lokasi:$('ag-lokasi').value,waktu:$('ag-waktu').value,keterangan:$('ag-keterangan').value});if(r.success){showToast('Agenda disimpan.');e.target.reset();await loadPublicData();}else{showToast(r.message||'Gagal.',true);}}
 async function handleAddInventaris(e){e.preventDefault();const r=await apiRequest('addinventaris',{namaBarang:$('iv-nama').value,jumlah:Number($('iv-jumlah').value),kondisi:$('iv-kondisi').value,lokasi:$('iv-lokasi').value});if(r.success){showToast('Inventaris ditambah.');e.target.reset();await loadPublicData();}else{showToast(r.message||'Gagal.',true);}}
 async function handleAddPinjam(e){e.preventDefault();const r=await apiRequest('addpinjam',{namaPeminjam:$('pj-nama').value,namaBarang:$('pj-barang').value,jumlah:Number($('pj-jumlah').value),tanggalKembali:$('pj-kembali').value});if(r.success){showToast('Pinjaman diajukan.');e.target.reset();await loadPublicData();}else{showToast(r.message||'Gagal.',true);}}
-async function handleAddLaporan(e){e.preventDefault();const r=await apiRequest('addlaporan',{nama:$('lap-nama').value,kategori:$('lap-kategori').value,lokasi:$('lap-lokasi').value,detail:$('lap-detail').value});if(r.success){showToast('Laporan terkirim.');e.target.reset();await loadPublicData();}else{showToast(r.message||'Gagal.',true);}}
 async function handleAddUmkm(e){e.preventDefault();const r=await apiRequest('addumkm',{namaUsaha:$('u-namaUsaha').value,pemilik:$('u-pemilik').value,kategori:$('u-kategori').value,whatsapp:$('u-wa').value,deskripsi:$('u-deskripsi').value});if(r.success){showToast('UMKM didaftarkan.');toggleUmkmModal();e.target.reset();await loadPublicData();}else{showToast(r.message||'Gagal.',true);}}
 async function handleAddSurat(e){e.preventDefault();const r=await apiRequest('addsurat',{nama:$('s-nama').value,nik:$('s-nik').value,jenisSurat:$('s-jenis').value,keperluan:$('s-keperluan').value});if(r.success){showToast('Permohonan surat terkirim.');e.target.reset();await loadPublicData();}else{showToast(r.message||'Gagal.',true);}}
 
@@ -378,6 +423,11 @@ function exportWargaCSV(){let csv='No,Nama,Blok,Gol Darah\n';(globalPortalData.w
 function downloadCSV(filename,text){const blob=new Blob([text],{type:'text/csv;charset=utf-8;'});const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.setAttribute('download',filename);document.body.appendChild(link);link.click();document.body.removeChild(link);}
 function shareKasWA(){const text=encodeURIComponent(`*LAPORAN KEUANGAN RT 06 BENDOTRETEK*\n\nPemasukan: ${$('total-masuk').textContent}\nPengeluaran: ${$('total-keluar').textContent}\nSaldo Bersih: ${$('total-saldo').textContent}\n\nSelengkapnya kunjungi Portal RT 06.`);window.open(`https://wa.me/?text=${text}`,'_blank');}
 
+function switchTab(tabId,btn){document.querySelectorAll('.tab-content').forEach(el=>el.classList.add('hidden'));document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));$(tabId).classList.remove('hidden');btn.classList.add('active');}
+function toggleSOSModal(){$('modal-sos').classList.toggle('hidden');}
+function toggleUmkmModal(){$('modal-umkm').classList.toggle('hidden');}
+function closeEditModal(){$('modal-edit-generic').classList.add('hidden');}
+
 window.addEventListener('DOMContentLoaded',async()=>{
   const yearsSelect=$('filter-tahun-kas');
   if(yearsSelect){
@@ -388,13 +438,12 @@ window.addEventListener('DOMContentLoaded',async()=>{
   if(sessionToken&&localStorage.getItem('currentUser')){
     try{currentUser=JSON.parse(localStorage.getItem('currentUser'));}catch(_){}
   }
-  if(currentUser&&sessionToken){
-    showDashboard();
-    await loadPublicData();
-  }else{
-    showLogin();
-    await loadPublicData();
-  }
+  if(currentUser&&sessionToken){ showDashboard(); }else{ showLogin(); }
+  
+  // Render instan dari local storage cache agar langsung tampil tanpa nunggu server
+  renderAllData();
+  // Fetch data terbaru di background
+  await loadPublicData();
 });
 </script>
 </body>
