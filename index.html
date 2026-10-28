@@ -3,46 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Portal Warga RT 06 Bendotretek - Pro App v26</title>
+<title>Portal Warga RT 06 Bendotretek - Pro App v27</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-body{font-family:'Plus Jakarta Sans',sans-serif;color:#1f2937;-webkit-tap-highlight-color:transparent;background:linear-gradient(135deg,#0f172a,#1e293b,#065f46);background-attachment:fixed;background-size:300% 300%;animation:gradientMove 15s ease infinite}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:#1e293b;background:linear-gradient(135deg,#090d16,#111c30,#064e3b);background-attachment:fixed;background-size:400% 400%;animation:gradientMove 20s ease infinite;-webkit-tap-highlight-color:transparent}
 @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.desa-card{background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.2);border-radius:1.25rem;box-shadow:0 10px 25px -5px rgba(0,0,0,0.15),0 8px 10px -6px rgba(0,0,0,0.1);transition:all .3s ease}
+
+.desa-card{background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.3);border-radius:1.5rem;box-shadow:0 15px 35px -5px rgba(0,0,0,0.2),0 5px 15px rgba(0,0,0,0.1);transition:all .3s cubic-bezier(.4,0,.2,1)}
+.desa-card:hover{box-shadow:0 20px 40px -5px rgba(0,0,0,0.25)}
 .desa-nav{background:rgba(15,23,42,0.85);border-bottom:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(20px)}
-.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}.btn-smooth{transition:all .2s cubic-bezier(.4,0,.2,1)}.btn-smooth:active{transform:scale(.97)}
-.auto-size-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+
+/* Transisi Halaman Smooth */
+.tab-content{animation:fadeInScale .35s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes fadeInScale{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Efek Tombol Interaktif */
+.btn-smooth{transition:all .2s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.btn-smooth:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.btn-smooth:active{transform:scale(.96);filter:brightness(.95)}
+
+.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+.auto-size-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem}
 .spinner{animation:spin 1s linear infinite}@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-#toast-container{position:fixed;bottom:1.5rem;right:1rem;z-index:99999;display:flex;flex-direction:column;gap:.5rem;max-width:360px;width:calc(100% - 2rem);pointer-events:none}
-.toast-item{pointer-events:auto;display:flex;align-items:flex-start;gap:.75rem;padding:1rem;border-radius:1rem;color:#fff;font-size:.8125rem;font-weight:600;box-shadow:0 10px 25px -5px #0004;animation:slideIn .3s ease forwards}.toast-success{background:#059669}.toast-error{background:#dc2626}.toast-item.fade-out{animation:slideOut .2s ease forwards}
-@keyframes slideIn{from{opacity:0;transform:translateY(1rem) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes slideOut{to{opacity:0;transform:translateY(1rem) scale(.95)}}
-th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;background:#f9fafb;border-bottom:1px solid #e5e7eb}td{border-bottom:1px solid #f3f4f6}tr:last-child td{border-bottom:none}
-.menu-item.active{background:#059669;color:#white;font-weight:700}
-.field{width:100%;padding:.75rem;font-size:.8125rem;background:#fff;border:1px solid #d1d5db;border-radius:.75rem;outline:none}.field:focus{box-shadow:0 0 0 2px #10b981;border-color:#10b981}
+
+#toast-container{position:fixed;bottom:1.5rem;right:1rem;z-index:99999;display:flex;flex-direction:column;gap:.5rem;max-width:380px;width:calc(100% - 2rem);pointer-events:none}
+.toast-item{pointer-events:auto;display:flex;align-items:flex-start;gap:.75rem;padding:1.1rem;border-radius:1rem;color:#fff;font-size:.8125rem;font-weight:600;box-shadow:0 10px 25px -5px #0005;animation:slideIn .3s cubic-bezier(0,0,.2,1) forwards}.toast-success{background:linear-gradient(135deg,#059669,#10b981)}.toast-error{background:linear-gradient(135deg,#dc2626,#ef4444)}.toast-item.fade-out{animation:slideOut .2s ease forwards}
+@keyframes slideIn{from{opacity:0;transform:translateY(1.5rem) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes slideOut{to{opacity:0;transform:translateY(1rem) scale(.95)}}
+
+th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;background:#f8fafc;border-bottom:1px solid #e2e8f0;padding:1rem .75rem}td{border-bottom:1px solid #f1f5f9;padding:1rem .75rem}tr:last-child td{border-bottom:none}
+.menu-item.active{background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(5,150,105,0.3)}
+.field{width:100%;padding:.8rem 1rem;font-size:.875rem;background:#fff;border:1px solid #cbd5e1;border-radius:.85rem;outline:none;transition:all .2s}.field:focus{box-shadow:0 0 0 3px rgba(16,185,129,0.2);border-color:#10b981}
 </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
 <div id="toast-container"></div>
-<div id="global-loader" class="hidden fixed inset-0 bg-gray-950/60 backdrop-blur-sm z-[99999] flex flex-col items-center justify-center text-white"><div class="w-12 h-12 border-4 border-white/20 border-t-emerald-400 rounded-full spinner mb-3"></div><p id="loader-text" class="text-xs font-bold tracking-wide uppercase text-emerald-300">Memuat Sistem...</p></div>
+<div id="global-loader" class="hidden fixed inset-0 bg-slate-950/70 backdrop-blur-md z-[99999] flex flex-col items-center justify-center text-white"><div class="w-14 h-14 border-4 border-white/20 border-t-emerald-400 rounded-full spinner mb-3"></div><p id="loader-text" class="text-xs font-bold tracking-widest uppercase text-emerald-300">Memuat Sistem...</p></div>
 
-<header class="desa-nav sticky top-0 z-50 text-white shadow-lg">
+<header class="desa-nav sticky top-0 z-50 text-white shadow-xl">
   <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
     <div class="flex items-center space-x-3">
       <button id="hamburger-btn" onclick="toggleDrawer()" class="hidden btn-smooth p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm"><i class="fa-solid fa-bars"></i></button>
-      <div class="bg-emerald-500 text-white p-2 rounded-xl shadow-inner"><i class="fa-solid fa-building-shield"></i></div>
+      <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-2.5 rounded-2xl shadow-lg"><i class="fa-solid fa-building-shield"></i></div>
       <div>
         <h1 class="font-extrabold text-sm sm:text-base tracking-wide">RT 06 Bendotretek</h1>
-        <p class="text-[10px] text-emerald-400 uppercase tracking-widest font-bold">Portal Pro Warga</p>
+        <p class="text-[10px] text-emerald-400 uppercase tracking-widest font-extrabold">Portal Pro Warga</p>
       </div>
     </div>
-    <div class="flex items-center space-x-2">
-      <button onclick="vibrate();toggleSOSModal()" class="btn-smooth bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs px-3 py-2 rounded-xl font-bold flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> Darurat</button>
+    <div class="flex items-center space-x-2.5">
+      <button onclick="toggleSOSModal()" class="btn-smooth bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 text-xs px-3.5 py-2 rounded-xl font-bold flex items-center gap-1.5 shadow-sm"><i class="fa-solid fa-triangle-exclamation"></i> Darurat</button>
       <div id="user-info-bar" class="hidden items-center space-x-3 border-l border-white/20 pl-3">
-        <div class="text-right hidden sm:block"><span id="user-name-display" class="block font-bold text-xs"></span><span id="user-role-badge" class="inline-block text-[9px] px-1.5 py-0.5 bg-emerald-500/20 text-emerald-300 font-extrabold rounded">Warga</span></div>
-        <button onclick="logout()" class="btn-smooth bg-white/10 hover:bg-white/20 text-white text-xs p-2.5 rounded-xl" title="Keluar"><i class="fa-solid fa-right-from-bracket"></i></button>
+        <div class="text-right hidden sm:block"><span id="user-name-display" class="block font-bold text-xs"></span><span id="user-role-badge" class="inline-block text-[9px] px-2 py-0.5 bg-emerald-500/20 text-emerald-300 font-extrabold rounded-full">Warga</span></div>
+        <button onclick="logout()" class="btn-smooth bg-white/10 hover:bg-white/20 text-white text-xs p-2.5 rounded-xl shadow-sm" title="Keluar"><i class="fa-solid fa-right-from-bracket"></i></button>
       </div>
     </div>
   </div>
@@ -50,15 +64,15 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 
 <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
 
-<section id="sec-login" class="max-w-md mx-auto my-12"><div class="desa-card overflow-hidden border-t-4 border-t-emerald-500 text-gray-900"><div class="p-8 text-center border-b border-gray-100"><div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-4"><i class="fa-solid fa-fingerprint text-2xl"></i></div><h2 class="text-xl font-extrabold">Masuk Portal</h2><p class="text-xs text-gray-500 mt-1">Sistem Informasi Pengurus & Warga RT 06</p></div>
-<form id="login-form" class="p-8 space-y-5 bg-gray-50/50" onsubmit="handleLogin(event)"><div><label class="block text-xs font-bold mb-1.5">Username</label><input id="login-username" autocomplete="username" required class="field" placeholder="Masukkan username"></div><div><label class="block text-xs font-bold mb-1.5">Password</label><input id="login-password" type="password" autocomplete="current-password" required class="field" placeholder="Password"></div><div><label class="block text-xs font-bold mb-1.5">Level Akses</label><select id="login-role" class="field font-bold"><option value="viewer">Warga RT 06</option><option value="admin">Pengurus / Admin RT</option></select></div><button type="submit" class="btn-smooth w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-xs"><i class="fa-solid fa-arrow-right-to-bracket mr-2"></i>Masuk Sistem</button></form></div></section>
+<section id="sec-login" class="max-w-md mx-auto my-12"><div class="desa-card overflow-hidden border-t-4 border-t-emerald-500 text-slate-900 shadow-2xl"><div class="p-8 text-center border-b border-slate-100 bg-slate-50/50"><div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-inner"><i class="fa-solid fa-fingerprint text-2xl"></i></div><h2 class="text-xl font-extrabold">Masuk Portal</h2><p class="text-xs text-slate-500 mt-1">Sistem Informasi Pengurus & Warga RT 06</p></div>
+<form id="login-form" class="p-8 space-y-5" onsubmit="handleLogin(event)"><div><label class="block text-xs font-bold mb-1.5 text-slate-700">Username</label><input id="login-username" autocomplete="username" required class="field" placeholder="Masukkan username"></div><div><label class="block text-xs font-bold mb-1.5 text-slate-700">Password</label><input id="login-password" type="password" autocomplete="current-password" required class="field" placeholder="Password"></div><div><label class="block text-xs font-bold mb-1.5 text-slate-700">Level Akses</label><select id="login-role" class="field font-bold"><option value="viewer">Warga RT 06</option><option value="admin">Pengurus / Admin RT</option></select></div><button type="submit" class="btn-smooth w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg shadow-emerald-600/30"><i class="fa-solid fa-arrow-right-to-bracket mr-2"></i>Masuk Sistem</button></form></div></section>
 
 <section id="sec-dashboard" class="hidden space-y-6">
 
-<div id="drawer-backdrop" onclick="toggleDrawer()" class="hidden fixed inset-0 bg-black/50 z-40 backdrop-blur-xs"></div>
-<div id="app-drawer" class="fixed top-0 left-0 bottom-0 w-72 bg-gray-900 text-white z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
-  <div class="p-5 border-b border-gray-800 flex items-center justify-between"><div class="flex items-center gap-3"><div class="bg-emerald-500 p-2 rounded-xl text-white"><i class="fa-solid fa-bars-staggered"></i></div><span class="font-bold text-sm tracking-wide">Menu Navigasi</span></div><button onclick="toggleDrawer()" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button></div>
-  <div class="flex-1 overflow-y-auto p-4 space-y-1.5 text-xs font-semibold">
+<div id="drawer-backdrop" onclick="toggleDrawer()" class="hidden fixed inset-0 bg-slate-950/60 z-40 backdrop-blur-xs transition-opacity"></div>
+<div id="app-drawer" class="fixed top-0 left-0 bottom-0 w-72 bg-slate-900 text-white z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+  <div class="p-5 border-b border-slate-800 flex items-center justify-between"><div class="flex items-center gap-3"><div class="bg-emerald-500 p-2 rounded-xl text-white"><i class="fa-solid fa-bars-staggered"></i></div><span class="font-bold text-sm tracking-wide">Menu Navigasi</span></div><button onclick="toggleDrawer()" class="text-slate-400 hover:text-white p-2 rounded-lg"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+  <div class="flex-1 overflow-y-auto p-4 space-y-2 text-xs font-semibold">
     <button onclick="switchTab('tab-dashboard',this)" class="menu-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition text-left active"><i class="fa-solid fa-chart-pie w-5 text-emerald-400"></i> Dashboard Utama</button>
     <button onclick="switchTab('tab-ringkasan',this)" class="menu-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition text-left hover:bg-white/10"><i class="fa-solid fa-wallet w-5 text-emerald-400"></i> Kas Keuangan</button>
     <button onclick="switchTab('tab-warga',this)" class="menu-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition text-left hover:bg-white/10"><i class="fa-solid fa-users w-5 text-emerald-400"></i> Data Warga</button>
@@ -72,7 +86,7 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 </div>
 
 <div id="tab-dashboard" class="tab-content space-y-6">
-  <div class="desa-card p-6 sm:p-8 bg-gradient-to-r from-emerald-600 to-teal-700 text-white relative overflow-hidden">
+  <div class="desa-card p-6 sm:p-8 bg-gradient-to-r from-emerald-600 to-teal-700 text-white relative overflow-hidden shadow-2xl">
     <div class="relative z-10 space-y-2">
       <span class="inline-block bg-white/20 text-emerald-100 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Selamat Datang di Portal Warga</span>
       <h2 id="dash-welcome-name" class="text-xl sm:text-2xl font-black">Warga RT 06 Bendotretek</h2>
@@ -83,34 +97,34 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 
   <div class="auto-size-grid">
     <div class="desa-card p-5 border-l-4 border-emerald-500 cursor-pointer hover:scale-[1.02] transition" onclick="switchTab('tab-ringkasan', document.querySelector('[data-tab=tab-ringkasan]'))">
-      <div class="flex items-center justify-between"><span class="text-[10px] text-gray-500 font-bold uppercase">Saldo Kas Bersih</span><i class="fa-solid fa-wallet text-emerald-600"></i></div>
+      <div class="flex items-center justify-between"><span class="text-[10px] text-slate-500 font-bold uppercase">Saldo Kas Bersih</span><i class="fa-solid fa-wallet text-emerald-600"></i></div>
       <h3 id="dash-saldo" class="text-xl font-black text-emerald-700 mt-2">Rp 0</h3>
-      <p class="text-[10px] text-gray-400 mt-1">Ketuk untuk lihat detail keuangan</p>
+      <p class="text-[10px] text-slate-400 mt-1">Ketuk untuk lihat detail keuangan</p>
     </div>
     <div class="desa-card p-5 border-l-4 border-purple-500 cursor-pointer hover:scale-[1.02] transition" onclick="switchTab('tab-warga', document.querySelector('[data-tab=tab-warga]'))">
-      <div class="flex items-center justify-between"><span class="text-[10px] text-gray-500 font-bold uppercase">Total Warga Terdata</span><i class="fa-solid fa-users text-purple-600"></i></div>
+      <div class="flex items-center justify-between"><span class="text-[10px] text-slate-500 font-bold uppercase">Total Warga Terdata</span><i class="fa-solid fa-users text-purple-600"></i></div>
       <h3 id="dash-warga" class="text-xl font-black text-purple-700 mt-2">0 Jiwa</h3>
-      <p class="text-[10px] text-gray-400 mt-1">Direktori warga aktif</p>
+      <p class="text-[10px] text-slate-400 mt-1">Direktori warga aktif</p>
     </div>
     <div class="desa-card p-5 border-l-4 border-blue-500 cursor-pointer hover:scale-[1.02] transition" onclick="switchTab('tab-surat', document.querySelector('[data-tab=tab-surat]'))">
-      <div class="flex items-center justify-between"><span class="text-[10px] text-gray-500 font-bold uppercase">Permohonan Surat</span><i class="fa-solid fa-file-signature text-blue-600"></i></div>
+      <div class="flex items-center justify-between"><span class="text-[10px] text-slate-500 font-bold uppercase">Permohonan Surat</span><i class="fa-solid fa-file-signature text-blue-600"></i></div>
       <h3 id="dash-surat" class="text-xl font-black text-blue-700 mt-2">0 Pengajuan</h3>
-      <p class="text-[10px] text-gray-400 mt-1">Cetak otomatis online</p>
+      <p class="text-[10px] text-slate-400 mt-1">Cetak otomatis online</p>
     </div>
     <div class="desa-card p-5 border-l-4 border-amber-500 cursor-pointer hover:scale-[1.02] transition" onclick="switchTab('tab-laporan', document.querySelector('[data-tab=tab-laporan]'))">
-      <div class="flex items-center justify-between"><span class="text-[10px] text-gray-500 font-bold uppercase">Aspirasi & Laporan</span><i class="fa-solid fa-comment-dots text-amber-600"></i></div>
+      <div class="flex items-center justify-between"><span class="text-[10px] text-slate-500 font-bold uppercase">Aspirasi & Laporan</span><i class="fa-solid fa-comment-dots text-amber-600"></i></div>
       <h3 id="dash-laporan" class="text-xl font-black text-amber-700 mt-2">0 Laporan</h3>
-      <p class="text-[10px] text-gray-400 mt-1">Fasilitas & keluhan lingkungan</p>
+      <p class="text-[10px] text-slate-400 mt-1">Fasilitas & keluhan lingkungan</p>
     </div>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <div class="desa-card p-6 space-y-4">
-      <div class="flex justify-between items-center"><h3 class="font-bold text-sm text-gray-900"><i class="fa-solid fa-bullhorn text-emerald-600 mr-2"></i> Pengumuman Terbaru</h3><button onclick="switchTab('tab-pengumuman')" class="text-xs text-emerald-600 font-bold hover:underline">Lihat Semua</button></div>
+      <div class="flex justify-between items-center"><h3 class="font-bold text-sm text-slate-900"><i class="fa-solid fa-bullhorn text-emerald-600 mr-2"></i> Pengumuman Terbaru</h3><button onclick="switchTab('tab-pengumuman')" class="text-xs text-emerald-600 font-bold hover:underline">Lihat Semua</button></div>
       <div id="dash-latest-pengumuman" class="space-y-3"></div>
     </div>
     <div class="desa-card p-6 space-y-4">
-      <div class="flex justify-between items-center"><h3 class="font-bold text-sm text-gray-900"><i class="fa-solid fa-calendar-days text-blue-600 mr-2"></i> Agenda RT Mendatang</h3><button onclick="switchTab('tab-agenda')" class="text-xs text-blue-600 font-bold hover:underline">Lihat Semua</button></div>
+      <div class="flex justify-between items-center"><h3 class="font-bold text-sm text-slate-900"><i class="fa-solid fa-calendar-days text-blue-600 mr-2"></i> Agenda RT Mendatang</h3><button onclick="switchTab('tab-agenda')" class="text-xs text-blue-600 font-bold hover:underline">Lihat Semua</button></div>
       <div id="dash-latest-agenda" class="space-y-3"></div>
     </div>
   </div>
@@ -118,40 +132,50 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 
 <!-- Tab Kas Keuangan -->
 <div id="tab-ringkasan" class="tab-content hidden space-y-5">
-  <div class="flex items-center pb-2 border-b"><button onclick="switchTab('tab-dashboard')" class="bg-gray-800 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button></div>
-  <div class="desa-card p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"><div><h3 class="font-bold text-sm">Laporan Keuangan Bulanan</h3><p class="text-[11px] text-gray-500">Filter periode dan unduh rekap data</p></div><div class="flex flex-wrap gap-2"><select id="filter-bulan-kas" onchange="applyKasFilter()" class="field w-auto"><option value="ALL">Semua Bulan</option><option value="01">Januari</option><option value="02">Februari</option><option value="03">Maret</option><option value="04">April</option><option value="05">Mei</option><option value="06">Juni</option><option value="07">Juli</option><option value="08">Agustus</option><option value="09">September</option><option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option></select><select id="filter-tahun-kas" onchange="applyKasFilter()" class="field w-auto"></select><button onclick="exportKasCSV()" class="bg-gray-800 text-white text-xs px-3 rounded-xl font-bold">Export CSV</button><button onclick="shareKasWA()" class="bg-emerald-600 text-white text-xs px-3 rounded-xl"><i class="fa-brands fa-whatsapp"></i></button></div></div>
-  <div class="auto-size-grid"><div class="desa-card p-5 border-l-4 border-emerald-500"><span class="text-[10px] text-gray-500 font-bold uppercase">Pemasukan</span><h3 id="total-masuk" class="text-2xl font-black text-emerald-600 mt-1">Rp 0</h3></div><div class="desa-card p-5 border-l-4 border-red-500"><span class="text-[10px] text-gray-500 font-bold uppercase">Pengeluaran</span><h3 id="total-keluar" class="text-2xl font-black text-red-600 mt-1">Rp 0</h3></div><div class="desa-card p-5 border-l-4 border-blue-500"><span class="text-[10px] text-gray-500 font-bold uppercase">Saldo Bersih</span><h3 id="total-saldo" class="text-2xl font-black text-blue-600 mt-1">Rp 0</h3></div></div>
+  <div class="flex items-center justify-between pb-2 border-b">
+    <button onclick="switchTab('tab-dashboard')" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button>
+  </div>
+  <div class="desa-card p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"><div><h3 class="font-bold text-sm">Laporan Keuangan Bulanan</h3><p class="text-[11px] text-slate-500">Filter periode dan unduh rekap data</p></div><div class="flex flex-wrap gap-2"><select id="filter-bulan-kas" onchange="applyKasFilter()" class="field w-auto"><option value="ALL">Semua Bulan</option><option value="01">Januari</option><option value="02">Februari</option><option value="03">Maret</option><option value="04">April</option><option value="05">Mei</option><option value="06">Juni</option><option value="07">Juli</option><option value="08">Agustus</option><option value="09">September</option><option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option></select><select id="filter-tahun-kas" onchange="applyKasFilter()" class="field w-auto"></select><button onclick="resetKasFilter()" class="btn-smooth bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs px-3.5 py-2.5 rounded-xl font-bold">Reset</button><button onclick="exportKasCSV()" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-3.5 py-2.5 rounded-xl font-bold shadow-sm">Export CSV</button><button onclick="shareKasWA()" class="btn-smooth bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3.5 py-2.5 rounded-xl font-bold shadow-sm"><i class="fa-brands fa-whatsapp mr-1"></i> Bagikan</button></div></div>
+  <div class="auto-size-grid"><div class="desa-card p-5 border-l-4 border-emerald-500"><span class="text-[10px] text-slate-500 font-bold uppercase">Pemasukan</span><h3 id="total-masuk" class="text-2xl font-black text-emerald-600 mt-1">Rp 0</h3></div><div class="desa-card p-5 border-l-4 border-red-500"><span class="text-[10px] text-slate-500 font-bold uppercase">Pengeluaran</span><h3 id="total-keluar" class="text-2xl font-black text-red-600 mt-1">Rp 0</h3></div><div class="desa-card p-5 border-l-4 border-blue-500"><span class="text-[10px] text-slate-500 font-bold uppercase">Saldo Bersih</span><h3 id="total-saldo" class="text-2xl font-black text-blue-600 mt-1">Rp 0</h3></div></div>
   <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4"><i class="fa-solid fa-chart-line text-emerald-600"></i> Visualisasi Keuangan Kas</h3><div class="w-full h-64"><canvas id="kasChart"></canvas></div></div>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5"><div class="desa-card overflow-hidden"><div class="p-4 bg-gray-50 border-b font-bold text-xs">Transaksi Masuk</div><div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="tbl-masuk"></tbody></table></div></div><div class="desa-card overflow-hidden"><div class="p-4 bg-gray-50 border-b font-bold text-xs">Transaksi Keluar</div><div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="tbl-keluar"></tbody></table></div></div></div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5"><div class="desa-card overflow-hidden"><div class="p-4 bg-slate-50 border-b font-bold text-xs">Transaksi Masuk</div><div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="tbl-masuk"></tbody></table></div></div><div class="desa-card overflow-hidden"><div class="p-4 bg-slate-50 border-b font-bold text-xs">Transaksi Keluar</div><div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="tbl-keluar"></tbody></table></div></div></div>
 </div>
 
 <!-- Tab Warga -->
 <div id="tab-warga" class="tab-content hidden space-y-5">
-  <div class="flex items-center pb-2 border-b"><button onclick="switchTab('tab-dashboard')" class="bg-gray-800 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button></div>
-  <div class="desa-card p-6 space-y-5"><div class="flex flex-wrap justify-between gap-3"><h2 class="font-bold">Direktori Data Warga</h2><div class="flex gap-2"><input id="search-warga" oninput="filterWarga()" class="field" placeholder="Cari nama / status"><button onclick="exportWargaCSV()" class="bg-gray-800 text-white px-3 rounded-xl text-xs">CSV</button></div></div><div class="overflow-x-auto rounded-xl border"><table class="w-full text-left text-xs"><thead><tr><th class="p-3">No</th><th class="p-3">Nama Warga</th><th class="p-3">Status Hunian</th><th class="p-3">Gol. Darah</th><th class="p-3">Status</th><th id="warga-action-head" class="p-3 hidden">Aksi</th></tr></thead><tbody id="tbl-warga-list"></tbody></table></div></div>
+  <div class="flex items-center justify-between pb-2 border-b">
+    <button onclick="switchTab('tab-dashboard')" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button>
+  </div>
+  <div class="desa-card p-6 space-y-5"><div class="flex flex-wrap justify-between gap-3 items-center"><h2 class="font-bold">Direktori Data Warga</h2><div class="flex gap-2"><input id="search-warga" oninput="filterWarga()" class="field" placeholder="Cari nama / status"><button onclick="resetWargaFilter()" class="btn-smooth bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs px-3.5 py-2.5 rounded-xl font-bold">Reset</button><button onclick="exportWargaCSV()" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-3.5 py-2.5 rounded-xl font-bold shadow-sm">CSV</button></div></div><div class="overflow-x-auto rounded-xl border"><table class="w-full text-left text-xs"><thead><tr><th class="p-3">No</th><th class="p-3">Nama Warga</th><th class="p-3">Status Hunian</th><th class="p-3">Gol. Darah</th><th class="p-3">Status</th><th id="warga-action-head" class="p-3 hidden">Aksi</th></tr></thead><tbody id="tbl-warga-list"></tbody></table></div></div>
 </div>
 
 <!-- Tab Agenda & Ronda -->
 <div id="tab-agenda" class="tab-content hidden space-y-5">
-  <div class="flex items-center pb-2 border-b"><button onclick="switchTab('tab-dashboard')" class="bg-gray-800 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button></div>
+  <div class="flex items-center justify-between pb-2 border-b">
+    <button onclick="switchTab('tab-dashboard')" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button>
+  </div>
   <div class="desa-card p-5"><h2 class="font-bold text-sm mb-4"><i class="fa-solid fa-shield-cat text-blue-500"></i> Jadwal Siskamling Malam</h2><div id="list-ronda" class="auto-size-grid"></div></div>
   <div class="desa-card p-5"><div class="flex justify-between items-center mb-4"><h2 class="font-bold text-sm"><i class="fa-solid fa-calendar-check text-emerald-500"></i> Daftar Agenda RT</h2></div><div id="list-agenda" class="space-y-3"></div></div>
 </div>
 
 <!-- Tab Inventaris -->
 <div id="tab-inventaris" class="tab-content hidden space-y-5">
-  <div class="flex items-center pb-2 border-b"><button onclick="switchTab('tab-dashboard')" class="bg-gray-800 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button></div>
+  <div class="flex items-center justify-between pb-2 border-b">
+    <button onclick="switchTab('tab-dashboard')" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button>
+  </div>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-    <div class="desa-card p-6 h-fit"><h3 class="font-bold text-sm mb-4">Form Pinjam Alat RT</h3><form onsubmit="handleAddPinjam(event)" class="space-y-3"><input id="pj-nama" class="field" placeholder="Nama Peminjam" required><input id="pj-barang" class="field" placeholder="Nama Barang" required><input id="pj-jumlah" class="field" type="number" min="1" placeholder="Jumlah" required><input id="pj-kembali" class="field" type="date" required><button class="w-full bg-emerald-600 text-white text-xs py-3 rounded-xl font-bold">Ajukan Pinjaman</button></form><div class="mt-5"><h4 class="font-bold text-xs mb-2">Pengajuan Peminjaman</h4><div id="list-pinjam" class="space-y-2"></div></div></div>
+    <div class="desa-card p-6 h-fit"><h3 class="font-bold text-sm mb-4">Form Pinjam Alat RT</h3><form onsubmit="handleAddPinjam(event)" class="space-y-3"><input id="pj-nama" class="field" placeholder="Nama Peminjam" required><input id="pj-barang" class="field" placeholder="Nama Barang" required><input id="pj-jumlah" class="field" type="number" min="1" placeholder="Jumlah" required><input id="pj-kembali" class="field" type="date" required><button class="btn-smooth w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-3 rounded-xl font-bold shadow-md">Ajukan Pinjaman</button></form><div class="mt-5"><h4 class="font-bold text-xs mb-2">Pengajuan Peminjaman</h4><div id="list-pinjam" class="space-y-2"></div></div></div>
     <div class="lg:col-span-2 desa-card p-6"><h3 class="font-bold text-sm mb-4">Stok Inventaris Aset</h3><div id="list-inventaris" class="auto-size-grid"></div></div>
   </div>
 </div>
 
 <!-- Tab Laporan / Aspirasi -->
 <div id="tab-laporan" class="tab-content hidden space-y-5">
-  <div class="flex items-center pb-2 border-b"><button onclick="switchTab('tab-dashboard')" class="bg-gray-800 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button></div>
+  <div class="flex items-center justify-between pb-2 border-b">
+    <button onclick="switchTab('tab-dashboard')" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button>
+  </div>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-    <div class="desa-card p-6 h-fit"><h2 class="font-bold text-sm mb-4">Sampaikan Aspirasi / Laporan</h2><form onsubmit="handleAddLaporan(event)" class="space-y-3"><input id="lap-nama" class="field" placeholder="Nama Anda" required><input id="lap-kategori" class="field" placeholder="Kategori laporan" required><input id="lap-lokasi" class="field" placeholder="Lokasi spesifik" required><textarea id="lap-detail" rows="3" class="field" placeholder="Detail laporan" required></textarea><div><label class="block text-xs font-bold mb-1 text-gray-500">Lampiran Foto (Opsional)</label><input type="file" id="lap-foto" accept="image/*" class="field text-[11px] file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700"></div><button class="w-full bg-emerald-600 text-white text-xs py-3 rounded-xl font-bold">Kirim Laporan</button></form></div>
+    <div class="desa-card p-6 h-fit"><h2 class="font-bold text-sm mb-4">Sampaikan Aspirasi / Laporan</h2><form onsubmit="handleAddLaporan(event)" class="space-y-3"><input id="lap-nama" class="field" placeholder="Nama Anda" required><input id="lap-kategori" class="field" placeholder="Kategori laporan" required><input id="lap-lokasi" class="field" placeholder="Lokasi spesifik" required><textarea id="lap-detail" rows="3" class="field" placeholder="Detail laporan" required></textarea><div><label class="block text-xs font-bold mb-1 text-slate-500">Lampiran Foto (Opsional)</label><input type="file" id="lap-foto" accept="image/*" class="field text-[11px] file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700"></div><button class="btn-smooth w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-3 rounded-xl font-bold shadow-md">Kirim Laporan</button></form></div>
     <div class="lg:col-span-2 desa-card p-6"><h2 class="font-bold text-sm mb-4">Status Laporan Warga</h2><div id="list-laporan" class="space-y-3"></div></div>
   </div>
 </div>
@@ -159,36 +183,40 @@ th{text-transform:uppercase;font-size:.7rem;letter-spacing:.05em;color:#6b7280;b
 <!-- Tab Pengumuman -->
 <div id="tab-pengumuman" class="tab-content hidden space-y-4">
   <div class="flex items-center justify-between pb-2 border-b">
-    <button onclick="switchTab('tab-dashboard')" class="bg-gray-800 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button>
-    <h2 class="font-bold text-sm text-gray-900">Semua Pengumuman RT</h2>
+    <button onclick="switchTab('tab-dashboard')" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button>
+    <h2 class="font-bold text-sm text-slate-900">Semua Pengumuman RT</h2>
   </div>
   <div id="list-pengumuman" class="space-y-4"></div>
 </div>
 
 <!-- Tab Surat -->
 <div id="tab-surat" class="tab-content hidden space-y-5">
-  <div class="flex items-center pb-2 border-b"><button onclick="switchTab('tab-dashboard')" class="bg-gray-800 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button></div>
+  <div class="flex items-center justify-between pb-2 border-b">
+    <button onclick="switchTab('tab-dashboard')" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button>
+  </div>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-    <div class="desa-card p-6 h-fit"><h2 class="font-bold text-sm mb-4">Pengajuan Surat Pengantar</h2><form onsubmit="handleAddSurat(event)" class="space-y-3"><input id="s-nama" class="field" placeholder="Nama Lengkap" required><input id="s-nik" class="field" inputmode="numeric" maxlength="16" pattern="[0-9]{16}" placeholder="NIK (16 digit)" required><input id="s-jenis" class="field" placeholder="Jenis Surat (Domisili/SKTM)" required><textarea id="s-keperluan" rows="3" class="field" placeholder="Keperluan" required></textarea><button class="w-full bg-emerald-600 text-white text-xs py-3 rounded-xl font-bold">Kirim Permohonan</button></form></div>
+    <div class="desa-card p-6 h-fit"><h2 class="font-bold text-sm mb-4">Pengajuan Surat Pengantar</h2><form onsubmit="handleAddSurat(event)" class="space-y-3"><input id="s-nama" class="field" placeholder="Nama Lengkap" required><input id="s-nik" class="field" inputmode="numeric" maxlength="16" pattern="[0-9]{16}" placeholder="NIK (16 digit)" required><input id="s-jenis" class="field" placeholder="Jenis Surat (Domisili/SKTM)" required><textarea id="s-keperluan" rows="3" class="field" placeholder="Keperluan" required></textarea><button class="btn-smooth w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-3 rounded-xl font-bold shadow-md">Kirim Permohonan</button></form></div>
     <div class="lg:col-span-2 desa-card p-6"><h2 class="font-bold text-sm mb-4">Status Permohonan Surat</h2><div class="overflow-x-auto rounded-xl border"><table class="w-full text-left text-xs"><thead><tr><th class="p-3">Tanggal</th><th class="p-3">Nama</th><th class="p-3">Jenis Surat</th><th class="p-3">Status / Cetak</th><th id="surat-action-head" class="p-3 hidden">Aksi</th></tr></thead><tbody id="tbl-surat-status"></tbody></table></div></div>
   </div>
 </div>
 
 <!-- Panel Admin / Pengurus -->
 <div id="tab-admin" class="tab-content hidden space-y-5">
-  <div class="flex items-center pb-2 border-b"><button onclick="switchTab('tab-dashboard')" class="bg-gray-800 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button></div>
-  <div class="desa-card p-6 border-t-4 border-emerald-500"><h3 class="font-bold text-sm mb-4">Catat Transaksi Kas</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><form onsubmit="handleAddKas(event,'addmasuk')" class="space-y-3"><h4 class="text-xs font-extrabold text-emerald-700">Pemasukan</h4><input id="km-tanggal" type="date" class="field" required><input id="km-nama" class="field" placeholder="Nama / sumber pemasukan" required><input id="km-kategori" class="field" placeholder="Kategori" value="Iuran Warga" required><input id="km-jumlah" type="number" min="1" class="field" placeholder="Nominal rupiah" required><button class="bg-emerald-600 text-white text-xs px-4 py-3 rounded-xl font-bold">Simpan Pemasukan</button></form><form onsubmit="handleAddKas(event,'addkeluar')" class="space-y-3"><h4 class="text-xs font-extrabold text-red-700">Pengeluaran</h4><input id="kk-tanggal" type="date" class="field" required><input id="kk-keterangan" class="field" placeholder="Keterangan pengeluaran" required><input id="kk-kategori" class="field" placeholder="Kategori" required><input id="kk-jumlah" type="number" min="1" class="field" placeholder="Nominal rupiah" required><button class="bg-red-600 text-white text-xs px-4 py-3 rounded-xl font-bold">Simpan Pengeluaran</button></form></div></div>
-  <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Registrasi Data Warga Baru</h3><form onsubmit="handleAddWarga(event)" class="space-y-3"><div class="grid grid-cols-1 sm:grid-cols-3 gap-3"><input id="w-nama" class="field" placeholder="Nama Lengkap" required><select id="w-statusHunian" class="field font-bold"><option value="Tetap">Warga Tetap</option><option value="Kontrak">Warga Kontrak</option></select><select id="w-goldarah" class="field"><option value="-">Gol. Darah (-)</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div><button class="bg-emerald-600 text-white text-xs px-5 py-3 rounded-xl font-bold">Simpan Warga Baru</button></form></div>
-  <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Buat Pengumuman</h3><form onsubmit="handleAddPengumuman(event)" class="space-y-3"><input id="pg-judul" class="field" placeholder="Judul pengumuman" required><input id="pg-kategori" class="field" placeholder="Kategori" required><textarea id="pg-isi" class="field" rows="3" placeholder="Isi pengumuman" required></textarea><button class="bg-emerald-600 text-white text-xs px-5 py-3 rounded-xl font-bold">Terbitkan Pengumuman</button></form></div>
-  <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Tambah Agenda RT</h3><form onsubmit="handleAddAgenda(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="ag-tanggal" type="date" class="field" required><input id="ag-kegiatan" class="field" placeholder="Nama kegiatan" required><input id="ag-lokasi" class="field" placeholder="Lokasi"><input id="ag-waktu" class="field" placeholder="Waktu"><input id="ag-keterangan" class="field sm:col-span-2" placeholder="Keterangan"><button class="bg-emerald-600 text-white text-xs px-5 py-3 rounded-xl font-bold sm:col-span-2">Simpan Agenda</button></form></div>
-  <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Tambah Inventaris RT</h3><form onsubmit="handleAddInventaris(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="iv-nama" class="field" placeholder="Nama barang" required><input id="iv-jumlah" type="number" min="1" class="field" placeholder="Jumlah total" required><input id="iv-kondisi" class="field" placeholder="Kondisi" value="Baik"><input id="iv-lokasi" class="field" placeholder="Lokasi penyimpanan"><button class="bg-emerald-600 text-white text-xs px-5 py-3 rounded-xl font-bold sm:col-span-2">Tambah Inventaris</button></form></div>
+  <div class="flex items-center justify-between pb-2 border-b">
+    <button onclick="switchTab('tab-dashboard')" class="btn-smooth bg-slate-800 hover:bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md"><i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard</button>
+  </div>
+  <div class="desa-card p-6 border-t-4 border-emerald-500"><h3 class="font-bold text-sm mb-4">Catat Transaksi Kas</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><form onsubmit="handleAddKas(event,'addmasuk')" class="space-y-3"><h4 class="text-xs font-extrabold text-emerald-700">Pemasukan</h4><input id="km-tanggal" type="date" class="field" required><input id="km-nama" class="field" placeholder="Nama / sumber pemasukan" required><input id="km-kategori" class="field" placeholder="Kategori" value="Iuran Warga" required><input id="km-jumlah" type="number" min="1" class="field" placeholder="Nominal rupiah" required><button class="btn-smooth bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-3 rounded-xl font-bold shadow-md">Simpan Pemasukan</button></form><form onsubmit="handleAddKas(event,'addkeluar')" class="space-y-3"><h4 class="text-xs font-extrabold text-red-700">Pengeluaran</h4><input id="kk-tanggal" type="date" class="field" required><input id="kk-keterangan" class="field" placeholder="Keterangan pengeluaran" required><input id="kk-kategori" class="field" placeholder="Kategori" required><input id="kk-jumlah" type="number" min="1" class="field" placeholder="Nominal rupiah" required><button class="btn-smooth bg-red-600 hover:bg-red-700 text-white text-xs px-4 py-3 rounded-xl font-bold shadow-md">Simpan Pengeluaran</button></form></div></div>
+  <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Registrasi Data Warga Baru</h3><form onsubmit="handleAddWarga(event)" class="space-y-3"><div class="grid grid-cols-1 sm:grid-cols-3 gap-3"><input id="w-nama" class="field" placeholder="Nama Lengkap" required><select id="w-statusHunian" class="field font-bold"><option value="Tetap">Warga Tetap</option><option value="Kontrak">Warga Kontrak</option></select><select id="w-goldarah" class="field"><option value="-">Gol. Darah (-)</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></div><button class="btn-smooth bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-5 py-3 rounded-xl font-bold shadow-md">Simpan Warga Baru</button></form></div>
+  <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Buat Pengumuman</h3><form onsubmit="handleAddPengumuman(event)" class="space-y-3"><input id="pg-judul" class="field" placeholder="Judul pengumuman" required><input id="pg-kategori" class="field" placeholder="Kategori" required><textarea id="pg-isi" class="field" rows="3" placeholder="Isi pengumuman" required></textarea><button class="btn-smooth bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-5 py-3 rounded-xl font-bold shadow-md">Terbitkan Pengumuman</button></form></div>
+  <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Tambah Agenda RT</h3><form onsubmit="handleAddAgenda(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="ag-tanggal" type="date" class="field" required><input id="ag-kegiatan" class="field" placeholder="Nama kegiatan" required><input id="ag-lokasi" class="field" placeholder="Lokasi"><input id="ag-waktu" class="field" placeholder="Waktu"><input id="ag-keterangan" class="field sm:col-span-2" placeholder="Keterangan"><button class="btn-smooth bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-5 py-3 rounded-xl font-bold sm:col-span-2 shadow-md">Simpan Agenda</button></form></div>
+  <div class="desa-card p-6"><h3 class="font-bold text-sm mb-4">Tambah Inventaris RT</h3><form onsubmit="handleAddInventaris(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="iv-nama" class="field" placeholder="Nama barang" required><input id="iv-jumlah" type="number" min="1" class="field" placeholder="Jumlah total" required><input id="iv-kondisi" class="field" placeholder="Kondisi" value="Baik"><input id="iv-lokasi" class="field" placeholder="Lokasi penyimpanan"><button class="btn-smooth bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-5 py-3 rounded-xl font-bold sm:col-span-2 shadow-md">Tambah Inventaris</button></form></div>
 </div>
 </section></main>
 
-<footer class="text-center text-white/70 text-[10px] font-bold py-6">Portal Layanan Terpadu Warga RT 06 RW 01 · Desa Bendotretek</footer>
+<footer class="text-center text-slate-400 text-[10px] font-bold py-6">Portal Layanan Terpadu Warga RT 06 RW 01 · Desa Bendotretek</footer>
 
-<div id="modal-edit-generic" class="hidden fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"><div class="desa-card max-w-md w-full p-6 space-y-4 bg-white text-gray-900"><h3 id="modal-edit-title" class="font-bold text-sm border-b pb-3">Edit Data</h3><form id="form-edit-generic" onsubmit="handleSaveEdit(event)" class="space-y-4"><input type="hidden" id="edit-item-id"><input type="hidden" id="edit-target-type"><div id="modal-edit-fields" class="space-y-3"></div><div class="flex gap-3"><button type="button" onclick="closeEditModal()" class="w-1/2 bg-gray-100 py-3 rounded-xl text-xs font-bold">Batal</button><button type="submit" class="w-1/2 bg-emerald-600 text-white py-3 rounded-xl text-xs font-bold">Simpan</button></div></form></div></div>
-<div id="modal-sos" class="hidden fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"><div class="desa-card max-w-sm w-full p-6 text-center space-y-5 text-gray-900"><div class="w-14 h-14 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl"><i class="fa-solid fa-triangle-exclamation"></i></div><h3 class="font-bold text-base">KONTAK DARURAT</h3><div class="space-y-3 text-left text-xs"><a href="tel:08123456789" class="p-3.5 bg-gray-50 border rounded-xl flex justify-between font-bold"><span>Pak RT 06</span><span>0812-xxxx</span></a><a href="tel:110" class="p-3.5 bg-gray-50 border rounded-xl flex justify-between font-bold"><span>Polisi / Darurat</span><span>110</span></a></div><button onclick="toggleSOSModal()" class="w-full bg-gray-100 py-3 rounded-xl text-xs font-bold">Tutup</button></div></div>
+<div id="modal-edit-generic" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"><div class="desa-card max-w-md w-full p-6 space-y-4 bg-white text-slate-900 shadow-2xl"><h3 id="modal-edit-title" class="font-bold text-sm border-b pb-3">Edit Data</h3><form id="form-edit-generic" onsubmit="handleSaveEdit(event)" class="space-y-4"><input type="hidden" id="edit-item-id"><input type="hidden" id="edit-target-type"><div id="modal-edit-fields" class="space-y-3"></div><div class="flex gap-3"><button type="button" onclick="closeEditModal()" class="btn-smooth w-1/2 bg-slate-100 hover:bg-slate-200 py-3 rounded-xl text-xs font-bold">Batal</button><button type="submit" class="btn-smooth w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl text-xs font-bold shadow-md">Simpan</button></div></form></div></div>
+<div id="modal-sos" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4"><div class="desa-card max-w-sm w-full p-6 text-center space-y-5 text-slate-900 shadow-2xl"><div class="w-14 h-14 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto text-xl shadow-inner"><i class="fa-solid fa-triangle-exclamation"></i></div><h3 class="font-bold text-base">KONTAK DARURAT</h3><div class="space-y-3 text-left text-xs"><a href="tel:08123456789" class="p-3.5 bg-slate-50 border rounded-xl flex justify-between font-bold hover:bg-slate-100 transition"><span>Pak RT 06</span><span>0812-xxxx</span></a><a href="tel:110" class="p-3.5 bg-slate-50 border rounded-xl flex justify-between font-bold hover:bg-slate-100 transition"><span>Polisi / Darurat</span><span>110</span></a></div><button onclick="toggleSOSModal()" class="btn-smooth w-full bg-slate-100 hover:bg-slate-200 py-3 rounded-xl text-xs font-bold">Tutup</button></div></div>
 
 <script>
 'use strict';
@@ -298,10 +326,10 @@ function renderAllData(){
 
 function renderDashboardSummary(){
   const pList=(globalPortalData.pengumuman||[]).slice(0,2);
-  $('dash-latest-pengumuman').innerHTML=pList.map(p=>`<div class="p-3 bg-gray-50 border rounded-xl"><div class="text-[10px] text-gray-400 font-bold">${dateText(p.tanggal)}</div><div class="font-bold text-xs text-gray-900 mt-0.5">${escapeHtml(p.judul)}</div></div>`).join('')||'<p class="text-xs text-gray-400">Tidak ada pengumuman.</p>';
+  $('dash-latest-pengumuman').innerHTML=pList.map(p=>`<div class="p-3 bg-slate-50 border rounded-xl"><div class="text-[10px] text-slate-400 font-bold">${dateText(p.tanggal)}</div><div class="font-bold text-xs text-slate-900 mt-0.5">${escapeHtml(p.judul)}</div></div>`).join('')||'<p class="text-xs text-slate-400">Tidak ada pengumuman.</p>';
 
   const aList=(globalPortalData.agenda||[]).slice(0,2);
-  $('dash-latest-agenda').innerHTML=aList.map(a=>`<div class="p-3 bg-gray-50 border rounded-xl"><div class="text-[10px] text-emerald-600 font-bold">${dateText(a.tanggal)} · ${escapeHtml(a.waktu||'-')}</div><div class="font-bold text-xs text-gray-900 mt-0.5">${escapeHtml(a.kegiatan)}</div></div>`).join('')||'<p class="text-xs text-gray-400">Tidak ada agenda.</p>';
+  $('dash-latest-agenda').innerHTML=aList.map(a=>`<div class="p-3 bg-slate-50 border rounded-xl"><div class="text-[10px] text-emerald-600 font-bold">${dateText(a.tanggal)} · ${escapeHtml(a.waktu||'-')}</div><div class="font-bold text-xs text-slate-900 mt-0.5">${escapeHtml(a.kegiatan)}</div></div>`).join('')||'<p class="text-xs text-slate-400">Tidak ada agenda.</p>';
 }
 
 function applyKasFilter(){
@@ -310,10 +338,23 @@ function applyKasFilter(){
   renderKasTablesAndChart(filter(globalPortalData.riwayat),filter(globalPortalData.pengeluaran));
 }
 
+function resetKasFilter(){
+  $('filter-bulan-kas').value='ALL';
+  $('filter-tahun-kas').value='';
+  applyKasFilter();
+  showToast('Filter kas direset.');
+}
+
+function resetWargaFilter(){
+  $('search-warga').value='';
+  filterWarga();
+  showToast('Pencarian warga direset.');
+}
+
 function renderKasTablesAndChart(masukList,keluarList){
   let masuk=0,keluar=0;
-  $('tbl-masuk').innerHTML=masukList.map(r=>{masuk+=Number(r.jumlah||0);return `<tr><td class="p-3 text-gray-500">${dateText(r.tanggal)}</td><td class="p-3 font-bold">${escapeHtml(r.nama)}</td><td class="p-3 text-right text-emerald-600 font-black">+${rupiah(r.jumlah)}</td></tr>`}).join('')||'<tr><td colspan="3" class="p-4 text-center text-gray-500">Belum ada pemasukan.</td></tr>';
-  $('tbl-keluar').innerHTML=keluarList.map(r=>{keluar+=Number(r.jumlah||0);return `<tr><td class="p-3 text-gray-500">${dateText(r.tanggal)}</td><td class="p-3 font-bold">${escapeHtml(r.keterangan)}</td><td class="p-3 text-right text-red-600 font-black">-${rupiah(r.jumlah)}</td></tr>`}).join('')||'<tr><td colspan="3" class="p-4 text-center text-gray-500">Belum ada pengeluaran.</td></tr>';
+  $('tbl-masuk').innerHTML=masukList.map(r=>{masuk+=Number(r.jumlah||0);return `<tr><td class="p-3 text-slate-500">${dateText(r.tanggal)}</td><td class="p-3 font-bold">${escapeHtml(r.nama)}</td><td class="p-3 text-right text-emerald-600 font-black">+${rupiah(r.jumlah)}</td></tr>`}).join('')||'<tr><td colspan="3" class="p-4 text-center text-slate-500">Belum ada pemasukan.</td></tr>';
+  $('tbl-keluar').innerHTML=keluarList.map(r=>{keluar+=Number(r.jumlah||0);return `<tr><td class="p-3 text-slate-500">${dateText(r.tanggal)}</td><td class="p-3 font-bold">${escapeHtml(r.keterangan)}</td><td class="p-3 text-right text-red-600 font-black">-${rupiah(r.jumlah)}</td></tr>`}).join('')||'<tr><td colspan="3" class="p-4 text-center text-slate-500">Belum ada pengeluaran.</td></tr>';
   $('total-masuk').textContent=rupiah(masuk);$('total-keluar').textContent=rupiah(keluar);
   const saldo=masuk-keluar;
   $('total-saldo').textContent=rupiah(saldo);
@@ -333,40 +374,40 @@ function renderWargaTable(list){
   const admin=isAdmin();
   $('tbl-warga-list').innerHTML=list.map((w,i)=>{
     const statusBadge = w.statusHunian === 'Kontrak' ? '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[10px] font-bold">Kontrak</span>' : '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold">Tetap</span>';
-    return `<tr><td class="p-3">${i+1}</td><td class="p-3 font-bold">${escapeHtml(w.nama)}</td><td class="p-3">${statusBadge}</td><td class="p-3">${escapeHtml(w.golDarah||'-')}</td><td class="p-3"><span class="text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full text-[10px] font-bold">Aktif</span></td>${admin?`<td class="p-3"><button class="text-blue-600 font-bold" onclick="openEdit('warga','${escapeHtml(w.id)}')">Edit</button> <button class="text-red-600 font-bold ml-2" onclick="deleteRecord('Warga','${escapeHtml(w.id)}')">Hapus</button></td>`:''}</tr>`;
-  }).join('')||`<tr><td colspan="${admin?6:5}" class="p-4 text-center text-gray-500">Tidak ada data warga.</td></tr>`;
+    return `<tr><td class="p-3">${i+1}</td><td class="p-3 font-bold">${escapeHtml(w.nama)}</td><td class="p-3">${statusBadge}</td><td class="p-3">${escapeHtml(w.golDarah||'-')}</td><td class="p-3"><span class="text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full text-[10px] font-bold">Aktif</span></td>${admin?`<td class="p-3"><button class="text-blue-600 font-bold hover:underline" onclick="openEdit('warga','${escapeHtml(w.id)}')">Edit</button> <button class="text-red-600 font-bold hover:underline ml-2" onclick="deleteRecord('Warga','${escapeHtml(w.id)}')">Hapus</button></td>`:''}</tr>`;
+  }).join('')||`<tr><td colspan="${admin?6:5}" class="p-4 text-center text-slate-500">Tidak ada data warga.</td></tr>`;
 }
 
-function renderRonda(){$('list-ronda').innerHTML=(globalPortalData.ronda||[]).map(r=>`<div class="border rounded-xl p-4 bg-white"><div class="text-xs font-extrabold text-blue-700">${escapeHtml(r.hari||'Jadwal ronda')}</div><div class="font-bold mt-1">${escapeHtml(r.namaPetugas||'-')}</div><div class="text-xs text-gray-500 mt-1">Pos: ${escapeHtml(r.pos||'-')}</div><span class="inline-block mt-2 text-[10px] bg-gray-100 rounded-full px-2 py-1">${escapeHtml(r.status||'Terjadwal')}</span></div>`).join('')||emptyMsg('Belum ada jadwal ronda.');}
+function renderRonda(){$('list-ronda').innerHTML=(globalPortalData.ronda||[]).map(r=>`<div class="border rounded-xl p-4 bg-white shadow-sm"><div class="text-xs font-extrabold text-blue-700">${escapeHtml(r.hari||'Jadwal ronda')}</div><div class="font-bold mt-1">${escapeHtml(r.namaPetugas||'-')}</div><div class="text-xs text-slate-500 mt-1">Pos: ${escapeHtml(r.pos||'-')}</div><span class="inline-block mt-2 text-[10px] bg-slate-100 text-slate-700 rounded-full px-2 py-1 font-semibold">${escapeHtml(r.status||'Terjadwal')}</span></div>`).join('')||emptyMsg('Belum ada jadwal ronda.');}
 
 function renderAgenda(){
   $('list-agenda').innerHTML=(globalPortalData.agenda||[]).map(a=>{
     const shareText=encodeURIComponent(`*AGENDA RT 06 BENDOTRETEK*\n\n📅 *${escapeHtml(a.kegiatan)}*\n🗓 Tanggal: ${dateText(a.tanggal)}\n⏰ Waktu: ${escapeHtml(a.waktu||'-')}\n📍 Lokasi: ${escapeHtml(a.lokasi||'-')}\n📝 Keterangan: ${escapeHtml(a.keterangan||'-')}`);
     const admin=isAdmin();
-    return `<div class="border rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white"><div><div class="font-bold text-sm">${escapeHtml(a.kegiatan||'-')}</div><div class="text-xs text-gray-500 mt-1">${dateText(a.tanggal)} · ${escapeHtml(a.waktu||'Waktu belum ditentukan')} · ${escapeHtml(a.lokasi||'-')}</div><div class="text-xs mt-2 text-gray-700">${escapeHtml(a.keterangan||'')}</div></div><div class="flex items-center gap-2 pt-2 sm:pt-0 border-t sm:border-t-0"><a href="https://wa.me/?text=${shareText}" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Share</a>${admin?`<button class="text-blue-600 text-xs font-bold px-2 py-1" onclick="openEdit('agenda','${escapeHtml(a.id)}')">Edit</button><button class="text-red-600 text-xs font-bold px-2 py-1" onclick="deleteRecord('Agenda','${escapeHtml(a.id)}')">Hapus</button>`:''}</div></div>`;
+    return `<div class="border rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white shadow-sm"><div><div class="font-bold text-sm">${escapeHtml(a.kegiatan||'-')}</div><div class="text-xs text-slate-500 mt-1">${dateText(a.tanggal)} · ${escapeHtml(a.waktu||'Waktu belum ditentukan')} · ${escapeHtml(a.lokasi||'-')}</div><div class="text-xs mt-2 text-slate-700">${escapeHtml(a.keterangan||'')}</div></div><div class="flex items-center gap-2 pt-2 sm:pt-0 border-t sm:border-t-0"><a href="https://wa.me/?text=${shareText}" target="_blank" class="btn-smooth bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Share</a>${admin?`<button class="text-blue-600 text-xs font-bold px-2 py-1 hover:underline" onclick="openEdit('agenda','${escapeHtml(a.id)}')">Edit</button><button class="text-red-600 text-xs font-bold px-2 py-1 hover:underline" onclick="deleteRecord('Agenda','${escapeHtml(a.id)}')">Hapus</button>`:''}</div></div>`;
   }).join('')||emptyMsg('Belum ada agenda.');
 }
 
-function renderInventaris(){$('list-inventaris').innerHTML=(globalPortalData.inventaris||[]).map(i=>{const admin=isAdmin();return `<div class="border rounded-xl p-4 bg-white flex flex-col justify-between"><div><div class="font-bold text-sm text-gray-900">${escapeHtml(i.namaBarang||'-')}</div><div class="text-xs text-gray-500 mt-1">Jumlah: <span class="font-bold text-gray-800">${escapeHtml(i.jumlah||0)}</span> · Kondisi: <span class="font-bold text-emerald-600">${escapeHtml(i.kondisi||'Baik')}</span></div><div class="text-xs text-gray-500 mt-1">Lokasi: ${escapeHtml(i.lokasi||'-')}</div></div>${admin?`<div class="mt-4 pt-3 border-t flex gap-3 text-xs"><button class="text-blue-600 font-bold" onclick="openEdit('inventaris','${escapeHtml(i.id)}')">Edit</button><button class="text-red-600 font-bold" onclick="deleteRecord('Inventaris','${escapeHtml(i.id)}')">Hapus</button></div>`:''}</div>`}).join('')||emptyMsg('Belum ada data inventaris.');}
-function renderPinjam(){$('list-pinjam').innerHTML=(globalPortalData.pinjam||[]).map(p=>`<div class="border rounded-xl p-3 bg-gray-50 text-xs"><div class="font-bold text-gray-800">${escapeHtml(p.namaPeminjam||'-')}</div><div class="text-gray-600 mt-0.5">Meminjam: <strong>${escapeHtml(p.namaBarang||'-')}</strong> (${escapeHtml(p.jumlah||1)})</div><div class="text-gray-400 text-[10px] mt-1"><i class="fa-regular fa-clock"></i> Kembali: ${dateText(p.tanggalKembali)}</div></div>`).join('')||'<div class="text-xs text-gray-400 py-2">Tidak ada peminjaman aktif.</div>';}
+function renderInventaris(){$('list-inventaris').innerHTML=(globalPortalData.inventaris||[]).map(i=>{const admin=isAdmin();return `<div class="border rounded-xl p-4 bg-white flex flex-col justify-between shadow-sm"><div><div class="font-bold text-sm text-slate-900">${escapeHtml(i.namaBarang||'-')}</div><div class="text-xs text-slate-500 mt-1">Jumlah: <span class="font-bold text-slate-800">${escapeHtml(i.jumlah||0)}</span> · Kondisi: <span class="font-bold text-emerald-600">${escapeHtml(i.kondisi||'Baik')}</span></div><div class="text-xs text-slate-500 mt-1">Lokasi: ${escapeHtml(i.lokasi||'-')}</div></div>${admin?`<div class="mt-4 pt-3 border-t flex gap-3 text-xs"><button class="text-blue-600 font-bold hover:underline" onclick="openEdit('inventaris','${escapeHtml(i.id)}')">Edit</button><button class="text-red-600 font-bold hover:underline" onclick="deleteRecord('Inventaris','${escapeHtml(i.id)}')">Hapus</button></div>`:''}</div>`}).join('')||emptyMsg('Belum ada data inventaris.');}
+function renderPinjam(){$('list-pinjam').innerHTML=(globalPortalData.pinjam||[]).map(p=>`<div class="border rounded-xl p-3 bg-slate-50 text-xs shadow-sm"><div class="font-bold text-slate-800">${escapeHtml(p.namaPeminjam||'-')}</div><div class="text-slate-600 mt-0.5">Meminjam: <strong>${escapeHtml(p.namaBarang||'-')}</strong> (${escapeHtml(p.jumlah||1)})</div><div class="text-slate-400 text-[10px] mt-1"><i class="fa-regular fa-clock"></i> Kembali: ${dateText(p.tanggalKembali)}</div></div>`).join('')||'<div class="text-xs text-slate-400 py-2">Tidak ada peminjaman aktif.</div>';}
 
 function renderLaporan(){
   $('list-laporan').innerHTML=(globalPortalData.laporan||[]).map(l=>{
     const shareText=encodeURIComponent(`*ASPIRASI & LAPORAN WARGA RT 06*\n\n📌 Kategori: ${escapeHtml(l.kategori)}\n👤 Pelapor: ${escapeHtml(l.nama)}\n📍 Lokasi: ${escapeHtml(l.lokasi)}\n📝 Detail: ${escapeHtml(l.detail)}\nStatus: ${escapeHtml(l.status)}`);
-    return `<div class="border rounded-xl p-4 bg-white space-y-3"><div class="flex justify-between items-start"><span class="text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded">${escapeHtml(l.kategori||'Aspirasi')}</span><span class="text-[10px] text-gray-400">${dateText(l.tanggal)}</span></div><div class="font-bold text-xs text-gray-900">${escapeHtml(l.nama||'-')} <span class="text-gray-500 font-normal">(${escapeHtml(l.lokasi||'-')})</span></div><p class="text-xs text-gray-600 leading-relaxed">${escapeHtml(l.detail||'')}</p>${l.lampiranFoto?`<div class="mt-2"><a href="${escapeHtml(l.lampiranFoto)}" target="_blank" class="text-xs text-blue-600 font-bold underline"><i class="fa-solid fa-image"></i> Lihat Lampiran Foto</a></div>`:''}<div class="pt-2 border-t flex justify-end"><a href="https://wa.me/?text=${shareText}" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Bagikan Laporan</a></div></div>`;
+    return `<div class="border rounded-xl p-4 bg-white space-y-3 shadow-sm"><div class="flex justify-between items-start"><span class="text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded">${escapeHtml(l.kategori||'Aspirasi')}</span><span class="text-[10px] text-slate-400">${dateText(l.tanggal)}</span></div><div class="font-bold text-xs text-slate-900">${escapeHtml(l.nama||'-')} <span class="text-slate-500 font-normal">(${escapeHtml(l.lokasi||'-')})</span></div><p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(l.detail||'')}</p>${l.lampiranFoto?`<div class="mt-2"><a href="${escapeHtml(l.lampiranFoto)}" target="_blank" class="text-xs text-blue-600 font-bold underline"><i class="fa-solid fa-image"></i> Lihat Lampiran Foto</a></div>`:''}<div class="pt-2 border-t flex justify-end"><a href="https://wa.me/?text=${shareText}" target="_blank" class="btn-smooth bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Bagikan Laporan</a></div></div>`;
   }).join('')||emptyMsg('Belum ada laporan atau aspirasi.');
 }
 
 function renderPengumuman(){
   $('list-pengumuman').innerHTML=(globalPortalData.pengumuman||[]).map(p=>{
     const shareText=encodeURIComponent(`📢 *PENGUMUMAN RT 06 BENDOTRETEK*\n\n*${escapeHtml(p.judul)}*\nKategori: ${escapeHtml(p.kategori)}\n\n${escapeHtml(p.isi)}`);
-    return `<div class="desa-card p-5 border-l-4 border-amber-500 space-y-3"><div class="flex justify-between items-center"><span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">${escapeHtml(p.kategori||'Pengumuman')}</span><span class="text-xs text-gray-400">${dateText(p.tanggal)}</span></div><h3 class="font-bold text-sm text-gray-900">${escapeHtml(p.judul||'-')}</h3><p class="text-xs text-gray-600 leading-relaxed">${escapeHtml(p.isi||'')}</p><div class="pt-2 border-t flex justify-end"><a href="https://wa.me/?text=${shareText}" target="_blank" class="bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Bagikan Info</a></div></div>`;
+    return `<div class="desa-card p-5 border-l-4 border-amber-500 space-y-3 shadow-sm"><div class="flex justify-between items-center"><span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">${escapeHtml(p.kategori||'Pengumuman')}</span><span class="text-xs text-slate-400">${dateText(p.tanggal)}</span></div><h3 class="font-bold text-sm text-slate-900">${escapeHtml(p.judul||'-')}</h3><p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(p.isi||'')}</p><div class="pt-2 border-t flex justify-end"><a href="https://wa.me/?text=${shareText}" target="_blank" class="btn-smooth bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> Bagikan Info</a></div></div>`;
   }).join('')||emptyMsg('Belum ada pengumuman.');
 }
 
 function renderSurat(){
   const admin=isAdmin();
-  $('tbl-surat-status').innerHTML=(globalPortalData.surat||[]).map(s=>`<tr><td class="p-3 text-gray-500">${dateText(s.tanggal)}</td><td class="p-3 font-bold">${escapeHtml(s.nama||'-')}</td><td class="p-3">${escapeHtml(s.jenisSurat||'-')}</td><td class="p-3"><div class="flex items-center gap-2"><span class="px-2 py-1 rounded text-[10px] font-bold ${s.status.includes('Disetujui')||s.status==='Selesai'?'bg-emerald-100 text-emerald-800':s.status==='Diproses'?'bg-blue-100 text-blue-800':'bg-amber-100 text-amber-800'}">${escapeHtml(s.status||'Menunggu')}</span>${s.status.includes('Disetujui')||s.status==='Selesai'?`<button onclick="printSurat('${escapeHtml(s.nama)}','${escapeHtml(s.nik)}','${escapeHtml(s.jenisSurat)}','${escapeHtml(s.keperluan)}')" class="bg-gray-800 text-white text-[10px] px-2 py-1 rounded font-bold"><i class="fa-solid fa-print"></i> Cetak</button>`:''}</div></td>${admin?`<td class="p-3"><button class="text-emerald-600 font-bold" onclick="updateSuratStatus('${escapeHtml(s.id)}')">Proses</button></td>`:''}</tr>`).join('')||`<tr><td colspan="${admin?5:4}" class="p-4 text-center text-gray-500">Belum ada permohonan surat.</td></tr>`;
+  $('tbl-surat-status').innerHTML=(globalPortalData.surat||[]).map(s=>`<tr><td class="p-3 text-slate-500">${dateText(s.tanggal)}</td><td class="p-3 font-bold">${escapeHtml(s.nama||'-')}</td><td class="p-3">${escapeHtml(s.jenisSurat||'-')}</td><td class="p-3"><div class="flex items-center gap-2"><span class="px-2 py-1 rounded text-[10px] font-bold ${s.status.includes('Disetujui')||s.status==='Selesai'?'bg-emerald-100 text-emerald-800':s.status==='Diproses'?'bg-blue-100 text-blue-800':'bg-amber-100 text-amber-800'}">${escapeHtml(s.status||'Menunggu')}</span>${s.status.includes('Disetujui')||s.status==='Selesai'?`<button onclick="printSurat('${escapeHtml(s.nama)}','${escapeHtml(s.nik)}','${escapeHtml(s.jenisSurat)}','${escapeHtml(s.keperluan)}')" class="btn-smooth bg-slate-800 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-sm"><i class="fa-solid fa-print"></i> Cetak</button>`:''}</div></td>${admin?`<td class="p-3"><button class="text-emerald-600 font-bold hover:underline" onclick="updateSuratStatus('${escapeHtml(s.id)}')">Proses</button></td>`:''}</tr>`).join('')||`<tr><td colspan="${admin?5:4}" class="p-4 text-center text-slate-500">Belum ada permohonan surat.</td></tr>`;
 }
 
 async function compressImage(file, maxWidth = 800, quality = 0.7) {
@@ -532,7 +573,7 @@ function openEdit(target,id){
   $('edit-item-id').value=id; $('edit-target-type').value=target;
   $('modal-edit-title').textContent=`Edit Data ${target.toUpperCase()}`;
   let html='';
-  for(const k in item){if(k==='id'||k==='rawDate') continue;html+=`<div><label class="block text-xs font-bold mb-1 uppercase tracking-wider text-gray-500">${escapeHtml(k)}</label><input name="${escapeHtml(k)}" class="field" value="${escapeHtml(item[k])}" required></div>`;}
+  for(const k in item){if(k==='id'||k==='rawDate') continue;html+=`<div><label class="block text-xs font-bold mb-1 uppercase tracking-wider text-slate-500">${escapeHtml(k)}</label><input name="${escapeHtml(k)}" class="field" value="${escapeHtml(item[k])}" required></div>`;}
   $('modal-edit-fields').innerHTML=html; $('modal-edit-generic').classList.remove('hidden');
 }
 async function handleSaveEdit(e){
@@ -559,7 +600,7 @@ function shareKasWA(){const text=encodeURIComponent(`*LAPORAN KEUANGAN RT 06 BEN
 
 function toggleSOSModal(){$('modal-sos').classList.toggle('hidden');}
 function closeEditModal(){$('modal-edit-generic').classList.add('hidden');}
-function emptyMsg(msg){return `<p class="text-center text-xs text-gray-400 py-6 font-medium">${escapeHtml(msg)}</p>`;}
+function emptyMsg(msg){return `<p class="text-center text-xs text-slate-400 py-6 font-medium">${escapeHtml(msg)}</p>`;}
 
 window.addEventListener('DOMContentLoaded',async()=>{
   const yearsSelect=$('filter-tahun-kas');
